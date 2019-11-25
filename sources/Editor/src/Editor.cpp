@@ -149,15 +149,14 @@ Frame::~Frame()
 
 void Frame::CreatePanels()
 {
-    //wxPanel *panel = new wxPanel(this, wxID_ANY);
+    wxScrolledWindow *sw = new wxScrolledWindow(this);
 
-    wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
+    TheCanvas = new Canvas(sw);
 
-    TheCanvas = new Canvas(this);
+    wxSize size = TheCanvas->GetSize();
 
-    sizer->Add(TheCanvas, 1, wxEXPAND | wxALL);
-
-    SetSizer(sizer);
+    sw->SetScrollbars(10, 10, size.x / 10, size.y / 10);
+    sw->Scroll(0, 0);
 
     Centre();
 }
@@ -170,9 +169,9 @@ void Frame::OnTimer(wxTimerEvent &)
 }
 
 
-void Frame::OnResize(wxSizeEvent &)
+void Frame::OnResize(wxSizeEvent &event)
 {
-    TheCanvas->SetSize(GetClientSize());
+    event.Skip();
 }
 
 
