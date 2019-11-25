@@ -228,6 +228,9 @@ void Canvas::DrawSymbols(wxPaintDC &dc)
 {
     int numSymbol = 0;
 
+    dc.SetPen(*wxBLACK_PEN);
+    dc.SetBrush(*wxBLACK_BRUSH);
+
     for(int row = 0; row < 16; row++)
     {
         for(int col = 0; col < 16; col++)
@@ -247,12 +250,12 @@ void Canvas::DrawSymbol(wxPaintDC &dc, int row, int col, int num)
     int x0 = col * font.size.x * step;
     int y0 = row * font.size.y * step;
 
-    dc.SetPen(*wxBLACK_PEN);
-    dc.SetBrush(*wxBLACK_BRUSH);
+    int sizeX = font.size.x;
+    int sizeY = font.size.y;
 
-    for(int y = 0; y < font.size.y; y++)
+    for(int y = 0; y < sizeY; y++)
     {
-        for(int x = 0; x < font.size.x; x++)
+        for(int x = 0; x < sizeX; x++)
         {
             if(symbol.Get(y, x))
             {
