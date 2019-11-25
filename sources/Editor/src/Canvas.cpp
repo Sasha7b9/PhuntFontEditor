@@ -71,6 +71,8 @@ void Canvas::OnPaint(wxPaintEvent &)
         dc.DrawLine(0, i, GetSize().x, i);
     }
 
+    DrawSymbols(dc);
+
     HighlightCell(dc);
 }
 
@@ -214,6 +216,45 @@ void Canvas::BuildSymbol(const wxFont &f, uint8 s)
             else
             {
                 symbol.Set(row, col, 0);
+            }
+        }
+    }
+}
+
+
+void Canvas::DrawSymbols(wxPaintDC &dc)
+{
+    int numSymbol = 0;
+
+    for(int row = 0; row < 16; row++)
+    {
+        for(int col = 0; col < 16; col++)
+        {
+            DrawSymbol(dc, row, col, numSymbol++);
+        }
+    }
+}
+
+
+void Canvas::DrawSymbol(wxPaintDC &dc, int row, int col, int num)
+{
+    Symbol &symbol = font.symbols[num];
+
+    int step = font.pixelsInPoint;
+
+    int x0 = col * font.size.x * step;
+    int y0 = row * font.size.y * step;
+
+    dc.SetPen(*wxBLACK_PEN);
+    dc.SetBrush(*wxBLACK_BRUSH);
+
+    for(int y = 0; y < font.size.y; y++)
+    {
+        for(int x = 0; x < font.size.x; x++)
+        {
+            if(symbol.Get(y, x))
+            {
+                dc.DrawRectangle(x0 + x * step, y0 + y * step, step, step);
             }
         }
     }

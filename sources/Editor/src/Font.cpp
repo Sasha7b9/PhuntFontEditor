@@ -17,3 +17,9 @@ void Symbol::Set(int row, int col, uint8 value)
 {
     bits[static_cast<uint>(row)][static_cast<uint>(col)] = value;
 }
+
+
+uint8 Symbol::Get(int row, int col) const
+{
+    return bits[static_cast<uint>(row)][static_cast<uint>(col)];
+}

@@ -7,8 +7,9 @@
 
 struct Symbol
 {
-    Symbol(uint w = 8, uint h = 8);
+    Symbol(uint w = 16, uint h = 16);
     void Set(int row, int col, uint8 value);
+    uint8 Get(int row, int col) const;
     uint width;
     uint height;
     /// Здесь каждый бит представлен 8-битным значением
@@ -21,7 +22,7 @@ class Font
 public:
 
     /// Размер символа в точках
-    wxSize size = { 8, 8 };
+    wxSize size = { 16, 16 };
     /// Столько писелей занимает одна точка шрифта в люому направлении
     int pixelsInPoint = 8;
 
