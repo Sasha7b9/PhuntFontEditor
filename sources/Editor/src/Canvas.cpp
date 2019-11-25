@@ -1,54 +1,64 @@
 #include "defines.h"
 #include "Canvas.h"
+#include "Font.h"
 #include <cstdlib>
 
 
 Canvas *TheCanvas = nullptr;
 
 
-static const int PIXEL_SIZE = 8;
-
-static const wxSize MIN_SIZE = { PIXEL_SIZE * 4 * 16, PIXEL_SIZE * 4 * 16 };
-
-static const wxSize MAX_SIZE = MIN_SIZE * 2;
+static Font font;
 
 
 Canvas::Canvas(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 {
-    SetSize(MIN_SIZE);
     SetDoubleBuffered(true);
 
     Bind(wxEVT_PAINT,      &Canvas::OnPaint, this);
     Bind(wxEVT_MOUSEWHEEL, &Canvas::OnMouse, this);
 
-    wxFont font(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New"));
-    SetFont(font);
+    SetFont(wxFont(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New")));
 }
 
 
 void Canvas::OnPaint(wxPaintEvent &)
 {
+    SetSize({ 16 * font.size.x * font.pixelsInPoint + 1, 16 * font.size.y * font.pixelsInPoint + 1 });
+
     wxPaintDC dc(this);
 
     dc.SetPen(*wxBLACK);
 
-    dc.SetBrush(wxBrush(*wxYELLOW_BRUSH));
+    dc.SetBrush(wxBrush(wxColor(0xF0, 0xF0, 0xF0)));
 
     dc.DrawRectangle(GetRect());
 
     dc.DrawText(wxT("Test string. Тестовая строка."), { 0, 0 });
 
+    dc.SetPen(wxPen(wxColor(0xa0, 0xa0, 0xa0)));
 
+    for (int i = 0; i < GetSize().x; i += font.pixelsInPoint)
+    {
+        dc.DrawLine(i, 0, i, GetSize().y);
+    }
 
+    for (int i = 0; i < GetSize().y; i += font.pixelsInPoint)
+    {
+        dc.DrawLine(0, i, GetSize().x, i);
+    }
 
-//    for (int i = 0; i < 1000; i++)
-//    {
-//        wxSize size = { std::rand() % 30, std::rand() % 30 };
-//
-//        wxPoint point = { std::rand() % 3000, std::rand() % 1500 };
-//
-//        dc.DrawRectangle(point, size);
-//    }
+    dc.SetPen(*wxBLACK);
+
+    
+    for (int i = 0; i < GetSize().x; i += font.size.x * font.pixelsInPoint)
+    {
+        dc.DrawLine(i, 0, i, GetSize().y);
+    }
+
+    for (int i = 0; i < GetSize().y; i += font.size.y * font.pixelsInPoint)
+    {
+        dc.DrawLine(0, i, GetSize().x, i);
+    }
 }
 
 
@@ -67,17 +77,17 @@ void Canvas::OnMouse(wxMouseEvent &event)
 
 void Canvas::Increase()
 {
-    if (GetSize().x < MAX_SIZE.x)
+    if (font.pixelsInPoint < 32)
     {
-        SetSize(GetSize() * 2);
+        font.pixelsInPoint++;
     }
 }
 
 
 void Canvas::Decrease()
 {
-    if (GetSize().x > MIN_SIZE.x)
+    if (font.pixelsInPoint > 2)
     {
-        SetSize(GetSize() / 2);
+        font.pixelsInPoint--;
     }
 }

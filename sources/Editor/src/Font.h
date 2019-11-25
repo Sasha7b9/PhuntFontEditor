@@ -9,5 +9,7 @@ class Font
 public:
 
     /// Размер символа в точках
-    wxSize size;
+    wxSize size = { 8, 8 };
+    /// Столько писелей занимает одна точка шрифта в люому направлении
+    int pixelsInPoint = 2;
 };
