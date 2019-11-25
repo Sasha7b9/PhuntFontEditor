@@ -25,8 +25,6 @@ public:
 private:
     wxTimer timer;
 
-    void HandlerEvents();
-
     void SetSizeAndPosition();
 
     wxRect GetMaxDisplay();
