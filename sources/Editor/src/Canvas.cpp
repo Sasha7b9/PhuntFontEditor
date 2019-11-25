@@ -21,9 +21,10 @@ Canvas::Canvas(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 {
     SetDoubleBuffered(true);
 
-    Bind(wxEVT_PAINT,      &Canvas::OnPaint,      this);
-    Bind(wxEVT_MOUSEWHEEL, &Canvas::OnMouseWheel, this);
-    Bind(wxEVT_MOTION,     &Canvas::OnMouseMove,  this);
+    Bind(wxEVT_PAINT,        &Canvas::OnPaint,      this);
+    Bind(wxEVT_MOUSEWHEEL,   &Canvas::OnMouseWheel, this);
+    Bind(wxEVT_MOTION,       &Canvas::OnMouseMove,  this);
+    Bind(wxEVT_LEAVE_WINDOW, &Canvas::OnMouseLeave, this);
 
     SetFont(wxFont(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New")));
 }
@@ -126,3 +127,8 @@ void Canvas::Decrease()
 }
 
 
+void Canvas::OnMouseLeave(wxMouseEvent &)
+{
+    mouseX = mouseY = -100;
+    Refresh();
+}

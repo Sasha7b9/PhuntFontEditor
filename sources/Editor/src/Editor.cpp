@@ -54,30 +54,6 @@ enum
 static wxBitmap bitmap;
 
 
-static const int WIDTH = 800;
-static const int HEIGHT = 600;
-
-
-class Screen : public wxPanel
-{
-public:
-    Screen(wxWindow *parent) : wxPanel(parent)
-    {
-        SetMinSize({ WIDTH, HEIGHT });
-        SetDoubleBuffered(true);
-        Bind(wxEVT_PAINT, &Screen::OnPaint, this);
-    }
-
-    void OnPaint(wxPaintEvent &)
-    {
-        wxPaintDC dc(this);
-        wxImage image = bitmap.ConvertToImage();
-        image = image.Rescale(WIDTH, HEIGHT);
-        dc.DrawBitmap(wxBitmap(image), 0, 0);
-    }
-};
-
-
 /// true, если ЛКМ находится в нажатом положении
 static bool mouseIsDown = false;
 
