@@ -139,7 +139,7 @@ void Dialog::OnButtonApply(wxCommandEvent &)
 }
 
 
-void Dialog::OnButtonCancel(wxCommandEvent &)
+void Dialog::OnButtonCancel(wxCommandEvent &) //-V524
 {
     Destroy();
 }

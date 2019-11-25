@@ -51,13 +51,6 @@ enum
 };
 
 
-static wxBitmap bitmap;
-
-
-/// true, если ЛКМ находится в нажатом положении
-static bool mouseIsDown = false;
-
-
 wxIMPLEMENT_APP_NO_MAIN(Application);
 
 
@@ -362,10 +355,10 @@ void Frame::InsertPoints(wxCommandEvent &)
 
 void Frame::OnChangeFont(wxCommandEvent &)
 {
-    wxFontDialog *dlg = new wxFontDialog(this);
+    wxFontDialog dlg(this);
 
-    if (dlg->ShowModal() == wxID_OK)
+    if (dlg.ShowModal() == wxID_OK)
     {
-        TheCanvas->SetFont(dlg->GetFontData().GetChosenFont());
+        TheCanvas->SetFont(dlg.GetFontData().GetChosenFont());
     }
 }

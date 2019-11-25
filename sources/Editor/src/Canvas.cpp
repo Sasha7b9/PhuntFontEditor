@@ -86,7 +86,7 @@ static void HighlightCell(wxPaintDC &dc)
 }
 
 
-void Canvas::OnMouseWheel(wxMouseEvent &event)
+void Canvas::OnMouseWheel(wxMouseEvent &event) //-V2009
 {
     if (event.GetWheelRotation() > 0)
     {
@@ -101,7 +101,7 @@ void Canvas::OnMouseWheel(wxMouseEvent &event)
 }
 
 
-void Canvas::OnMouseMove(wxMouseEvent &event)
+void Canvas::OnMouseMove(wxMouseEvent &event) //-V2009
 {
     event.GetPosition(&mouseX, &mouseY);
 

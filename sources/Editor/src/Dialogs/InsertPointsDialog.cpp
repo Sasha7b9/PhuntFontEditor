@@ -57,7 +57,7 @@ void InsertPointsDialog::OnButtonOk(wxCommandEvent &)
 }
 
 
-void InsertPointsDialog::OnButtonCancel(wxCommandEvent &)
+void InsertPointsDialog::OnButtonCancel(wxCommandEvent &) //-V524
 {
     Destroy();
 }
