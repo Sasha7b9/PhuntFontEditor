@@ -46,4 +46,12 @@ private:
     void OnNewFile(wxCommandEvent &);
 
     void OnKeyDown(wxKeyEvent &);
+
+    void CreateTriangle(wxCommandEvent &);
+
+    void CreateTrapeze(wxCommandEvent &);
+
+    void CreateExponent(wxCommandEvent &);
+
+    void InsertPoints(wxCommandEvent &);
 };

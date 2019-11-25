@@ -119,16 +119,20 @@ Frame::Frame(const wxString &title)
 
     SetSizeAndPosition();
 
-    Bind(wxEVT_MENU, &Frame::OnQuit, this, MENU_FILE_QUIT);
-    Bind(wxEVT_MENU, &Frame::OnOpenFile, this, FILE_OPEN);
-    Bind(wxEVT_MENU, &Frame::OnSaveFile, this, FILE_SAVE);
-    Bind(wxEVT_MENU, &Frame::OnNewFile, this, FILE_NEW);
-    Bind(wxEVT_MENU, &Frame::OnUndo, this, UNDO);
-    Bind(wxEVT_MENU, &Frame::OnRedo, this, REDO);
-    Bind(wxEVT_TIMER, &Frame::OnTimer, this, TIMER_ID);
-    Bind(wxEVT_SIZE, &Frame::OnResize, this);
-    Bind(wxEVT_PAINT, &Frame::OnRepaint, this);
-    Bind(wxEVT_KEY_DOWN, &Frame::OnKeyDown, this);
+    Bind(wxEVT_MENU,     &Frame::OnQuit,         this, MENU_FILE_QUIT);
+    Bind(wxEVT_MENU,     &Frame::OnOpenFile,     this, FILE_OPEN);
+    Bind(wxEVT_MENU,     &Frame::OnSaveFile,     this, FILE_SAVE);
+    Bind(wxEVT_MENU,     &Frame::OnNewFile,      this, FILE_NEW);
+    Bind(wxEVT_MENU,     &Frame::OnUndo,         this, UNDO);
+    Bind(wxEVT_MENU,     &Frame::OnRedo,         this, REDO);
+    Bind(wxEVT_TIMER,    &Frame::OnTimer,        this, TIMER_ID);
+    Bind(wxEVT_SIZE,     &Frame::OnResize,       this);
+    Bind(wxEVT_PAINT,    &Frame::OnRepaint,      this);
+    Bind(wxEVT_KEY_DOWN, &Frame::OnKeyDown,      this);
+    Bind(wxEVT_MENU,     &Frame::CreateTriangle, this, CREATE_TRIANGLE);
+    Bind(wxEVT_MENU,     &Frame::CreateTrapeze,  this, CREATE_TRAPEZE);
+    Bind(wxEVT_MENU,     &Frame::CreateExponent, this, CREATE_EXPONENT);
+    Bind(wxEVT_MENU,     &Frame::InsertPoints,   this, INSERT_POINTS);
 
     Show(true);
 
@@ -349,4 +353,36 @@ void Frame::OnUndo(wxCommandEvent &)
 void Frame::OnRedo(wxCommandEvent &)
 {
 
+}
+
+
+void Frame::CreateTriangle(wxCommandEvent &)
+{
+    TriangleDialog dialog;
+
+    dialog.ShowModal();
+}
+
+
+void Frame::CreateTrapeze(wxCommandEvent &)
+{
+    TrapezeDialog dialog;
+
+    dialog.ShowModal();
+}
+
+
+void Frame::CreateExponent(wxCommandEvent &)
+{
+    ExponentDialog dialog;
+
+    dialog.ShowModal();
+}
+
+
+void Frame::InsertPoints(wxCommandEvent &)
+{
+    InsertPointsDialog dialog;
+
+    dialog.ShowModal();
 }
