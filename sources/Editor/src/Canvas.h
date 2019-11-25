@@ -17,7 +17,9 @@ public:
 
 private:
 
-    void OnMouse(wxMouseEvent &);
+    void OnMouseWheel(wxMouseEvent &);
+
+    void OnMouseMove(wxMouseEvent &);
     /// Увеличить в два раза
     void Increase();
     /// Уменьшить в два раза

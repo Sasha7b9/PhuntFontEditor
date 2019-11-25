@@ -179,7 +179,6 @@ void Frame::OnRepaint(wxPaintEvent &)
 
 void Frame::HandlerEvents()
 {
-    TheCanvas->Refresh();
 }
 
 

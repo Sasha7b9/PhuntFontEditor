@@ -9,13 +9,21 @@ Canvas *TheCanvas = nullptr;
 
 static Font font;
 
+static wxCoord mouseX;
+static wxCoord mouseY;
+
+
+/// ѕодсветить клетку, на которую указывает мышь
+static void HighlightCell(wxPaintDC &dc);
+
 
 Canvas::Canvas(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 {
     SetDoubleBuffered(true);
 
-    Bind(wxEVT_PAINT,      &Canvas::OnPaint, this);
-    Bind(wxEVT_MOUSEWHEEL, &Canvas::OnMouse, this);
+    Bind(wxEVT_PAINT,      &Canvas::OnPaint,      this);
+    Bind(wxEVT_MOUSEWHEEL, &Canvas::OnMouseWheel, this);
+    Bind(wxEVT_MOTION,     &Canvas::OnMouseMove,  this);
 
     SetFont(wxFont(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New")));
 }
@@ -59,10 +67,25 @@ void Canvas::OnPaint(wxPaintEvent &)
     {
         dc.DrawLine(0, i, GetSize().x, i);
     }
+
+    HighlightCell(dc);
 }
 
 
-void Canvas::OnMouse(wxMouseEvent &event)
+static void HighlightCell(wxPaintDC &dc)
+{
+    dc.SetPen(*wxBLACK_PEN);
+    dc.SetBrush(*wxBLACK_BRUSH);
+
+    int x = (mouseX / (font.pixelsInPoint)) * (font.pixelsInPoint);
+
+    int y = (mouseY / (font.pixelsInPoint)) * (font.pixelsInPoint);
+
+    dc.DrawRectangle(x, y, font.pixelsInPoint, font.pixelsInPoint);
+}
+
+
+void Canvas::OnMouseWheel(wxMouseEvent &event)
 {
     if (event.GetWheelRotation() > 0)
     {
@@ -72,6 +95,16 @@ void Canvas::OnMouse(wxMouseEvent &event)
     {
         Decrease();
     }
+
+    Refresh();
+}
+
+
+void Canvas::OnMouseMove(wxMouseEvent &event)
+{
+    event.GetPosition(&mouseX, &mouseY);
+
+    Refresh();
 }
 
 
@@ -91,3 +124,5 @@ void Canvas::Decrease()
         font.pixelsInPoint--;
     }
 }
+
+
