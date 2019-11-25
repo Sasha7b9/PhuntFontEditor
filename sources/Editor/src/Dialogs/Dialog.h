@@ -1,5 +1,4 @@
 #pragma once
-#include "Form.h"
 #pragma warning(push, 0)
 #include <wx/wx.h>
 #pragma warning(pop)
@@ -26,9 +25,7 @@ protected:
 
     void DrawLine(int x1, int y1, int x2, int y2);
     /// Сигнал для засылки в TheForm
-    static uint16 data[Point::NUM_POINTS];
-    /// Дополнительные точки для засылки в TheForm
-    static std::vector<Point> points;
+    static uint16 data[1024];
 
     /// Создаёт панель полярности сигнала
     wxPanel *CreatePanelPolarity();

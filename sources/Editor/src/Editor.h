@@ -35,22 +35,6 @@ private:
 
     void CreateMenu();
 
-    void OnAlignLeft(wxCommandEvent &);
-
-    void OnAlignRight(wxCommandEvent &);
-
-    void OnAlignLeftTop(wxCommandEvent &);
-
-    void OnAlignLeftDown(wxCommandEvent &);
-
-    void OnAlignRightTop(wxCommandEvent &);
-
-    void OnAlignRightDown(wxCommandEvent &);
-
-    void OnDeletePoint(wxCommandEvent &);
-
-    void OnParametersPoint(wxCommandEvent &);
-
 	void OnUndo(wxCommandEvent &);
 
 	void OnRedo(wxCommandEvent &);
@@ -60,16 +44,6 @@ private:
     void OnSaveFile(wxCommandEvent &);
 
     void OnNewFile(wxCommandEvent &);
-
-    void CreateSine(wxCommandEvent &);
-
-    void CreateTriangle(wxCommandEvent &);
-
-    void CreateTrapeze(wxCommandEvent &);
-
-    void CreateExponent(wxCommandEvent &);
-
-    void InsertPoints(wxCommandEvent &);
 
     void OnKeyDown(wxKeyEvent &);
 };

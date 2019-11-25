@@ -1,7 +1,5 @@
 #include "defines.h"
-#include "Canvas.h"
 #include "Editor.h"
-#include "Form.h"
 #include "Dialogs/Dialog.h"
 #include "Dialogs/SpinControl.h"
 
@@ -17,9 +15,8 @@ enum
 };
 
 
-uint16 Dialog::data[Point::NUM_POINTS];
+uint16 Dialog::data[1024];
 
-std::vector<Point> Dialog::points;
 
 
 Dialog::Dialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, title)
@@ -54,7 +51,6 @@ Dialog::Dialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, title)
 
 Dialog::~Dialog()
 {
-    TheForm->SetAdditionForm(nullptr);
 }
 
 
@@ -134,14 +130,11 @@ void Dialog::SetBoxSizer(wxBoxSizer *sizer, wxSize size)
 
 void Dialog::OnMove(wxMoveEvent &)
 {
-    TheCanvas->Redraw();
 }
 
 
 void Dialog::OnButtonApply(wxCommandEvent &)
 {
-    TheForm->SetMainForm(data, &points);
-
     Destroy();
 }
 
