@@ -49,6 +49,8 @@ private:
 
     void OnKeyDown(wxKeyEvent &);
 
+    void OnChangeFont(wxCommandEvent &);
+
     void CreateTriangle(wxCommandEvent &);
 
     void CreateTrapeze(wxCommandEvent &);

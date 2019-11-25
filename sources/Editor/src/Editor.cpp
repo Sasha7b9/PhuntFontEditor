@@ -2,6 +2,7 @@
 #pragma warning(push, 0)
 #include <wx/wx.h>
 #include <wx/display.h>
+#include <wx/fontdlg.h>
 #include <wx/mstream.h>
 #include <wx/textfile.h>
 #pragma warning(pop)
@@ -39,6 +40,8 @@ enum
     FILE_NEW,                                   // Очистить форму
 	UNDO,
 	REDO,
+
+    TOOL_CHANGE_FONT,
 
     CREATE_SINE,
     CREATE_TRIANGLE,
@@ -126,6 +129,7 @@ Frame::Frame(const wxString &title)
     Bind(wxEVT_MENU,     &Frame::OnOpenFile,     this, FILE_OPEN);
     Bind(wxEVT_MENU,     &Frame::OnSaveFile,     this, FILE_SAVE);
     Bind(wxEVT_MENU,     &Frame::OnNewFile,      this, FILE_NEW);
+    Bind(wxEVT_MENU,     &Frame::OnChangeFont,   this, TOOL_CHANGE_FONT);
     Bind(wxEVT_MENU,     &Frame::OnUndo,         this, UNDO);
     Bind(wxEVT_MENU,     &Frame::OnRedo,         this, REDO);
     Bind(wxEVT_TIMER,    &Frame::OnTimer,        this, TIMER_ID);
@@ -249,6 +253,7 @@ void Frame::CreateMenu()
     wxBitmap imgOpen(wxImage(wxT("icons/open.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgSave(wxImage(wxT("icons/save.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgNew(wxImage(wxT("icons/new.bmp"), wxBITMAP_TYPE_BMP));
+    wxBitmap imgChangeFont(wxImage(wxT("icons/font.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgUndo(wxImage(wxT("icons/undo.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgRedo(wxImage(wxT("icons/redo.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgCreateSine(wxImage(wxT("icons/sine.bmp"), wxBITMAP_TYPE_BMP));
@@ -261,6 +266,9 @@ void Frame::CreateMenu()
     toolBar->AddTool(FILE_OPEN, wxT("Открыть"), imgOpen, wxT("Загрузить ранее созданный сигнал из файла"));
     toolBar->AddTool(FILE_SAVE, wxT("Сохранить"), imgSave, wxT("Сохранить сигнал в файл"));
     toolBar->AddTool(FILE_NEW, wxT("Новый"), imgNew, wxT("Создать новый сигнал"));
+
+    toolBar->AddSeparator();
+    toolBar->AddTool(TOOL_CHANGE_FONT, wxT("Выбрать шрифт"), imgChangeFont, wxT("Выбрать шрифт"));
 
     toolBar->AddSeparator();
     toolBar->AddTool(UNDO, wxT("Отменить"), imgUndo, wxT("Отменить предыдущее действие"));
@@ -404,4 +412,15 @@ void Frame::InsertPoints(wxCommandEvent &)
     InsertPointsDialog dialog;
 
     dialog.ShowModal();
+}
+
+
+void Frame::OnChangeFont(wxCommandEvent &)
+{
+    wxFontDialog *dlg = new wxFontDialog(this);
+
+    if (dlg->ShowModal() == wxID_OK)
+    {
+        TheCanvas->SetFont(dlg->GetFontData().GetChosenFont());
+    }
 }
