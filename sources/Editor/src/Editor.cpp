@@ -12,9 +12,7 @@
 
 #include "defines.h"
 #include "Canvas.h"
-#include "Dialogs/ExponentDialog.h"
 #include "Dialogs/InsertPointsDialog.h"
-#include "Dialogs/TrapezeDialog.h"
 #include "Dialogs/TriangleDialog.h"
 
 extern void update();
@@ -43,10 +41,7 @@ enum
 
     TOOL_CHANGE_FONT,
 
-    CREATE_SINE,
     CREATE_TRIANGLE,
-    CREATE_TRAPEZE,
-    CREATE_EXPONENT,
     INSERT_POINTS
 };
 
@@ -125,21 +120,19 @@ Frame::Frame(const wxString &title)
 
     SetSizeAndPosition();
 
-    Bind(wxEVT_MENU,     &Frame::OnQuit,         this, MENU_FILE_QUIT);
-    Bind(wxEVT_MENU,     &Frame::OnOpenFile,     this, FILE_OPEN);
-    Bind(wxEVT_MENU,     &Frame::OnSaveFile,     this, FILE_SAVE);
-    Bind(wxEVT_MENU,     &Frame::OnNewFile,      this, FILE_NEW);
-    Bind(wxEVT_MENU,     &Frame::OnChangeFont,   this, TOOL_CHANGE_FONT);
-    Bind(wxEVT_MENU,     &Frame::OnUndo,         this, UNDO);
-    Bind(wxEVT_MENU,     &Frame::OnRedo,         this, REDO);
-    Bind(wxEVT_TIMER,    &Frame::OnTimer,        this, TIMER_ID);
-    Bind(wxEVT_SIZE,     &Frame::OnResize,       this);
-    Bind(wxEVT_PAINT,    &Frame::OnRepaint,      this);
-    Bind(wxEVT_KEY_DOWN, &Frame::OnKeyDown,      this);
-    Bind(wxEVT_MENU,     &Frame::CreateTriangle, this, CREATE_TRIANGLE);
-    Bind(wxEVT_MENU,     &Frame::CreateTrapeze,  this, CREATE_TRAPEZE);
-    Bind(wxEVT_MENU,     &Frame::CreateExponent, this, CREATE_EXPONENT);
-    Bind(wxEVT_MENU,     &Frame::InsertPoints,   this, INSERT_POINTS);
+    Bind(wxEVT_MENU,       &Frame::OnQuit,         this, MENU_FILE_QUIT);
+    Bind(wxEVT_MENU,       &Frame::OnOpenFile,     this, FILE_OPEN);
+    Bind(wxEVT_MENU,       &Frame::OnSaveFile,     this, FILE_SAVE);
+    Bind(wxEVT_MENU,       &Frame::OnNewFile,      this, FILE_NEW);
+    Bind(wxEVT_MENU,       &Frame::OnChangeFont,   this, TOOL_CHANGE_FONT);
+    Bind(wxEVT_MENU,       &Frame::OnUndo,         this, UNDO);
+    Bind(wxEVT_MENU,       &Frame::OnRedo,         this, REDO);
+    Bind(wxEVT_TIMER,      &Frame::OnTimer,        this, TIMER_ID);
+    Bind(wxEVT_SIZE,       &Frame::OnResize,       this);
+    Bind(wxEVT_PAINT,      &Frame::OnRepaint,      this);
+    Bind(wxEVT_KEY_DOWN,   &Frame::OnKeyDown,      this);
+    Bind(wxEVT_MENU,       &Frame::CreateTriangle, this, CREATE_TRIANGLE);
+    Bind(wxEVT_MENU,       &Frame::InsertPoints,   this, INSERT_POINTS);
 
     Show(true);
 
@@ -256,10 +249,7 @@ void Frame::CreateMenu()
     wxBitmap imgChangeFont(wxImage(wxT("icons/font.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgUndo(wxImage(wxT("icons/undo.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgRedo(wxImage(wxT("icons/redo.bmp"), wxBITMAP_TYPE_BMP));
-    wxBitmap imgCreateSine(wxImage(wxT("icons/sine.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgCreateTriangle(wxImage(wxT("icons/triangle.bmp"), wxBITMAP_TYPE_BMP));
-    wxBitmap imgCreateTrapeze(wxImage(wxT("icons/trapeze.bmp"), wxBITMAP_TYPE_BMP));
-    wxBitmap imgCreateExponent(wxImage(wxT("icons/exponent.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgInsertPoints(wxImage(wxT("icons/points.bmp"), wxBITMAP_TYPE_BMP));
 
     wxToolBar* toolBar = CreateToolBar();
@@ -275,13 +265,9 @@ void Frame::CreateMenu()
     toolBar->AddTool(REDO, wxT("Восстановить"), imgRedo, wxT("Восстановить следующее действие"));
 
     toolBar->AddSeparator();
-    toolBar->AddTool(CREATE_SINE, wxT("Синусоида"), imgCreateSine, wxT("Создать новый сигнал в форме синусоиды"));
     toolBar->AddTool(CREATE_TRIANGLE, wxT("Треугольник"), imgCreateTriangle, wxT("Создать новый сигнал в форме треугольника"));
-    toolBar->AddTool(CREATE_TRAPEZE, wxT("Трапеция"), imgCreateTrapeze, wxT("Создать новый сигнал в форме трапеции"));
-    toolBar->AddTool(CREATE_EXPONENT, wxT("Експонента"), imgCreateExponent, wxT("Создать новый экспоненциальный сигнал"));
-
-    toolBar->AddSeparator();
     toolBar->AddTool(INSERT_POINTS, wxT("Вставить точки"), imgInsertPoints, wxT("Вставить маркеры"));
+
     toolBar->Realize();
 }
 
@@ -386,22 +372,6 @@ void Frame::OnRedo(wxCommandEvent &)
 void Frame::CreateTriangle(wxCommandEvent &)
 {
     TriangleDialog dialog;
-
-    dialog.ShowModal();
-}
-
-
-void Frame::CreateTrapeze(wxCommandEvent &)
-{
-    TrapezeDialog dialog;
-
-    dialog.ShowModal();
-}
-
-
-void Frame::CreateExponent(wxCommandEvent &)
-{
-    ExponentDialog dialog;
 
     dialog.ShowModal();
 }

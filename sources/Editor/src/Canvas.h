@@ -4,6 +4,9 @@
 #pragma warning(pop)
 
 
+
+
+
 class Canvas : public wxPanel
 {
 public:
@@ -11,6 +14,14 @@ public:
     Canvas(wxWindow *parent);
 
     void OnPaint(wxPaintEvent &);
+
+private:
+
+    void OnMouse(wxMouseEvent &);
+    /// Увеличить в два раза
+    void Increase();
+    /// Уменьшить в два раза
+    void Decrease();
 };
 
 

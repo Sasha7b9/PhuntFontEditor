@@ -53,9 +53,5 @@ private:
 
     void CreateTriangle(wxCommandEvent &);
 
-    void CreateTrapeze(wxCommandEvent &);
-
-    void CreateExponent(wxCommandEvent &);
-
     void InsertPoints(wxCommandEvent &);
 };
