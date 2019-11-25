@@ -1,7 +1,6 @@
 @echo off
 
-@echo .
-
+@echo %TIME%
 
 cd ..
 
@@ -14,4 +13,4 @@ cmake ../CMakeLists.txt -B../generated/Win32 -DCMAKE_SYSTEM_VERSION=10.0.17763.0
 
 @echo off
 
-@echo %TIME%   Complete
+@echo %TIME%

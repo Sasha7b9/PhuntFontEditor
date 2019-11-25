@@ -15,9 +15,8 @@ if (COMMAND cmake_policy)
 endif ()
 
 # Set project name
-project (G6-49)
+project (FontEditor)
 
-set (TARGET_NAME G6-49)
+set (TARGET_NAME FontEditor)
 
-add_subdirectory(Panel)
 add_subdirectory(Editor)

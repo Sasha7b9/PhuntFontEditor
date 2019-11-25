@@ -1,13 +1,19 @@
 @echo off
 
-cd keil
-call build.bat
-cd ..
+@echo %TIME% Compile
 
-cd vs_keil
-call build.bat
-cd ..
+MSBuild.exe ..\generated\Win32\FontEditor.sln -clp:ErrorsOnly;WarningsOnly -nologo /m
+set BUILD_STATUS=%ERRORLEVEL%
+if %BUILD_STATUS%==0 goto Succsess
 
-cd vs_win
-call build.bat
-cd ..
+:Failed
+@echo %TIME%   !!!!!!!!!!!!!!! Error !!!!!!!!!!!!!!! Build Failed !!!!!!!!!!!!!
+goto Exit
+
+:Succsess
+@echo %TIME% Completed
+
+:Exit
+
+call copy_wxWidgets_dlls.bat
+call copy_resources.bat
