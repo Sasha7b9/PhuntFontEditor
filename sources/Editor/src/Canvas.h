@@ -26,6 +26,10 @@ private:
     void Increase();
     /// Уменьшить в два раза
     void Decrease();
+
+    void TuneScrollBar();
+
+    wxScrolledWindow *sw = nullptr;
 };
 
 

@@ -51,9 +51,6 @@ enum
 };
 
 
-static wxScrolledWindow *sw = nullptr;
-
-
 wxIMPLEMENT_APP_NO_MAIN(Application);
 
 
@@ -118,14 +115,9 @@ Frame::~Frame()
 
 void Frame::CreatePanels()
 {
-    sw = new wxScrolledWindow(this);
+    wxScrolledWindow *sw = new wxScrolledWindow(this);
 
     TheCanvas = new Canvas(sw);
-
-    wxSize size = TheCanvas->GetSize();
-
-    sw->SetScrollbars(10, 10, size.x / 10, size.y / 10);
-    sw->Scroll(0, 0);
 
     Centre();
 }
@@ -133,10 +125,6 @@ void Frame::CreatePanels()
 
 void Frame::OnTimer(wxTimerEvent &)
 {
-    wxSize size = TheCanvas->GetSize();
-
-    sw->SetScrollbars(10, 10, size.x / 10, size.y / 10);
-
     update();
 }
 

@@ -15,10 +15,14 @@ static wxCoord mouseY;
 
 /// ѕодсветить клетку, на которую указывает мышь
 static void HighlightCell(wxPaintDC &dc);
+/// ƒействующий размер холста
+static wxSize CurrentSize();
 
 
 Canvas::Canvas(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 {
+    sw = static_cast<wxScrolledWindow *>(parent);
+
     SetDoubleBuffered(true);
 
     Bind(wxEVT_PAINT,        &Canvas::OnPaint,      this);
@@ -27,12 +31,14 @@ Canvas::Canvas(wxWindow *parent) : wxPanel(parent, wxID_ANY)
     Bind(wxEVT_LEAVE_WINDOW, &Canvas::OnMouseLeave, this);
 
     SetFont(wxFont(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New")));
+
+    TuneScrollBar();
 }
 
 
 void Canvas::OnPaint(wxPaintEvent &)
 {
-    SetSize({ 16 * font.size.x * font.pixelsInPoint + 1, 16 * font.size.y * font.pixelsInPoint + 1 });
+    SetSize(CurrentSize());
 
     wxPaintDC dc(this);
 
@@ -97,6 +103,8 @@ void Canvas::OnMouseWheel(wxMouseEvent &event) //-V2009
         Decrease();
     }
 
+    TuneScrollBar();
+
     Refresh();
 }
 
@@ -131,4 +139,20 @@ void Canvas::OnMouseLeave(wxMouseEvent &)
 {
     mouseX = mouseY = -100;
     Refresh();
+}
+
+
+static wxSize CurrentSize()
+{
+    return { 16 * font.size.x * font.pixelsInPoint + 1, 16 * font.size.y * font.pixelsInPoint + 1 };
+}
+
+
+void Canvas::TuneScrollBar()
+{
+    wxSize size = CurrentSize();
+
+    sw->SetScrollbars(1, 1, size.x, size.y);
+
+    SetPosition({ 0, 0 });
 }
