@@ -199,7 +199,7 @@ void Canvas::BuildSymbol(const wxFont &f, uint8 s)
 
     memDC.SetPen(*wxBLACK_PEN);
 
-    memDC.DrawText(Symbol::UTFfromCode(s), { 0, 0 });
+    memDC.DrawText(Symbol::UTFfrom1251(s), { 0, 0 });
 
     Symbol &symbol = font.symbols[s];
 

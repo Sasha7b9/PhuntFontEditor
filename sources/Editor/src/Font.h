@@ -18,7 +18,7 @@ struct Symbol
     /// «десь каждый бит представлен 8-битным значением
     std::vector<std::vector<uint8>> bits;
 
-    static wxString UTFfromCode(uint8 code);
+    static wxString UTFfrom1251(uint8 code);
 };
 
 
