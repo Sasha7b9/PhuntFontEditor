@@ -10,6 +10,7 @@
 
 
 #include "defines.h"
+#include "Canvas.h"
 #include "Dialogs/ExponentDialog.h"
 #include "Dialogs/InsertPointsDialog.h"
 #include "Dialogs/TrapezeDialog.h"
@@ -115,6 +116,8 @@ Frame::Frame(const wxString &title)
 
     CreateMenu();
 
+    CreatePanels();
+
     CreateStatusBar(2);
 
     SetSizeAndPosition();
@@ -144,6 +147,21 @@ Frame::~Frame()
 {
 }
 
+void Frame::CreatePanels()
+{
+    //wxPanel *panel = new wxPanel(this, wxID_ANY);
+
+    wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
+
+    TheCanvas = new Canvas(this);
+
+    sizer->Add(TheCanvas, 1, wxEXPAND | wxALL);
+
+    SetSizer(sizer);
+
+    Centre();
+}
+
 
 void Frame::OnTimer(wxTimerEvent &)
 {
@@ -154,6 +172,7 @@ void Frame::OnTimer(wxTimerEvent &)
 
 void Frame::OnResize(wxSizeEvent &)
 {
+    TheCanvas->SetSize(GetClientSize());
 }
 
 
@@ -164,6 +183,7 @@ void Frame::OnRepaint(wxPaintEvent &)
 
 void Frame::HandlerEvents()
 {
+    TheCanvas->Refresh();
 }
 
 

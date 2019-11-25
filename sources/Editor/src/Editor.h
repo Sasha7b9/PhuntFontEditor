@@ -35,6 +35,8 @@ private:
 
     void CreateMenu();
 
+    void CreatePanels();
+
 	void OnUndo(wxCommandEvent &);
 
 	void OnRedo(wxCommandEvent &);
