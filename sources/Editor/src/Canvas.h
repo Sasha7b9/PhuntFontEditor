@@ -15,6 +15,8 @@ public:
 
     void OnPaint(wxPaintEvent &);
 
+    void Rebuild(const wxFont &font);
+
 private:
 
     void OnMouseWheel(wxMouseEvent &);
@@ -22,6 +24,12 @@ private:
     void OnMouseMove(wxMouseEvent &);
 
     void OnMouseLeave(wxMouseEvent &);
+
+    void OnMouseRightDown(wxMouseEvent &);
+
+    void OnMouseRightUp(wxMouseEvent &);
+
+    void BuildSymbol(const wxFont &font, uint8 symbol);
     /// Увеличить в два раза
     void Increase();
     /// Уменьшить в два раза

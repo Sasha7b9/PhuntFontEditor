@@ -30,8 +30,6 @@ Canvas::Canvas(wxWindow *parent) : wxPanel(parent, wxID_ANY)
     Bind(wxEVT_MOTION,       &Canvas::OnMouseMove,  this);
     Bind(wxEVT_LEAVE_WINDOW, &Canvas::OnMouseLeave, this);
 
-    SetFont(wxFont(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New")));
-
     TuneScrollBar();
 }
 
@@ -47,8 +45,6 @@ void Canvas::OnPaint(wxPaintEvent &)
     dc.SetBrush(wxBrush(wxColor(0xF0, 0xF0, 0xF0)));
 
     dc.DrawRectangle(GetRect());
-
-    dc.DrawText(wxT("Test string. Тестовая строка."), { 0, 0 });
 
     dc.SetPen(wxPen(wxColor(0xa0, 0xa0, 0xa0)));
 
@@ -155,4 +151,70 @@ void Canvas::TuneScrollBar()
     sw->SetScrollbars(1, 1, size.x, size.y);
 
     SetPosition({ 0, 0 });
+}
+
+
+void Canvas::OnMouseRightDown(wxMouseEvent &)
+{
+
+}
+
+
+void Canvas::OnMouseRightUp(wxMouseEvent &)
+{
+
+}
+
+
+void Canvas::Rebuild(const wxFont &f)
+{
+    for(int i = 0; i < 256; i++)
+    {
+        BuildSymbol(f, static_cast<uint8>(i));
+    }
+}
+
+
+void Canvas::BuildSymbol(const wxFont &f, uint8 s)
+{
+    wxMemoryDC memDC;
+
+    memDC.SetFont(f);
+
+    wxBitmap bitmap(font.size.x, font.size.y);
+
+    memDC.SelectObject(bitmap);
+
+    wxPen pen(wxColour(0xff, 0xff, 0xff));
+    wxBrush brush(wxColour(0xff, 0xff, 0xff));
+
+    memDC.SetPen(pen);
+    memDC.SetBrush(brush);
+
+    memDC.Clear();
+
+    memDC.SetPen(*wxBLACK_PEN);
+
+    memDC.DrawText(wxString::Format("%c", s), { 0, 0 });
+
+    Symbol &symbol = font.symbols[s];
+
+    wxColour color;
+
+    for(int row = 0; row < font.size.y; row++)
+    {
+        for(int col = 0; col < font.size.x; col++)
+        {
+            memDC.GetPixel({ col, row }, &color);
+
+            if(color.Red() == 0x00)
+            {
+                symbol.Set(row, col, 1);
+            }
+            else
+            {
+                symbol.Set(row, col, 0);
+            }
+        }
+    }
 }

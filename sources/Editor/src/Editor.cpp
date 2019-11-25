@@ -348,6 +348,7 @@ void Frame::OnChangeFont(wxCommandEvent &)
 
     if (dlg.ShowModal() == wxID_OK)
     {
-        TheCanvas->SetFont(dlg.GetFontData().GetChosenFont());
+        TheCanvas->Rebuild(dlg.GetFontData().GetChosenFont());
+        TheCanvas->Refresh();
     }
 }
