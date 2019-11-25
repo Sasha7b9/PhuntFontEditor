@@ -31,6 +31,8 @@ Canvas::Canvas(wxWindow *parent) : wxPanel(parent, wxID_ANY)
     Bind(wxEVT_LEAVE_WINDOW, &Canvas::OnMouseLeave, this);
 
     TuneScrollBar();
+
+    Rebuild(wxFont(wxFont(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New"))));
 }
 
 
@@ -197,7 +199,7 @@ void Canvas::BuildSymbol(const wxFont &f, uint8 s)
 
     memDC.SetPen(*wxBLACK_PEN);
 
-    memDC.DrawText(wxString::Format("%c", s), { 0, 0 });
+    memDC.DrawText(Symbol::UTFfromCode(s), { 0, 0 });
 
     Symbol &symbol = font.symbols[s];
 

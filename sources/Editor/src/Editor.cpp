@@ -106,6 +106,8 @@ Frame::Frame(const wxString &title)
     Show(true);
 
     timer.Start(0);
+
+    Maximize();
 }
 
 
