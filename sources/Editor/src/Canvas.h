@@ -40,6 +40,8 @@ private:
     void DrawSymbol(wxPaintDC &d, int row, int col, int num);
 
     wxScrolledWindow *sw = nullptr;
+
+    void Resize();
 };
 
 

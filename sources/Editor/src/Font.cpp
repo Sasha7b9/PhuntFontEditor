@@ -107,7 +107,20 @@ void Symbol::Build(const wxFont &font, uint8 number)
 
 void Symbol::Draw(wxPaintDC &dc, int x, int y, int scale)
 {
-    wxImage image = bitmap->ConvertToImage().Rescale(width * scale, height * scale);
-
     dc.DrawBitmap(image, x, y);
+}
+
+
+void Symbol::Resize(int scale)
+{
+    image = bitmap->ConvertToImage().Rescale(width * scale, height * scale);
+}
+
+
+void Font::Resize()
+{
+    for (int i = 0; i < 256; i++)
+    {
+        symbols[i].Resize(pixelsInPoint);
+    }
 }

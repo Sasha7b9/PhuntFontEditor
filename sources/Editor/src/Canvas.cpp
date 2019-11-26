@@ -2,6 +2,9 @@
 #include "Canvas.h"
 #include "Font.h"
 #include <cstdlib>
+#pragma warning(push, 0)
+#include <wx/time.h>
+#pragma warning(pop)
 
 
 Canvas *TheCanvas = nullptr;
@@ -38,7 +41,9 @@ Canvas::Canvas(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 
 void Canvas::OnPaint(wxPaintEvent &)
 {
-    SetSize(CurrentSize());
+    std::cout << "" << std::endl;
+
+    wxLongLong start = wxGetUTCTimeMillis();
 
     wxPaintDC dc(this);
 
@@ -49,6 +54,8 @@ void Canvas::OnPaint(wxPaintEvent &)
     dc.DrawRectangle(GetRect());
 
     DrawSymbols(dc);
+
+    std::cout << "time 1       " << wxGetUTCTimeMillis() - start << std::endl;
   
     if (font.pixelsInPoint > 5)
     {
@@ -78,6 +85,8 @@ void Canvas::OnPaint(wxPaintEvent &)
     }
     
     HighlightCell(dc);
+
+    std::cout << "Time refresh " << wxGetUTCTimeMillis() - start << std::endl;
 }
 
 
@@ -124,6 +133,10 @@ void Canvas::Increase()
     if (font.pixelsInPoint < 32)
     {
         font.pixelsInPoint++;
+
+        Resize();
+
+        Refresh();
     }
 }
 
@@ -133,6 +146,10 @@ void Canvas::Decrease()
     if (font.pixelsInPoint > 2)
     {
         font.pixelsInPoint--;
+
+        Resize();
+
+        Refresh();
     }
 }
 
@@ -174,10 +191,16 @@ void Canvas::OnMouseRightUp(wxMouseEvent &)
 
 void Canvas::Rebuild(const wxFont &f)
 {
+    font.font = f;
+
+    SetSize(CurrentSize());
+
     for(int i = 0; i < 256; i++)
     {
         font.symbols[i].Build(f, static_cast<uint8>(i));
     }
+
+    font.Resize();
 }
 
 
@@ -201,4 +224,11 @@ void Canvas::DrawSymbol(wxPaintDC &dc, int row, int col, int num)
     int y0 = row * font.size.y * font.pixelsInPoint;
 
     font.symbols[num].Draw(dc, x0, y0, font.pixelsInPoint);
+}
+
+
+void Canvas::Resize()
+{
+    SetSize(CurrentSize());
+    font.Resize();
 }

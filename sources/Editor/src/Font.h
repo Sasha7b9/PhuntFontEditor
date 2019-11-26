@@ -27,8 +27,12 @@ struct Symbol
 
     void Draw(wxPaintDC &dc, int x, int y, int scale);
 
+    void Resize(int scale);
+
 private:
     void Set(int row, int col, uint8 value);
+
+    wxImage image;
 };
 
 
@@ -42,4 +46,8 @@ public:
     int pixelsInPoint = 8;
 
     Symbol symbols[256];
+
+    wxFont font;
+
+    void Resize();
 };
