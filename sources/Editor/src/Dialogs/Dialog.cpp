@@ -122,8 +122,6 @@ void Dialog::SetBoxSizer(wxBoxSizer *sizer, wxSize size)
 
     Centre();
 
-    SendAdditionForm();
-
     SetFocus();
 }
 
@@ -147,7 +145,6 @@ void Dialog::OnButtonCancel(wxCommandEvent &) //-V524
 
 void Dialog::OnControlEvent(wxCommandEvent &)
 {
-    SendAdditionForm();
 }
 
 

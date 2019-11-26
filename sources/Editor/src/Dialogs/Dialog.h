@@ -18,8 +18,6 @@ public:
     static const int WIDTH_PANEL = 220;
 
 protected:
-    /// ѕослать форму дл€ ознакомительной отрисовки
-    virtual void SendAdditionForm() = 0;
 
     void SetBoxSizer(wxBoxSizer *sizer, wxSize size);
 

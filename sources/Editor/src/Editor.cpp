@@ -12,8 +12,6 @@
 
 #include "defines.h"
 #include "Canvas.h"
-#include "Dialogs/InsertPointsDialog.h"
-#include "Dialogs/TriangleDialog.h"
 
 extern void update();
 extern void init();
@@ -42,10 +40,7 @@ enum
 
     TOOL_CHANGE_FONT,
     TOOL_SCALE_UP,
-    TOOL_SCALE_DOWN,
-
-    CREATE_TRIANGLE,
-    INSERT_POINTS
+    TOOL_SCALE_DOWN
 };
 
 enum
@@ -97,15 +92,13 @@ Frame::Frame(const wxString &title)
     Bind(wxEVT_MENU,       &Frame::OnSaveFile,     this, FILE_SAVE);
     Bind(wxEVT_MENU,       &Frame::OnNewFile,      this, FILE_NEW);
     Bind(wxEVT_MENU,       &Frame::OnImportFont,   this, FILE_IMPORT);
-    Bind(wxEVT_MENU,       &Frame::OnChangeFont,   this, TOOL_CHANGE_FONT);
+    Bind(wxEVT_MENU,       &Frame::OnImportFont,   this, TOOL_CHANGE_FONT);
     Bind(wxEVT_MENU,       &Frame::OnUndo,         this, UNDO);
     Bind(wxEVT_MENU,       &Frame::OnRedo,         this, REDO);
     Bind(wxEVT_TIMER,      &Frame::OnTimer,        this, TIMER_ID);
     Bind(wxEVT_SIZE,       &Frame::OnResize,       this);
     Bind(wxEVT_PAINT,      &Frame::OnRepaint,      this);
     Bind(wxEVT_KEY_DOWN,   &Frame::OnKeyDown,      this);
-    Bind(wxEVT_MENU,       &Frame::CreateTriangle, this, CREATE_TRIANGLE);
-    Bind(wxEVT_MENU,       &Frame::InsertPoints,   this, INSERT_POINTS);
     Bind(wxEVT_MENU,       &Frame::OnScaleDown,    this, TOOL_SCALE_DOWN);
     Bind(wxEVT_MENU,       &Frame::OnScaleUp,      this, TOOL_SCALE_UP);
 
@@ -216,8 +209,6 @@ void Frame::CreateMenu()
     wxBitmap imgChangeFont(wxImage(wxT("icons/font.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgUndo(wxImage(wxT("icons/undo.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgRedo(wxImage(wxT("icons/redo.bmp"), wxBITMAP_TYPE_BMP));
-    wxBitmap imgCreateTriangle(wxImage(wxT("icons/triangle.bmp"), wxBITMAP_TYPE_BMP));
-    wxBitmap imgInsertPoints(wxImage(wxT("icons/points.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgScaleDown(wxImage(wxT("icons/minus.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgScaleUp(wxImage(wxT("icons/plus.bmp"), wxBITMAP_TYPE_BMP));
 
@@ -236,10 +227,6 @@ void Frame::CreateMenu()
     toolBar->AddSeparator();
     toolBar->AddTool(TOOL_SCALE_DOWN, wxT("Уменьшить масштаб"), imgScaleDown, wxT("Уменьшение масштаба"));
     toolBar->AddTool(TOOL_SCALE_UP, wxT("Увеличить масштаб"), imgScaleUp, wxT("Увеличение масштаба"));
-
-    toolBar->AddSeparator();
-    toolBar->AddTool(CREATE_TRIANGLE, wxT("Треугольник"), imgCreateTriangle, wxT("Создать новый сигнал в форме треугольника"));
-    toolBar->AddTool(INSERT_POINTS, wxT("Вставить точки"), imgInsertPoints, wxT("Вставить маркеры"));
 
     toolBar->Realize();
 }
@@ -342,34 +329,6 @@ void Frame::OnRedo(wxCommandEvent &)
 }
 
 
-void Frame::CreateTriangle(wxCommandEvent &)
-{
-    TriangleDialog dialog;
-
-    dialog.ShowModal();
-}
-
-
-void Frame::InsertPoints(wxCommandEvent &)
-{
-    InsertPointsDialog dialog;
-
-    dialog.ShowModal();
-}
-
-
-void Frame::OnChangeFont(wxCommandEvent &)
-{
-    wxFontDialog dlg(this);
-
-    if (dlg.ShowModal() == wxID_OK)
-    {
-        TheCanvas->Rebuild(dlg.GetFontData().GetChosenFont());
-        TheCanvas->Refresh();
-    }
-}
-
-
 void Frame::OnScaleUp(wxCommandEvent &)
 {
     TheCanvas->Increase();
@@ -384,5 +343,11 @@ void Frame::OnScaleDown(wxCommandEvent &)
 
 void Frame::OnImportFont(wxCommandEvent &)
 {
+    wxFontDialog dlg(this);
 
+    if (dlg.ShowModal() == wxID_OK)
+    {
+        TheCanvas->Rebuild(dlg.GetFontData().GetChosenFont());
+        TheCanvas->Refresh();
+    }
 }

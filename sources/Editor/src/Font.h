@@ -5,8 +5,8 @@
 #include <vector>
 
 
-#define SYMBOL_WIDTH  16
-#define SYMBOL_HEIGHT 16
+#define SYMBOL_WIDTH  64
+#define SYMBOL_HEIGHT 64
 
 
 struct Symbol

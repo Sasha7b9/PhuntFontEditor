@@ -47,15 +47,9 @@ private:
 
     void OnKeyDown(wxKeyEvent &);
 
-    void OnChangeFont(wxCommandEvent &);
-
     void OnScaleUp(wxCommandEvent &);
 
     void OnScaleDown(wxCommandEvent &);
 
     void OnImportFont(wxCommandEvent &);
-
-    void CreateTriangle(wxCommandEvent &);
-
-    void InsertPoints(wxCommandEvent &);
 };

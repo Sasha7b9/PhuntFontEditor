@@ -94,14 +94,16 @@ static void HighlightCell(wxPaintDC &dc)
 
 void Canvas::OnMouseWheel(wxMouseEvent &event) //-V2009
 {
-    if (event.GetWheelRotation() > 0)
-    {
-        Increase();
-    }
-    else
-    {
-        Decrease();
-    }
+    //if (event.GetWheelRotation() > 0)
+    //{
+    //    Increase();
+    //}
+    //else
+    //{
+    //    Decrease();
+    //}
+
+    event.Skip();
 }
 
 
