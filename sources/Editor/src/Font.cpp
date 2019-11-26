@@ -2,13 +2,22 @@
 #include "Font.h"
 
 
-Symbol::Symbol(uint w, uint h) : width(w), height(h)
+Symbol::Symbol(int w, int h) : width(w), height(h)
 {
-    bits.resize(height);
+    bits.resize(static_cast<uint>(height));
 
-    for(uint row = 0; row < height; row++)
+    for(int row = 0; row < height; row++)
     {
-        bits[row].resize(w);
+        bits[static_cast<uint>(row)].resize(static_cast<uint>(width));
+    }
+}
+
+
+Symbol::~Symbol()
+{
+    if (bitmap)
+    {
+        delete bitmap;
     }
 }
 
@@ -43,4 +52,62 @@ wxString Symbol::UTFfrom1251(uint8 code)
     }
 
     return wxString::Format("%c", code);
+}
+
+
+void Symbol::Build(const wxFont &font, uint8 number)
+{
+    if (bitmap)
+    {
+        delete bitmap;
+    }
+
+    bitmap = new wxBitmap(width, height);
+
+    wxMemoryDC memDC;
+
+    memDC.SetFont(font);
+
+    memDC.SelectObject(*bitmap);
+
+    wxPen pen(wxColour(0xff, 0xff, 0xff));
+    wxBrush brush(wxColour(0xff, 0xff, 0xff));
+
+    memDC.SetPen(pen);
+    memDC.SetBrush(brush);
+
+    memDC.Clear();
+
+    memDC.SetPen(*wxBLACK_PEN);
+
+    memDC.DrawText(Symbol::UTFfrom1251(number), { 0, 0 });
+
+    wxColour color;
+
+    for (int row = 0; row < height; row++)
+    {
+        for (int col = 0; col < width; col++)
+        {
+            memDC.GetPixel({ col, row }, &color);
+
+            if (color.Red() == 0x00)
+            {
+                Set(row, col, 1);
+            }
+            else
+            {
+                Set(row, col, 0);
+            }
+        }
+    }
+
+    memDC.SelectObject(wxNullBitmap);
+}
+
+
+void Symbol::Draw(wxPaintDC &dc, int x, int y, int scale)
+{
+    wxImage image = bitmap->ConvertToImage().Rescale(width * scale, height * scale);
+
+    dc.DrawBitmap(image, x, y);
 }

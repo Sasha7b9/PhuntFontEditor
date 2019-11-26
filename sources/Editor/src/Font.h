@@ -5,20 +5,30 @@
 #include <vector>
 
 
-#define SIZE_FONT 16
+#define SYMBOL_WIDTH  8
+#define SYMBOL_HEIGHT 8
 
 
 struct Symbol
 {
-    Symbol(uint w = SIZE_FONT, uint h = SIZE_FONT);
-    void Set(int row, int col, uint8 value);
+    Symbol(int w = SYMBOL_WIDTH, int h = SYMBOL_HEIGHT);
+    ~Symbol();
     uint8 Get(int row, int col) const;
-    uint width;
-    uint height;
+    int width;
+    int height;
     /// Здесь каждый бит представлен 8-битным значением
     std::vector<std::vector<uint8>> bits;
 
     static wxString UTFfrom1251(uint8 code);
+
+    wxBitmap *bitmap = nullptr;
+
+    void Build(const wxFont &font, uint8 number);
+
+    void Draw(wxPaintDC &dc, int x, int y, int scale);
+
+private:
+    void Set(int row, int col, uint8 value);
 };
 
 
@@ -27,9 +37,9 @@ class Font
 public:
 
     /// Размер символа в точках
-    wxSize size = { SIZE_FONT, SIZE_FONT };
+    wxSize size = { SYMBOL_WIDTH, SYMBOL_HEIGHT };
     /// Столько писелей занимает одна точка шрифта в люому направлении
-    int pixelsInPoint = 5;
+    int pixelsInPoint = 8;
 
     Symbol symbols[256];
 };

@@ -48,33 +48,35 @@ void Canvas::OnPaint(wxPaintEvent &)
 
     dc.DrawRectangle(GetRect());
 
-    dc.SetPen(wxPen(wxColor(0xa0, 0xa0, 0xa0)));
-
-    for (int i = 0; i < GetSize().x; i += font.pixelsInPoint)
+    DrawSymbols(dc);
+  
+    if (font.pixelsInPoint > 5)
     {
-        dc.DrawLine(i, 0, i, GetSize().y);
-    }
+        dc.SetPen(wxPen(wxColor(0xa0, 0xa0, 0xa0)));
 
-    for (int i = 0; i < GetSize().y; i += font.pixelsInPoint)
-    {
-        dc.DrawLine(0, i, GetSize().x, i);
+        for (int i = 0; i < GetSize().x; i += font.pixelsInPoint)
+        {
+            dc.DrawLine(i, 0, i, GetSize().y);
+        }
+
+        for (int i = 0; i < GetSize().y; i += font.pixelsInPoint)
+        {
+            dc.DrawLine(0, i, GetSize().x, i);
+        }
     }
 
     dc.SetPen(*wxBLACK);
-
     
     for (int i = 0; i < GetSize().x; i += font.size.x * font.pixelsInPoint)
     {
         dc.DrawLine(i, 0, i, GetSize().y);
     }
-
+    
     for (int i = 0; i < GetSize().y; i += font.size.y * font.pixelsInPoint)
     {
         dc.DrawLine(0, i, GetSize().x, i);
     }
-
-    DrawSymbols(dc);
-
+    
     HighlightCell(dc);
 }
 
@@ -174,52 +176,7 @@ void Canvas::Rebuild(const wxFont &f)
 {
     for(int i = 0; i < 256; i++)
     {
-        BuildSymbol(f, static_cast<uint8>(i));
-    }
-}
-
-
-void Canvas::BuildSymbol(const wxFont &f, uint8 s)
-{
-    wxMemoryDC memDC;
-
-    memDC.SetFont(f);
-
-    wxBitmap bitmap(font.size.x, font.size.y);
-
-    memDC.SelectObject(bitmap);
-
-    wxPen pen(wxColour(0xff, 0xff, 0xff));
-    wxBrush brush(wxColour(0xff, 0xff, 0xff));
-
-    memDC.SetPen(pen);
-    memDC.SetBrush(brush);
-
-    memDC.Clear();
-
-    memDC.SetPen(*wxBLACK_PEN);
-
-    memDC.DrawText(Symbol::UTFfrom1251(s), { 0, 0 });
-
-    Symbol &symbol = font.symbols[s];
-
-    wxColour color;
-
-    for(int row = 0; row < font.size.y; row++)
-    {
-        for(int col = 0; col < font.size.x; col++)
-        {
-            memDC.GetPixel({ col, row }, &color);
-
-            if(color.Red() == 0x00)
-            {
-                symbol.Set(row, col, 1);
-            }
-            else
-            {
-                symbol.Set(row, col, 0);
-            }
-        }
+        font.symbols[i].Build(f, static_cast<uint8>(i));
     }
 }
 
@@ -227,9 +184,6 @@ void Canvas::BuildSymbol(const wxFont &f, uint8 s)
 void Canvas::DrawSymbols(wxPaintDC &dc)
 {
     int numSymbol = 0;
-
-    dc.SetPen(*wxBLACK_PEN);
-    dc.SetBrush(*wxBLACK_BRUSH);
 
     for(int row = 0; row < 16; row++)
     {
@@ -243,24 +197,8 @@ void Canvas::DrawSymbols(wxPaintDC &dc)
 
 void Canvas::DrawSymbol(wxPaintDC &dc, int row, int col, int num)
 {
-    Symbol &symbol = font.symbols[num];
+    int x0 = col * font.size.x * font.pixelsInPoint;
+    int y0 = row * font.size.y * font.pixelsInPoint;
 
-    int step = font.pixelsInPoint;
-
-    int x0 = col * font.size.x * step;
-    int y0 = row * font.size.y * step;
-
-    int sizeX = font.size.x;
-    int sizeY = font.size.y;
-
-    for(int y = 0; y < sizeY; y++)
-    {
-        for(int x = 0; x < sizeX; x++)
-        {
-            if(symbol.Get(y, x))
-            {
-                dc.DrawRectangle(x0 + x * step, y0 + y * step, step, step);
-            }
-        }
-    }
+    font.symbols[num].Draw(dc, x0, y0, font.pixelsInPoint);
 }
