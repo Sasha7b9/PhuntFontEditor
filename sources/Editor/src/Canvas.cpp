@@ -187,12 +187,9 @@ void Canvas::OnMouseRightUp(wxMouseEvent &)
 
 void Canvas::Rebuild()
 {
-    DataImport data;
-    ImportDialog::GetDataImport(data);
-
     SetSize(CurrentSize());
 
-    font.Rebuild(&data.font);
+    font.Rebuild();
 
     Refresh();
 }

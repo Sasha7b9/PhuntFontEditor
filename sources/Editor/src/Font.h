@@ -45,7 +45,7 @@ public:
 
     wxFont font;
 
-    void Rebuild(const wxFont *font = nullptr);
+    void Rebuild();
 
     void Resize();
 

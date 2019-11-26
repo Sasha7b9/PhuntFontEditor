@@ -1,5 +1,6 @@
 #include "defines.h"
 #include "Font.h"
+#include "Dialogs/ImportDialog.h"
 
 
 Symbol::Symbol(int w, int h) : width(w), height(h)
@@ -83,12 +84,12 @@ void Font::Resize()
 }
 
 
-void Font::Rebuild(const wxFont *f)
+void Font::Rebuild()
 {
-    if (f)
-    {
-        font = *f;
-    }
+    DataImport data;
+    ImportDialog::GetDataImport(data);
+
+    font = data.font;
 
     for (int i = 0; i < 256; i++)
     {

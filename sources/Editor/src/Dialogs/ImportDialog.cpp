@@ -43,7 +43,7 @@ ImportDialog::ImportDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, 
 #define _ALIGN wxALIGN_CENTER | wxALL
 
 
-    wxButton *btnOk = new wxButton(this, ID_BUTTON_OK, wxT("Импортировать"), wxDefaultPosition, BUTTON_SIZE);
+    wxButton *btnOk = new wxButton(this, ID_BUTTON_OK, wxT("Применить"), wxDefaultPosition, BUTTON_SIZE);
     Connect(ID_BUTTON_OK, wxEVT_BUTTON, wxCommandEventHandler(ImportDialog::OnButtonOk));
     wxButton *btnCancel = new wxButton(this, ID_BUTTON_CANCEL, wxT("Отменить"), wxDefaultPosition, BUTTON_SIZE);
     Connect(ID_BUTTON_CANCEL, wxEVT_BUTTON, wxCommandEventHandler(ImportDialog::OnButtonCancel));
