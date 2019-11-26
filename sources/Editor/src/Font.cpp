@@ -144,22 +144,16 @@ void Font::Rebuild(const wxFont *f)
 
 void Font::Draw(wxPaintDC &dc)
 {
-    int numSymbol = 0;
+    int num = 0;
 
     for (int row = 0; row < 16; row++)
     {
         for (int col = 0; col < 16; col++)
         {
-            DrawSymbol(dc, row, col, numSymbol++);
+            int x0 = col * size.x * pixelsInPoint;
+            int y0 = row * size.y * pixelsInPoint;
+
+            symbols[num++].Draw(dc, x0, y0);
         }
     }
-}
-
-
-void Font::DrawSymbol(wxPaintDC &dc, int row, int col, int num)
-{
-    int x0 = col * size.x * pixelsInPoint;
-    int y0 = row * size.y * pixelsInPoint;
-
-    symbols[num].Draw(dc, x0, y0);
 }

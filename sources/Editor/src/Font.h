@@ -54,6 +54,4 @@ public:
     void Resize();
 
     void Draw(wxPaintDC &dc);
-
-    void DrawSymbol(wxPaintDC &d, int row, int col, int num);
 };
