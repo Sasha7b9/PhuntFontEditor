@@ -1,6 +1,7 @@
 #include "defines.h"
-#include "Font.h"
 #include "Dialogs/ImportDialog.h"
+#include "Font/BitmapFont.h"
+
 
 
 Symbol::~Symbol()

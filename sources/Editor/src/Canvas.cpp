@@ -1,7 +1,7 @@
 #include "defines.h"
 #include "Canvas.h"
-#include "Font/Font.h"
 #include "Dialogs/ImportDialog.h"
+#include "Font/BitmapFont.h"
 #include <cstdlib>
 
 
