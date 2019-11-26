@@ -7,6 +7,7 @@
 
 struct BitmapSymbol
 {
+    BitmapSymbol() : width(0), height(0) {};
     ~BitmapSymbol();
     int width;
     int height;
