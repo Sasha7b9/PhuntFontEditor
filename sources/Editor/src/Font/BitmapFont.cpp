@@ -4,13 +4,13 @@
 
 
 
-Symbol::~Symbol()
+BitmapSymbol::~BitmapSymbol()
 {
     delete bitmap;
 }
 
 
-wxString Symbol::UTFfrom1251(uint8 code)
+wxString BitmapSymbol::UTFfrom1251(uint8 code)
 {
     if(code >= 192)
     {
@@ -31,7 +31,7 @@ wxString Symbol::UTFfrom1251(uint8 code)
 }
 
 
-void Symbol::Build(const wxFont &font, uint8 number, int w, int h, int offsetX, int offsetY)
+void BitmapSymbol::Build(const wxFont &font, uint8 number, int w, int h, int offsetX, int offsetY)
 {
     width = w;
     height = h;
@@ -56,13 +56,13 @@ void Symbol::Build(const wxFont &font, uint8 number, int w, int h, int offsetX, 
 
     memDC.SetPen(*wxBLACK_PEN);
 
-    memDC.DrawText(Symbol::UTFfrom1251(number), { offsetX, offsetY });
+    memDC.DrawText(BitmapSymbol::UTFfrom1251(number), { offsetX, offsetY });
 
     memDC.SelectObject(wxNullBitmap);
 }
 
 
-void Symbol::Clear()
+void BitmapSymbol::Clear()
 {
     delete bitmap;
     bitmap = new wxBitmap(width, height);
@@ -77,19 +77,19 @@ void Symbol::Clear()
 }
 
 
-void Symbol::Draw(wxMemoryDC &dc, int x, int y)
+void BitmapSymbol::Draw(wxMemoryDC &dc, int x, int y)
 {
     dc.DrawBitmap(image, x, y);
 }
 
 
-void Symbol::Resize(int scale)
+void BitmapSymbol::Resize(int scale)
 {
     image = bitmap->ConvertToImage().Rescale(width * scale, height * scale);
 }
 
 
-void Font::Resize()
+void BitmapFont::Resize()
 {
     for (int i = 0; i < 256; i++)
     {
@@ -117,7 +117,7 @@ void Font::Resize()
 }
 
 
-void Font::CreateNew()
+void BitmapFont::CreateNew()
 {
     DataImport data;
     ImportDialog::GetDataImport(data);
@@ -134,19 +134,19 @@ void Font::CreateNew()
 }
 
 
-void Font::Draw(wxPaintDC &dc)
+void BitmapFont::Draw(wxPaintDC &dc)
 {
     dc.DrawBitmap(*bitmap, 0, 0);
 }
 
 
-Font::~Font()
+BitmapFont::~BitmapFont()
 {
     delete bitmap;
 }
 
 
-void Font::ClearBadSymbols()
+void BitmapFont::ClearBadSymbols()
 {
     for (int i = 0; i < 0x20; i++)
     {

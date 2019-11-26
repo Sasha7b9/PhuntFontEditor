@@ -5,9 +5,9 @@
 #include <vector>
 
 
-struct Symbol
+struct BitmapSymbol
 {
-    ~Symbol();
+    ~BitmapSymbol();
     int width;
     int height;
 
@@ -29,16 +29,16 @@ private:
 };
 
 
-class Font
+class BitmapFont
 {
 public:
-    ~Font();
+    ~BitmapFont();
     /// Размер символа в точках
     wxSize size = { 0, 0 };
     /// Столько писелей занимает одна точка шрифта в люому направлении
     int pixelsInPoint = 8;
 
-    Symbol symbols[256];
+    BitmapSymbol symbols[256];
     /// Создаёт новый шрифт
     void CreateNew();
 
