@@ -2,6 +2,7 @@
 #include "Canvas.h"
 #include "Dialogs/ImportDialog.h"
 #include "Font/BitmapFont.h"
+#include "Font/FontImporter.h"
 #include <cstdlib>
 
 
@@ -189,4 +190,10 @@ void Canvas::Resize()
 void Canvas::ClearBadSymbols()
 {
     font.ClearBadSymbols();
+}
+
+
+void Canvas::ImportFont(wxTextFile &file)
+{
+    FontImporter::Import(font, file);
 }

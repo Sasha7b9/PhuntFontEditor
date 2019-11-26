@@ -324,6 +324,27 @@ void Frame::OnSaveFile(wxCommandEvent &)
 }
 
 
+void Frame::OnExportFontC(wxCommandEvent &)
+{
+    wxFileDialog dlg(nullptr, wxT("Экспорт"), wxEmptyString, wxEmptyString, wxT("*.c"), wxFD_SAVE);
+
+    if (dlg.ShowModal() == wxID_OK)
+    {
+        wxString fileName = dlg.GetPath();
+
+        wxTextFile file(fileName);
+
+        file.Create();
+
+        TheCanvas->ImportFont(file);
+
+        file.Write();
+
+        file.Close();
+    }
+}
+
+
 void Frame::OnNewFile(wxCommandEvent &)
 {
 }
@@ -362,12 +383,6 @@ void Frame::OnImportFont(wxCommandEvent &)
 {
     ImportDialog dlg(wxT("Импорт шрифта"));
     dlg.ShowModal();
-}
-
-
-void Frame::OnExportFontC(wxCommandEvent &)
-{
-
 }
 
 

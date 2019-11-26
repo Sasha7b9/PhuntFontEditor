@@ -1,6 +1,7 @@
 #pragma once
 #pragma warning(push, 0)
 #include <wx/wx.h>
+#include <wx/textfile.h>
 #pragma warning(pop)
 
 
@@ -19,6 +20,8 @@ public:
     void Decrease();
     /// Очистить символы, не входящие в основной набор
     void ClearBadSymbols();
+
+    void ImportFont(wxTextFile &file);
 
 private:
 
