@@ -61,6 +61,21 @@ void Symbol::Build(const wxFont &font, uint8 number, int w, int h, int offsetX, 
 }
 
 
+void Symbol::Clear()
+{
+    delete bitmap;
+    bitmap = new wxBitmap(width, height);
+
+    wxMemoryDC memDC;
+    memDC.SelectObject(*bitmap);
+
+    memDC.SetPen(*wxWHITE_PEN);
+    memDC.SetBrush(*wxWHITE_BRUSH);
+
+    memDC.Clear();
+}
+
+
 void Symbol::Draw(wxMemoryDC &dc, int x, int y)
 {
     dc.DrawBitmap(image, x, y);
@@ -128,4 +143,13 @@ void Font::Draw(wxPaintDC &dc)
 Font::~Font()
 {
     delete bitmap;
+}
+
+
+void Font::ClearBadSymbols()
+{
+    for (int i = 0; i < 0x20; i++)
+    {
+        symbols[i].Clear();
+    }
 }

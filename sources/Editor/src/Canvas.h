@@ -17,6 +17,8 @@ public:
     void Increase();
     /// Уменьшить масштаб
     void Decrease();
+    /// Очистить символы, не входящие в основной набор
+    void ClearBadSymbols();
 
 private:
 

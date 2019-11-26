@@ -41,7 +41,8 @@ enum
 
     TOOL_CHANGE_FONT,
     TOOL_SCALE_UP,
-    TOOL_SCALE_DOWN
+    TOOL_SCALE_DOWN,
+    TOOL_CLEAR_BAD_SYMBOLS
 };
 
 enum
@@ -88,20 +89,21 @@ Frame::Frame(const wxString &title)
 
     SetSizeAndPosition();
 
-    Bind(wxEVT_MENU,       &Frame::OnQuit,         this, MENU_FILE_QUIT);
-    Bind(wxEVT_MENU,       &Frame::OnOpenFile,     this, FILE_OPEN);
-    Bind(wxEVT_MENU,       &Frame::OnSaveFile,     this, FILE_SAVE);
-    Bind(wxEVT_MENU,       &Frame::OnNewFile,      this, FILE_NEW);
-    Bind(wxEVT_MENU,       &Frame::OnImportFont,   this, FILE_IMPORT);
-    Bind(wxEVT_MENU,       &Frame::OnImportFont,   this, TOOL_CHANGE_FONT);
-    Bind(wxEVT_MENU,       &Frame::OnUndo,         this, UNDO);
-    Bind(wxEVT_MENU,       &Frame::OnRedo,         this, REDO);
-    Bind(wxEVT_TIMER,      &Frame::OnTimer,        this, TIMER_ID);
-    Bind(wxEVT_SIZE,       &Frame::OnResize,       this);
-    Bind(wxEVT_PAINT,      &Frame::OnRepaint,      this);
-    Bind(wxEVT_KEY_DOWN,   &Frame::OnKeyDown,      this);
-    Bind(wxEVT_MENU,       &Frame::OnScaleDown,    this, TOOL_SCALE_DOWN);
-    Bind(wxEVT_MENU,       &Frame::OnScaleUp,      this, TOOL_SCALE_UP);
+    Bind(wxEVT_MENU,       &Frame::OnQuit,            this, MENU_FILE_QUIT);
+    Bind(wxEVT_MENU,       &Frame::OnOpenFile,        this, FILE_OPEN);
+    Bind(wxEVT_MENU,       &Frame::OnSaveFile,        this, FILE_SAVE);
+    Bind(wxEVT_MENU,       &Frame::OnNewFile,         this, FILE_NEW);
+    Bind(wxEVT_MENU,       &Frame::OnImportFont,      this, FILE_IMPORT);
+    Bind(wxEVT_MENU,       &Frame::OnImportFont,      this, TOOL_CHANGE_FONT);
+    Bind(wxEVT_MENU,       &Frame::OnUndo,            this, UNDO);
+    Bind(wxEVT_MENU,       &Frame::OnRedo,            this, REDO);
+    Bind(wxEVT_TIMER,      &Frame::OnTimer,           this, TIMER_ID);
+    Bind(wxEVT_SIZE,       &Frame::OnResize,          this);
+    Bind(wxEVT_PAINT,      &Frame::OnRepaint,         this);
+    Bind(wxEVT_KEY_DOWN,   &Frame::OnKeyDown,         this);
+    Bind(wxEVT_MENU,       &Frame::OnScaleDown,       this, TOOL_SCALE_DOWN);
+    Bind(wxEVT_MENU,       &Frame::OnScaleUp,         this, TOOL_SCALE_UP);
+    Bind(wxEVT_MENU,       &Frame::OnClearBadSymbols, this, TOOL_CLEAR_BAD_SYMBOLS);
 
     Show(true);
 
@@ -212,6 +214,7 @@ void Frame::CreateMenu()
     wxBitmap imgRedo(wxImage(wxT("icons/redo.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgScaleDown(wxImage(wxT("icons/minus.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgScaleUp(wxImage(wxT("icons/plus.bmp"), wxBITMAP_TYPE_BMP));
+    wxBitmap imgClear(wxImage(wxT("icons/clear.bmp"), wxBITMAP_TYPE_BMP));
 
     wxToolBar* toolBar = CreateToolBar();
     toolBar->AddTool(FILE_OPEN, wxT("Открыть"), imgOpen, wxT("Загрузить ранее созданный сигнал из файла"));
@@ -228,6 +231,9 @@ void Frame::CreateMenu()
     toolBar->AddSeparator();
     toolBar->AddTool(TOOL_SCALE_DOWN, wxT("Уменьшить масштаб"), imgScaleDown, wxT("Уменьшение масштаба"));
     toolBar->AddTool(TOOL_SCALE_UP, wxT("Увеличить масштаб"), imgScaleUp, wxT("Увеличение масштаба"));
+
+    toolBar->AddSeparator();
+    toolBar->AddTool(TOOL_CLEAR_BAD_SYMBOLS, wxT("Очистить дополнительные символы"), imgClear, wxT("Стереть дополнительные символы"));
 
     toolBar->Realize();
 }
@@ -346,4 +352,10 @@ void Frame::OnImportFont(wxCommandEvent &)
 {
     ImportDialog dlg(wxT("Импорт шрифта"));
     dlg.ShowModal();
+}
+
+
+void Frame::OnClearBadSymbols(wxCommandEvent &)
+{
+    TheCanvas->ClearBadSymbols();
 }

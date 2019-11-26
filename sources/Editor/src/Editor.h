@@ -52,4 +52,6 @@ private:
     void OnScaleDown(wxCommandEvent &);
 
     void OnImportFont(wxCommandEvent &);
+    /// Очистить символы, не входящие в основной набор
+    void OnClearBadSymbols(wxCommandEvent &);
 };

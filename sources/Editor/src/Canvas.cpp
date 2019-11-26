@@ -184,3 +184,9 @@ void Canvas::Resize()
     SetSize(CurrentSize());
     font.Resize();
 }
+
+
+void Canvas::ClearBadSymbols()
+{
+    font.ClearBadSymbols();
+}

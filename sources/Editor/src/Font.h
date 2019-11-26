@@ -16,6 +16,8 @@ struct Symbol
     wxBitmap *bitmap = nullptr;
 
     void Build(const wxFont &font, uint8 number, int w, int h, int offsetX, int offsetY);
+    
+    void Clear();
 
     void Draw(wxMemoryDC &dc, int x, int y);
 
@@ -45,6 +47,8 @@ public:
     void Resize();
 
     void Draw(wxPaintDC &dc);
+    /// Очистить символы, не входящие в основной набор
+    void ClearBadSymbols();
 
 private:
 
