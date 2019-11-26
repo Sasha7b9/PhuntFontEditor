@@ -9,8 +9,8 @@
 
 enum
 {
-    ID_BUTTON_OK,
-    ID_BUTTON_CANCEL,
+    ID_BUTTON_APPLY,
+    ID_BUTTON_CLOSE,
     ID_BUTTON_FONT
 };
 
@@ -43,14 +43,14 @@ ImportDialog::ImportDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, 
 #define _ALIGN wxALIGN_CENTER | wxALL
 
 
-    wxButton *btnOk = new wxButton(this, ID_BUTTON_OK, wxT("Применить"), wxDefaultPosition, BUTTON_SIZE);
-    Connect(ID_BUTTON_OK, wxEVT_BUTTON, wxCommandEventHandler(ImportDialog::OnButtonOk));
-    wxButton *btnCancel = new wxButton(this, ID_BUTTON_CANCEL, wxT("Отменить"), wxDefaultPosition, BUTTON_SIZE);
-    Connect(ID_BUTTON_CANCEL, wxEVT_BUTTON, wxCommandEventHandler(ImportDialog::OnButtonCancel));
+    wxButton *btnApply = new wxButton(this, ID_BUTTON_APPLY, wxT("Применить"), wxDefaultPosition, BUTTON_SIZE);
+    Connect(ID_BUTTON_APPLY, wxEVT_BUTTON, wxCommandEventHandler(ImportDialog::OnButtonApply));
+    wxButton *btnClose = new wxButton(this, ID_BUTTON_CLOSE, wxT("Закрыть"), wxDefaultPosition, BUTTON_SIZE);
+    Connect(ID_BUTTON_CLOSE, wxEVT_BUTTON, wxCommandEventHandler(ImportDialog::OnButtonClose));
     wxBoxSizer *boxButtons = new wxBoxSizer(wxHORIZONTAL);
-    boxButtons->Add(btnOk, 1, wxALIGN_CENTER);
+    boxButtons->Add(btnApply, 1, wxALIGN_CENTER);
     boxButtons->AddSpacer(20);
-    boxButtons->Add(btnCancel, 1, wxALIGN_CENTER);
+    boxButtons->Add(btnClose, 1, wxALIGN_CENTER);
 
     wxBoxSizer *vBox = new wxBoxSizer(wxVERTICAL);
 
@@ -111,7 +111,7 @@ static void TuneTextFont()
 }
 
 
-void ImportDialog::OnButtonOk(wxCommandEvent &)
+void ImportDialog::OnButtonApply(wxCommandEvent &)
 {
     tcWidthSymbol->ToLong(width);
     tcHeightSymbol->ToLong(height);
@@ -122,7 +122,7 @@ void ImportDialog::OnButtonOk(wxCommandEvent &)
 }
 
 
-void ImportDialog::OnButtonCancel(wxCommandEvent &)
+void ImportDialog::OnButtonClose(wxCommandEvent &)
 {
     Destroy();
 }

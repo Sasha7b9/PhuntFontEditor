@@ -171,9 +171,9 @@ void Canvas::OnMouseRightUp(wxMouseEvent &)
 
 void Canvas::Rebuild()
 {
-    SetSize(CurrentSize());
-
     font.Rebuild();
+
+    SetSize(CurrentSize());
 
     Refresh();
 }

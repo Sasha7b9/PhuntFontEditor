@@ -27,7 +27,7 @@ protected:
 
 private:
 
-    void OnButtonOk(wxCommandEvent &);
+    void OnButtonApply(wxCommandEvent &);
 
-    void OnButtonCancel(wxCommandEvent &);
+    void OnButtonClose(wxCommandEvent &);
 };
