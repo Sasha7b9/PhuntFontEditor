@@ -125,6 +125,8 @@ void Canvas::Increase()
 
         Resize();
 
+        font.Rebuild();
+
         Refresh();
     }
 }
@@ -137,6 +139,8 @@ void Canvas::Decrease()
         font.pixelsInPoint--;
 
         Resize();
+
+        font.Rebuild();
 
         Refresh();
     }

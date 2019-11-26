@@ -5,8 +5,8 @@
 #include <vector>
 
 
-#define SYMBOL_WIDTH  8
-#define SYMBOL_HEIGHT 8
+#define SYMBOL_WIDTH  16
+#define SYMBOL_HEIGHT 16
 
 
 struct Symbol
@@ -25,7 +25,7 @@ struct Symbol
 
     void Build(const wxFont &font, uint8 number);
 
-    void Draw(wxPaintDC &dc, int x, int y);
+    void Draw(wxMemoryDC &dc, int x, int y);
 
     void Resize(int scale);
 
@@ -39,7 +39,7 @@ private:
 class Font
 {
 public:
-
+    ~Font();
     /// Размер символа в точках
     wxSize size = { SYMBOL_WIDTH, SYMBOL_HEIGHT };
     /// Столько писелей занимает одна точка шрифта в люому направлении
@@ -54,4 +54,8 @@ public:
     void Resize();
 
     void Draw(wxPaintDC &dc);
+
+private:
+
+    wxBitmap *bitmap = nullptr;
 };

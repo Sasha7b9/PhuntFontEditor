@@ -4,9 +4,6 @@
 #pragma warning(pop)
 
 
-
-
-
 class Canvas : public wxPanel
 {
 public:
