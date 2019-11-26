@@ -27,7 +27,6 @@ Canvas::Canvas(wxWindow *parent) : wxPanel(parent, wxID_ANY)
     SetDoubleBuffered(true);
 
     Bind(wxEVT_PAINT,        &Canvas::OnPaint,      this);
-    Bind(wxEVT_MOUSEWHEEL,   &Canvas::OnMouseWheel, this);
     Bind(wxEVT_MOTION,       &Canvas::OnMouseMove,  this);
     Bind(wxEVT_LEAVE_WINDOW, &Canvas::OnMouseLeave, this);
 
@@ -90,21 +89,6 @@ static void HighlightCell(wxPaintDC &dc)
     int y = (mouseY / (font.pixelsInPoint)) * (font.pixelsInPoint);
 
     dc.DrawRectangle(x, y, font.pixelsInPoint, font.pixelsInPoint);
-}
-
-
-void Canvas::OnMouseWheel(wxMouseEvent &event) //-V2009
-{
-    //if (event.GetWheelRotation() > 0)
-    //{
-    //    Increase();
-    //}
-    //else
-    //{
-    //    Decrease();
-    //}
-
-    event.Skip();
 }
 
 

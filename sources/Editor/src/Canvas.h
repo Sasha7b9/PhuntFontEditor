@@ -20,8 +20,6 @@ public:
 
 private:
 
-    void OnMouseWheel(wxMouseEvent &);
-
     void OnMouseMove(wxMouseEvent &);
 
     void OnMouseLeave(wxMouseEvent &);
