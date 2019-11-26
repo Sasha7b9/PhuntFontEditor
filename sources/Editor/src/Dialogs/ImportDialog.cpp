@@ -32,6 +32,9 @@ static int offsetY = 0;
 
 static wxFont font(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New"));
 
+/// Сформировать строку описания шрифта
+static void TuneTextFont();
+
 
 ImportDialog::ImportDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, title)
 {
@@ -55,6 +58,7 @@ ImportDialog::ImportDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, 
     wxButton *btnFont = new wxButton(this, ID_BUTTON_FONT, wxT("Шрифт"), wxDefaultPosition, BUTTON_SIZE);
     Connect(ID_BUTTON_FONT, wxEVT_BUTTON, wxCommandEventHandler(ImportDialog::OnChoiceFont));
     textFont = new wxStaticText(this, wxID_ANY, "");
+    TuneTextFont();
     boxFont->Add(btnFont, wxALIGN_LEFT, BORDER);
     boxFont->AddSpacer(SPACER);
     boxFont->Add(textFont, 0, wxALIGN_CENTER_VERTICAL, BORDER);
@@ -88,20 +92,28 @@ void ImportDialog::OnChoiceFont(wxCommandEvent &)
     {
         font = dlg.GetFontData().GetChosenFont();
 
-        textFont->SetFont(font);
-
-        int pointSize = font.GetPointSize();
-
-        font.SetPointSize(10);
-
-        textFont->SetLabel(wxString::Format("%s %d %s", font.GetFaceName(), pointSize, wxT("Пример")));
+        TuneTextFont();
     }
+}
+
+
+static void TuneTextFont()
+{
+    int size = font.GetPointSize();
+
+    font.SetPointSize(10);
+
+    textFont->SetFont(font);
+
+    font.SetPointSize(size);
+
+    textFont->SetLabel(wxString::Format("%s %d %s", font.GetFaceName(), font.GetPointSize(), wxT("Пример")));
 }
 
 
 void ImportDialog::OnButtonOk(wxCommandEvent &)
 {
-
+    TheCanvas->Rebuild();
 }
 
 
