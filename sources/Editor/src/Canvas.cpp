@@ -46,7 +46,7 @@ void Canvas::OnPaint(wxPaintEvent &)
 
     dc.DrawRectangle(GetRect());
 
-    DrawSymbols(dc);
+    font.Draw(dc);
 
     if (font.pixelsInPoint > 5)
     {
@@ -180,39 +180,9 @@ void Canvas::OnMouseRightUp(wxMouseEvent &)
 
 void Canvas::Rebuild(const wxFont &f)
 {
-    font.font = f;
-
     SetSize(CurrentSize());
 
-    for(int i = 0; i < 256; i++)
-    {
-        font.symbols[i].Build(f, static_cast<uint8>(i));
-    }
-
-    font.Resize();
-}
-
-
-void Canvas::DrawSymbols(wxPaintDC &dc)
-{
-    int numSymbol = 0;
-
-    for(int row = 0; row < 16; row++)
-    {
-        for(int col = 0; col < 16; col++)
-        {
-            DrawSymbol(dc, row, col, numSymbol++);
-        }
-    }
-}
-
-
-void Canvas::DrawSymbol(wxPaintDC &dc, int row, int col, int num)
-{
-    int x0 = col * font.size.x * font.pixelsInPoint;
-    int y0 = row * font.size.y * font.pixelsInPoint;
-
-    font.symbols[num].Draw(dc, x0, y0, font.pixelsInPoint);
+    font.Rebuild(&f);
 }
 
 

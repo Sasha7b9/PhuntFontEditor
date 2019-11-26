@@ -105,7 +105,7 @@ void Symbol::Build(const wxFont &font, uint8 number)
 }
 
 
-void Symbol::Draw(wxPaintDC &dc, int x, int y, int scale)
+void Symbol::Draw(wxPaintDC &dc, int x, int y)
 {
     dc.DrawBitmap(image, x, y);
 }
@@ -123,4 +123,43 @@ void Font::Resize()
     {
         symbols[i].Resize(pixelsInPoint);
     }
+}
+
+
+void Font::Rebuild(const wxFont *f)
+{
+    if (f)
+    {
+        font = *f;
+    }
+
+    for (int i = 0; i < 256; i++)
+    {
+        symbols[i].Build(font, static_cast<uint8>(i));
+    }
+
+    Resize();
+}
+
+
+void Font::Draw(wxPaintDC &dc)
+{
+    int numSymbol = 0;
+
+    for (int row = 0; row < 16; row++)
+    {
+        for (int col = 0; col < 16; col++)
+        {
+            DrawSymbol(dc, row, col, numSymbol++);
+        }
+    }
+}
+
+
+void Font::DrawSymbol(wxPaintDC &dc, int row, int col, int num)
+{
+    int x0 = col * size.x * pixelsInPoint;
+    int y0 = row * size.y * pixelsInPoint;
+
+    symbols[num].Draw(dc, x0, y0);
 }

@@ -25,7 +25,7 @@ struct Symbol
 
     void Build(const wxFont &font, uint8 number);
 
-    void Draw(wxPaintDC &dc, int x, int y, int scale);
+    void Draw(wxPaintDC &dc, int x, int y);
 
     void Resize(int scale);
 
@@ -49,5 +49,11 @@ public:
 
     wxFont font;
 
+    void Rebuild(const wxFont *font = nullptr);
+
     void Resize();
+
+    void Draw(wxPaintDC &dc);
+
+    void DrawSymbol(wxPaintDC &d, int row, int col, int num);
 };
