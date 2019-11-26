@@ -1,6 +1,7 @@
 #include "defines.h"
 #include "Canvas.h"
 #include "Font.h"
+#include "Dialogs/ImportDialog.h"
 #include <cstdlib>
 
 
@@ -32,7 +33,7 @@ Canvas::Canvas(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 
     TuneScrollBar();
 
-    Rebuild(wxFont(wxFont(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New"))));
+    Rebuild();
 }
 
 
@@ -184,11 +185,14 @@ void Canvas::OnMouseRightUp(wxMouseEvent &)
 }
 
 
-void Canvas::Rebuild(const wxFont &f)
+void Canvas::Rebuild()
 {
+    DataImport data;
+    ImportDialog::GetDataImport(data);
+
     SetSize(CurrentSize());
 
-    font.Rebuild(&f);
+    font.Rebuild(&data.font);
 
     Refresh();
 }

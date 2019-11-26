@@ -12,7 +12,7 @@ public:
 
     void OnPaint(wxPaintEvent &);
 
-    void Rebuild(const wxFont &font);
+    void Rebuild();
     /// Увеличить масштаб
     void Increase();
     /// Уменьшить масштаб

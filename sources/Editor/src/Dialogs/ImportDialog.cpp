@@ -30,6 +30,8 @@ static int offsetX = 0;
 static TextControl *tcOffsetY = nullptr;
 static int offsetY = 0;
 
+static wxFont font(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New"));
+
 
 ImportDialog::ImportDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, title)
 {
@@ -55,7 +57,7 @@ ImportDialog::ImportDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, 
     textFont = new wxStaticText(this, wxID_ANY, "");
     boxFont->Add(btnFont, wxALIGN_LEFT, BORDER);
     boxFont->AddSpacer(SPACER);
-    boxFont->Add(textFont, 0, _ALIGN, BORDER);
+    boxFont->Add(textFont, 0, wxALIGN_CENTER_VERTICAL, BORDER);
 
     tcWidthSymbol = new TextControl(this, wxT("8"), wxT("ширина символа"));
 
@@ -65,14 +67,14 @@ ImportDialog::ImportDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, 
 
     tcOffsetY = new TextControl(this, wxT("0"), wxT("смещение по y"));
 
-    vBox->Add(boxFont, 0, _ALIGN, BORDER);
+    vBox->Add(boxFont, 0, wxALIGN_LEFT, BORDER);
     vBox->Add(tcWidthSymbol, 0, _ALIGN, BORDER);
     vBox->Add(tcHeightSymbol, 0, _ALIGN, BORDER);
     vBox->Add(tcOffsetX, 0, _ALIGN, BORDER);
     vBox->Add(tcOffsetY, 0, _ALIGN, BORDER);
 
     vBox->AddSpacer(10);
-    vBox->Add(boxButtons);
+    vBox->Add(boxButtons, 0, _ALIGN, BORDER);
 
     SetSizer(vBox);
 }
@@ -84,7 +86,7 @@ void ImportDialog::OnChoiceFont(wxCommandEvent &)
     
     if (dlg.ShowModal() == wxID_OK)
     {
-        wxFont font = dlg.GetFontData().GetChosenFont();
+        font = dlg.GetFontData().GetChosenFont();
 
         textFont->SetFont(font);
 
@@ -106,4 +108,14 @@ void ImportDialog::OnButtonOk(wxCommandEvent &)
 void ImportDialog::OnButtonCancel(wxCommandEvent &)
 {
     Destroy();
+}
+
+
+void ImportDialog::GetDataImport(DataImport &data)
+{
+    data.width = width;
+    data.height = height;
+    data.offsetX = offsetX;
+    data.offsetY = offsetY;
+    data.font = font;
 }
