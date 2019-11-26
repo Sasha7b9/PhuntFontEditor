@@ -94,24 +94,6 @@ void Font::Resize()
     {
         symbols[i].Resize(pixelsInPoint);
     }
-}
-
-
-void Font::Rebuild()
-{
-    DataImport data;
-    ImportDialog::GetDataImport(data);
-
-    font = data.font;
-    size.x = data.width;
-    size.y = data.height;
-
-    for (int i = 0; i < 256; i++)
-    {
-        symbols[i].Build(font, static_cast<uint8>(i), size.x, size.y, data.offsetX, data.offsetY);
-    }
-
-    Resize();
 
     delete bitmap;
 
@@ -134,6 +116,23 @@ void Font::Rebuild()
 }
 
 
+void Font::CreateNew()
+{
+    DataImport data;
+    ImportDialog::GetDataImport(data);
+
+    size.x = data.width;
+    size.y = data.height;
+
+    for (int i = 0; i < 256; i++)
+    {
+        symbols[i].Build(data.font, static_cast<uint8>(i), size.x, size.y, data.offsetX, data.offsetY);
+    }
+
+    Resize();
+}
+
+
 void Font::Draw(wxPaintDC &dc)
 {
     dc.DrawBitmap(*bitmap, 0, 0);
@@ -152,4 +151,11 @@ void Font::ClearBadSymbols()
     {
         symbols[i].Clear();
     }
+
+    for (int i = 0x7f; i < 0xc0; i++)
+    {
+        symbols[i].Clear();
+    }
+
+    Resize();
 }

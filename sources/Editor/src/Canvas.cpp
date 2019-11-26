@@ -108,7 +108,7 @@ void Canvas::Increase()
 
         Resize();
 
-        font.Rebuild();
+        font.Resize();
 
         TuneScrollBar();
 
@@ -125,7 +125,7 @@ void Canvas::Decrease()
 
         Resize();
 
-        font.Rebuild();
+        font.Resize();
 
         TuneScrollBar();
 
@@ -171,7 +171,7 @@ void Canvas::OnMouseRightUp(wxMouseEvent &)
 
 void Canvas::Rebuild()
 {
-    font.Rebuild();
+    font.CreateNew();
 
     SetSize(CurrentSize());
 

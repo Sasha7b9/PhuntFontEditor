@@ -19,10 +19,10 @@ enum
 static wxStaticText *textFont = nullptr;
 /// Ширина символа
 static TextControl *tcWidthSymbol = nullptr;
-static long width = 8;
+static long width = 16;
 /// Высота символа
 static TextControl *tcHeightSymbol = nullptr;
-static long height = 8;
+static long height = 16;
 /// Смещение шрифта по горизонтали
 static TextControl *tcOffsetX = nullptr;
 static long offsetX = 0;

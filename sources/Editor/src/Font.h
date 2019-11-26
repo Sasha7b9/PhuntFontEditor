@@ -39,10 +39,8 @@ public:
     int pixelsInPoint = 8;
 
     Symbol symbols[256];
-
-    wxFont font;
-
-    void Rebuild();
+    /// Ñמחהא¸ע םמגûי רנטפע
+    void CreateNew();
 
     void Resize();
 
