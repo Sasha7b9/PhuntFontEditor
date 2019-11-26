@@ -13,11 +13,8 @@ struct Symbol
 {
     Symbol(int w = SYMBOL_WIDTH, int h = SYMBOL_HEIGHT);
     ~Symbol();
-    uint8 Get(int row, int col) const;
     int width;
     int height;
-    /// «десь каждый бит представлен 8-битным значением
-    std::vector<std::vector<uint8>> bits;
 
     static wxString UTFfrom1251(uint8 code);
 
@@ -30,7 +27,6 @@ struct Symbol
     void Resize(int scale);
 
 private:
-    void Set(int row, int col, uint8 value);
 
     wxImage image;
 };

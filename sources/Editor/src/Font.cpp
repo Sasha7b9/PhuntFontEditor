@@ -4,12 +4,6 @@
 
 Symbol::Symbol(int w, int h) : width(w), height(h)
 {
-    bits.resize(static_cast<uint>(height));
-
-    for(int row = 0; row < height; row++)
-    {
-        bits[static_cast<uint>(row)].resize(static_cast<uint>(width));
-    }
 }
 
 
@@ -19,18 +13,6 @@ Symbol::~Symbol()
     {
         delete bitmap;
     }
-}
-
-
-void Symbol::Set(int row, int col, uint8 value)
-{
-    bits[static_cast<uint>(row)][static_cast<uint>(col)] = value;
-}
-
-
-uint8 Symbol::Get(int row, int col) const
-{
-    return bits[static_cast<uint>(row)][static_cast<uint>(col)];
 }
 
 
@@ -81,25 +63,6 @@ void Symbol::Build(const wxFont &font, uint8 number)
     memDC.SetPen(*wxBLACK_PEN);
 
     memDC.DrawText(Symbol::UTFfrom1251(number), { 0, 0 });
-
-    wxColour color;
-
-    for (int row = 0; row < height; row++)
-    {
-        for (int col = 0; col < width; col++)
-        {
-            memDC.GetPixel({ col, row }, &color);
-
-            if (color.Red() == 0x00)
-            {
-                Set(row, col, 1);
-            }
-            else
-            {
-                Set(row, col, 0);
-            }
-        }
-    }
 
     memDC.SelectObject(wxNullBitmap);
 }
