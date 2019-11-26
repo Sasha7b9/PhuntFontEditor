@@ -189,6 +189,8 @@ void Canvas::Rebuild(const wxFont &f)
     SetSize(CurrentSize());
 
     font.Rebuild(&f);
+
+    Refresh();
 }
 
 
