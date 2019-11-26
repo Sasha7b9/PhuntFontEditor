@@ -36,6 +36,7 @@ enum
     FILE_OPEN,
     FILE_SAVE,
     FILE_NEW,                                   // Очистить форму
+    FILE_IMPORT,                                // Импортировать шрифт
 	UNDO,
 	REDO,
 
@@ -95,6 +96,7 @@ Frame::Frame(const wxString &title)
     Bind(wxEVT_MENU,       &Frame::OnOpenFile,     this, FILE_OPEN);
     Bind(wxEVT_MENU,       &Frame::OnSaveFile,     this, FILE_SAVE);
     Bind(wxEVT_MENU,       &Frame::OnNewFile,      this, FILE_NEW);
+    Bind(wxEVT_MENU,       &Frame::OnImportFont,   this, FILE_IMPORT);
     Bind(wxEVT_MENU,       &Frame::OnChangeFont,   this, TOOL_CHANGE_FONT);
     Bind(wxEVT_MENU,       &Frame::OnUndo,         this, UNDO);
     Bind(wxEVT_MENU,       &Frame::OnRedo,         this, REDO);
@@ -198,6 +200,8 @@ void Frame::CreateMenu()
     wxMenu *fileMenu = new wxMenu;
     fileMenu->Append(FILE_OPEN, wxT("Загрузить\tCtrl+O"), wxT("Загрузить данные из файла"));
     fileMenu->Append(FILE_SAVE, wxT("Сохранить\tCtrl+S"), wxT("Сохранить данные в файл"));
+    fileMenu->AppendSeparator();
+    fileMenu->Append(FILE_IMPORT, wxT("Импорт"), wxT("Импортировать системный шрифт"));
     fileMenu->AppendSeparator();
     fileMenu->Append(MENU_FILE_QUIT, wxT("Выход\tAlt+X"), wxT("Закрыть редактор"));
 
@@ -375,4 +379,10 @@ void Frame::OnScaleUp(wxCommandEvent &)
 void Frame::OnScaleDown(wxCommandEvent &)
 {
     TheCanvas->Decrease();
+}
+
+
+void Frame::OnImportFont(wxCommandEvent &)
+{
+
 }

@@ -53,6 +53,8 @@ private:
 
     void OnScaleDown(wxCommandEvent &);
 
+    void OnImportFont(wxCommandEvent &);
+
     void CreateTriangle(wxCommandEvent &);
 
     void InsertPoints(wxCommandEvent &);
