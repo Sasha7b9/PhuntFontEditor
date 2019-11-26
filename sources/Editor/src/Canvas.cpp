@@ -1,6 +1,6 @@
 #include "defines.h"
 #include "Canvas.h"
-#include "Font.h"
+#include "Font/Font.h"
 #include "Dialogs/ImportDialog.h"
 #include <cstdlib>
 
