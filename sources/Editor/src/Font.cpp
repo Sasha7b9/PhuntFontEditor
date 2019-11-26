@@ -30,7 +30,7 @@ wxString Symbol::UTFfrom1251(uint8 code)
 }
 
 
-void Symbol::Build(const wxFont &font, uint8 number, int w, int h)
+void Symbol::Build(const wxFont &font, uint8 number, int w, int h, int offsetX, int offsetY)
 {
     width = w;
     height = h;
@@ -55,7 +55,7 @@ void Symbol::Build(const wxFont &font, uint8 number, int w, int h)
 
     memDC.SetPen(*wxBLACK_PEN);
 
-    memDC.DrawText(Symbol::UTFfrom1251(number), { 0, 0 });
+    memDC.DrawText(Symbol::UTFfrom1251(number), { offsetX, offsetY });
 
     memDC.SelectObject(wxNullBitmap);
 }
@@ -93,7 +93,7 @@ void Font::Rebuild()
 
     for (int i = 0; i < 256; i++)
     {
-        symbols[i].Build(font, static_cast<uint8>(i), size.x, size.y);
+        symbols[i].Build(font, static_cast<uint8>(i), size.x, size.y, data.offsetX, data.offsetY);
     }
 
     Resize();

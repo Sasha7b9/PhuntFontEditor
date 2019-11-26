@@ -15,7 +15,7 @@ struct Symbol
 
     wxBitmap *bitmap = nullptr;
 
-    void Build(const wxFont &font, uint8 number, int w, int h);
+    void Build(const wxFont &font, uint8 number, int w, int h, int offsetX, int offsetY);
 
     void Draw(wxMemoryDC &dc, int x, int y);
 
