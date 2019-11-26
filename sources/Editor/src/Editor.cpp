@@ -204,9 +204,9 @@ void Frame::CreateMenu()
     fileMenu->Append(FILE_IMPORT, wxT("»мпорт"), wxT("»мпортировать системный шрифт"));
 
     wxMenu *menuImport = new wxMenu;
-    menuImport->Append(FILE_EXPORT_C, wxT("»мпортировать в —и-файл"));
-    menuImport->Append(FILE_EXPORT_BIN, wxT("»мпортировать в двоичный файл"));
-    fileMenu->AppendSubMenu(menuImport, wxT("Ёкспорт"), wxT("Ёкспортировать системный шрифт"));
+    menuImport->Append(FILE_EXPORT_C, wxT("Ёкспортировать в —и-файл"));
+    menuImport->Append(FILE_EXPORT_BIN, wxT("Ёкспортировать в двоичный файл"));
+    fileMenu->AppendSubMenu(menuImport, wxT("Ёкспорт"));
 
     fileMenu->AppendSeparator();
     fileMenu->Append(MENU_FILE_QUIT, wxT("¬ыход\tAlt+X"), wxT("«акрыть редактор"));
