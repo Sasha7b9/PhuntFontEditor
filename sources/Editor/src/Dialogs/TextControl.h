@@ -11,6 +11,8 @@ public:
 
     bool ToLong(long &value);
 
+    void FromLong(long value);
+
 private:
     wxTextCtrl *tc = nullptr;
 };

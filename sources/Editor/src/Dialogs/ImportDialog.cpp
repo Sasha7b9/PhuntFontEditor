@@ -34,6 +34,8 @@ static wxFont font(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BO
 
 /// Сформировать строку описания шрифта
 static void TuneTextFont();
+/// Установить все полагающиеся надписи в соотвествии с текущими настройками
+static void TuneTexts();
 
 
 ImportDialog::ImportDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, title)
@@ -58,7 +60,6 @@ ImportDialog::ImportDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, 
     wxButton *btnFont = new wxButton(this, ID_BUTTON_FONT, wxT("Шрифт"), wxDefaultPosition, BUTTON_SIZE);
     Connect(ID_BUTTON_FONT, wxEVT_BUTTON, wxCommandEventHandler(ImportDialog::OnChoiceFont));
     textFont = new wxStaticText(this, wxID_ANY, "");
-    TuneTextFont();
     boxFont->Add(btnFont, wxALIGN_LEFT, BORDER);
     boxFont->AddSpacer(SPACER);
     boxFont->Add(textFont, 0, wxALIGN_CENTER_VERTICAL, BORDER);
@@ -81,6 +82,8 @@ ImportDialog::ImportDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, 
     vBox->Add(boxButtons, 0, _ALIGN, BORDER);
 
     SetSizer(vBox);
+
+    TuneTexts();
 }
 
 
@@ -94,20 +97,6 @@ void ImportDialog::OnChoiceFont(wxCommandEvent &)
 
         TuneTextFont();
     }
-}
-
-
-static void TuneTextFont()
-{
-    int size = font.GetPointSize();
-
-    font.SetPointSize(10);
-
-    textFont->SetFont(font);
-
-    font.SetPointSize(size);
-
-    textFont->SetLabel(wxString::Format("%s %d %s", font.GetFaceName(), font.GetPointSize(), wxT("Пример")));
 }
 
 
@@ -135,4 +124,29 @@ void ImportDialog::GetDataImport(DataImport &data)
     data.offsetX = offsetX;
     data.offsetY = offsetY;
     data.font = font;
+}
+
+
+static void TuneTexts()
+{
+    TuneTextFont();
+
+    tcWidthSymbol->FromLong(width);
+    tcHeightSymbol->FromLong(height);
+    tcOffsetX->FromLong(offsetX);
+    tcOffsetY->FromLong(offsetY);
+}
+
+
+static void TuneTextFont()
+{
+    int size = font.GetPointSize();
+
+    font.SetPointSize(10);
+
+    textFont->SetFont(font);
+
+    font.SetPointSize(size);
+
+    textFont->SetLabel(wxString::Format("%s %d %s", font.GetFaceName(), font.GetPointSize(), wxT("Пример")));
 }

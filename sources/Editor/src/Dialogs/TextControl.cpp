@@ -20,3 +20,10 @@ bool TextControl::ToLong(long &value)
 {
     return tc->GetLineText(0).ToLong(&value);
 }
+
+
+void TextControl::FromLong(long value)
+{
+    tc->Clear();
+    tc->WriteText(wxString::Format("%d", value));
+}
