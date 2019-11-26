@@ -40,6 +40,8 @@ enum
 	REDO,
 
     TOOL_CHANGE_FONT,
+    TOOL_SCALE_UP,
+    TOOL_SCALE_DOWN,
 
     CREATE_TRIANGLE,
     INSERT_POINTS
@@ -102,6 +104,8 @@ Frame::Frame(const wxString &title)
     Bind(wxEVT_KEY_DOWN,   &Frame::OnKeyDown,      this);
     Bind(wxEVT_MENU,       &Frame::CreateTriangle, this, CREATE_TRIANGLE);
     Bind(wxEVT_MENU,       &Frame::InsertPoints,   this, INSERT_POINTS);
+    Bind(wxEVT_MENU,       &Frame::OnScaleDown,    this, TOOL_SCALE_DOWN);
+    Bind(wxEVT_MENU,       &Frame::OnScaleUp,      this, TOOL_SCALE_UP);
 
     Show(true);
 
@@ -210,6 +214,8 @@ void Frame::CreateMenu()
     wxBitmap imgRedo(wxImage(wxT("icons/redo.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgCreateTriangle(wxImage(wxT("icons/triangle.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgInsertPoints(wxImage(wxT("icons/points.bmp"), wxBITMAP_TYPE_BMP));
+    wxBitmap imgScaleDown(wxImage(wxT("icons/minus.bmp"), wxBITMAP_TYPE_BMP));
+    wxBitmap imgScaleUp(wxImage(wxT("icons/plus.bmp"), wxBITMAP_TYPE_BMP));
 
     wxToolBar* toolBar = CreateToolBar();
     toolBar->AddTool(FILE_OPEN, wxT("Открыть"), imgOpen, wxT("Загрузить ранее созданный сигнал из файла"));
@@ -217,11 +223,15 @@ void Frame::CreateMenu()
     toolBar->AddTool(FILE_NEW, wxT("Новый"), imgNew, wxT("Создать новый сигнал"));
 
     toolBar->AddSeparator();
+    toolBar->AddTool(UNDO, wxT("Отменить"), imgUndo, wxT("Отменить предыдущее действие"));
+    toolBar->AddTool(REDO, wxT("Восстановить"), imgRedo, wxT("Восстановить следующее действие"));
+
+    toolBar->AddSeparator();
     toolBar->AddTool(TOOL_CHANGE_FONT, wxT("Выбрать шрифт"), imgChangeFont, wxT("Выбрать шрифт"));
 
     toolBar->AddSeparator();
-    toolBar->AddTool(UNDO, wxT("Отменить"), imgUndo, wxT("Отменить предыдущее действие"));
-    toolBar->AddTool(REDO, wxT("Восстановить"), imgRedo, wxT("Восстановить следующее действие"));
+    toolBar->AddTool(TOOL_SCALE_DOWN, wxT("Уменьшить масштаб"), imgScaleDown, wxT("Уменьшение масштаба"));
+    toolBar->AddTool(TOOL_SCALE_UP, wxT("Увеличить масштаб"), imgScaleUp, wxT("Увеличение масштаба"));
 
     toolBar->AddSeparator();
     toolBar->AddTool(CREATE_TRIANGLE, wxT("Треугольник"), imgCreateTriangle, wxT("Создать новый сигнал в форме треугольника"));
@@ -353,4 +363,16 @@ void Frame::OnChangeFont(wxCommandEvent &)
         TheCanvas->Rebuild(dlg.GetFontData().GetChosenFont());
         TheCanvas->Refresh();
     }
+}
+
+
+void Frame::OnScaleUp(wxCommandEvent &)
+{
+    TheCanvas->Increase();
+}
+
+
+void Frame::OnScaleDown(wxCommandEvent &)
+{
+    TheCanvas->Decrease();
 }

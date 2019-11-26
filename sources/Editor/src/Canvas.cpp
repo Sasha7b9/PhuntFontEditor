@@ -102,10 +102,6 @@ void Canvas::OnMouseWheel(wxMouseEvent &event) //-V2009
     {
         Decrease();
     }
-
-    TuneScrollBar();
-
-    Refresh();
 }
 
 
@@ -127,6 +123,8 @@ void Canvas::Increase()
 
         font.Rebuild();
 
+        TuneScrollBar();
+
         Refresh();
     }
 }
@@ -141,6 +139,8 @@ void Canvas::Decrease()
         Resize();
 
         font.Rebuild();
+
+        TuneScrollBar();
 
         Refresh();
     }

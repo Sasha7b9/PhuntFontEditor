@@ -13,6 +13,10 @@ public:
     void OnPaint(wxPaintEvent &);
 
     void Rebuild(const wxFont &font);
+    /// Увеличить масштаб
+    void Increase();
+    /// Уменьшить масштаб
+    void Decrease();
 
 private:
 
@@ -25,10 +29,6 @@ private:
     void OnMouseRightDown(wxMouseEvent &);
 
     void OnMouseRightUp(wxMouseEvent &);
-    /// Увеличить в два раза
-    void Increase();
-    /// Уменьшить в два раза
-    void Decrease();
 
     void TuneScrollBar();
 
