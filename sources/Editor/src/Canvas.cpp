@@ -2,9 +2,6 @@
 #include "Canvas.h"
 #include "Font.h"
 #include <cstdlib>
-#pragma warning(push, 0)
-#include <wx/time.h>
-#pragma warning(pop)
 
 
 Canvas *TheCanvas = nullptr;
@@ -41,10 +38,6 @@ Canvas::Canvas(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 
 void Canvas::OnPaint(wxPaintEvent &)
 {
-    std::cout << "" << std::endl;
-
-    wxLongLong start = wxGetUTCTimeMillis();
-
     wxPaintDC dc(this);
 
     dc.SetPen(*wxBLACK);
@@ -55,8 +48,6 @@ void Canvas::OnPaint(wxPaintEvent &)
 
     DrawSymbols(dc);
 
-    std::cout << "time 1       " << wxGetUTCTimeMillis() - start << std::endl;
-  
     if (font.pixelsInPoint > 5)
     {
         dc.SetPen(wxPen(wxColor(0xa0, 0xa0, 0xa0)));
@@ -85,8 +76,6 @@ void Canvas::OnPaint(wxPaintEvent &)
     }
     
     HighlightCell(dc);
-
-    std::cout << "Time refresh " << wxGetUTCTimeMillis() - start << std::endl;
 }
 
 
