@@ -1,6 +1,7 @@
 #include "defines.h"
 #include "Canvas.h"
 #include "Dialogs/ImportDialog.h"
+#include "Dialogs/TextControl.h"
 #pragma warning(push, 0)
 #include <wx/fontdlg.h>
 #pragma warning(pop)
@@ -8,16 +9,24 @@
 
 enum
 {
-    ID_BUTTON_FONT
+    ID_BUTTON_FONT = 100
 };
 
 
 /// Информация о выбранном шрифте
 static wxStaticText *textFont = nullptr;
 /// Ширина символа
-static wxTextCtrl *tcWidthSymbol = nullptr;
+static TextControl *tcWidthSymbol = nullptr;
+static int width = 8;
 /// Высота символа
-static wxTextCtrl *tcHeightSymbol = nullptr;
+static TextControl *tcHeightSymbol = nullptr;
+static int height = 8;
+/// Смещение шрифта по горизонтали
+static TextControl *tcOffsetX = nullptr;
+static int offsetX = 0;
+/// Смещение шрифта по вертикали
+static TextControl *tcOffsetY = nullptr;
+static int offsetY = 0;
 
 
 ImportDialog::ImportDialog(const wxString &title) : Dialog(title)
@@ -36,23 +45,21 @@ ImportDialog::ImportDialog(const wxString &title) : Dialog(title)
     boxFont->AddSpacer(SPACER);
     boxFont->Add(textFont, 0, _ALIGN, BORDER);
 
-    wxBoxSizer *boxWidth = new wxBoxSizer(wxHORIZONTAL);
-    tcWidthSymbol = new wxTextCtrl(this, wxID_ANY, wxT("8"), wxDefaultPosition, { 10, 20 });
-    boxWidth->Add(tcWidthSymbol, _ALIGN, BORDER);
-    boxWidth->AddSpacer(SPACER);
-    boxWidth->Add(new wxStaticText(this, wxID_ANY, wxT("ширина символа")), _ALIGN, BORDER);
+    tcWidthSymbol = new TextControl(this, wxT("8"), wxT("ширина символа"));
 
-    wxBoxSizer *boxHeight = new wxBoxSizer(wxHORIZONTAL);
-    tcHeightSymbol = new wxTextCtrl(this, wxID_ANY, wxT("8"), wxDefaultPosition, { 10, 20 });
-    boxHeight->Add(tcHeightSymbol, _ALIGN, BORDER);
-    boxHeight->AddSpacer(SPACER);
-    boxHeight->Add(new wxStaticText(this, wxID_ANY, wxT("высота символа")), _ALIGN, BORDER);
+    tcHeightSymbol = new TextControl(this, wxT("8"), wxT("высота символа"));
+
+    tcOffsetX = new TextControl(this, wxT("0"), wxT("смещение по x"));
+
+    tcOffsetY = new TextControl(this, wxT("0"), wxT("смещение по y"));
 
     vBox->Add(boxFont, 0, _ALIGN, BORDER);
-    vBox->Add(boxWidth, 0, _ALIGN, BORDER);
-    vBox->Add(boxHeight, 0, _ALIGN, BORDER);
+    vBox->Add(tcWidthSymbol, 0, _ALIGN, BORDER);
+    vBox->Add(tcHeightSymbol, 0, _ALIGN, BORDER);
+    vBox->Add(tcOffsetX, 0, _ALIGN, BORDER);
+    vBox->Add(tcOffsetY, 0, _ALIGN, BORDER);
 
-    SetBoxSizer(vBox, { 300, 200 });
+    SetBoxSizer(vBox, { 200, 200 });
 }
 
 
