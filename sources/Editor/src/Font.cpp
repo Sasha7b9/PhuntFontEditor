@@ -9,10 +9,7 @@ Symbol::Symbol(int w, int h) : width(w), height(h)
 
 Symbol::~Symbol()
 {
-    if (bitmap)
-    {
-        delete bitmap;
-    }
+    delete bitmap;
 }
 
 
@@ -20,17 +17,17 @@ wxString Symbol::UTFfrom1251(uint8 code)
 {
     if(code >= 192)
     {
-        return wxChar(0x0410 + (code - 192));
+        return static_cast<wxChar>(0x0410 + code - 192);
     }
 
     if(code == 168)
     {
-        return wxChar(0x0401);
+        return static_cast<wxChar>(0x0401);
     }
     
     if(code == 184)
     {
-        return wxChar(0x0451);
+        return static_cast<wxChar>(0x0451);
     }
 
     return wxString::Format("%c", code);
@@ -39,10 +36,7 @@ wxString Symbol::UTFfrom1251(uint8 code)
 
 void Symbol::Build(const wxFont &font, uint8 number)
 {
-    if (bitmap)
-    {
-        delete bitmap;
-    }
+    delete bitmap;
 
     bitmap = new wxBitmap(width, height);
 
@@ -103,10 +97,7 @@ void Font::Rebuild(const wxFont *f)
 
     Resize();
 
-    if (bitmap)
-    {
-        delete bitmap;
-    }
+    delete bitmap;
 
     bitmap = new wxBitmap(16 * size.x * pixelsInPoint, 16 * size.y * pixelsInPoint);
 

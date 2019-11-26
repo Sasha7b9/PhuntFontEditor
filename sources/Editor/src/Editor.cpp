@@ -12,6 +12,7 @@
 
 #include "defines.h"
 #include "Canvas.h"
+#include "Dialogs/ImportDialog.h"
 
 extern void update();
 extern void init();
@@ -343,11 +344,6 @@ void Frame::OnScaleDown(wxCommandEvent &)
 
 void Frame::OnImportFont(wxCommandEvent &)
 {
-    wxFontDialog dlg(this);
-
-    if (dlg.ShowModal() == wxID_OK)
-    {
-        TheCanvas->Rebuild(dlg.GetFontData().GetChosenFont());
-        TheCanvas->Refresh();
-    }
+    ImportDialog dlg(wxT("Импорт шрифта"));
+    dlg.ShowModal();
 }

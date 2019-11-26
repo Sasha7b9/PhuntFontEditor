@@ -5,9 +5,9 @@
 class ImportDialog : public Dialog
 {
 public:
-    ImportDialog();
+    ImportDialog(const wxString &title);
 
 protected:
 
-    virtual void SendAdditonForm() {};
+    void OnChoiceFont(wxCommandEvent &);
 };
