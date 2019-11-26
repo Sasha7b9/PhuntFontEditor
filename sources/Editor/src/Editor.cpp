@@ -36,7 +36,8 @@ enum
     FILE_SAVE,
     FILE_NEW,                                   // ќчистить форму
     FILE_IMPORT,                                // »мпортировать шрифт
-    FILE_EXPORT,                                // Ёкспортировать шрифт
+    FILE_EXPORT_C,                              // Ёкспортировать шрифт в си-файл
+    FILE_EXPORT_BIN,                            // Ёкспортировать шрифт в двоичный файл
 	UNDO,
 	REDO,
 
@@ -95,7 +96,8 @@ Frame::Frame(const wxString &title)
     Bind(wxEVT_MENU,       &Frame::OnSaveFile,        this, FILE_SAVE);
     Bind(wxEVT_MENU,       &Frame::OnNewFile,         this, FILE_NEW);
     Bind(wxEVT_MENU,       &Frame::OnImportFont,      this, FILE_IMPORT);
-    Bind(wxEVT_MENU,       &Frame::OnExportFont,      this, FILE_EXPORT);
+    Bind(wxEVT_MENU,       &Frame::OnExportFontC,     this, FILE_EXPORT_C);
+    Bind(wxEVT_MENU,       &Frame::OnExportFontBin,   this, FILE_EXPORT_BIN);
     Bind(wxEVT_MENU,       &Frame::OnImportFont,      this, TOOL_CHANGE_FONT);
     Bind(wxEVT_MENU,       &Frame::OnUndo,            this, UNDO);
     Bind(wxEVT_MENU,       &Frame::OnRedo,            this, REDO);
@@ -200,7 +202,12 @@ void Frame::CreateMenu()
     fileMenu->Append(FILE_SAVE, wxT("—охранить\tCtrl+S"), wxT("—охранить данные в файл"));
     fileMenu->AppendSeparator();
     fileMenu->Append(FILE_IMPORT, wxT("»мпорт"), wxT("»мпортировать системный шрифт"));
-    fileMenu->Append(FILE_EXPORT, wxT("Ёкспорт"), wxT("Ёкспортировать системный шрифт"));
+
+    wxMenu *menuImport = new wxMenu;
+    menuImport->Append(FILE_EXPORT_C, wxT("»мпортировать в —и-файл"));
+    menuImport->Append(FILE_EXPORT_BIN, wxT("»мпортировать в двоичный файл"));
+    fileMenu->AppendSubMenu(menuImport, wxT("Ёкспорт"), wxT("Ёкспортировать системный шрифт"));
+
     fileMenu->AppendSeparator();
     fileMenu->Append(MENU_FILE_QUIT, wxT("¬ыход\tAlt+X"), wxT("«акрыть редактор"));
 
@@ -358,7 +365,13 @@ void Frame::OnImportFont(wxCommandEvent &)
 }
 
 
-void Frame::OnExportFont(wxCommandEvent &)
+void Frame::OnExportFontC(wxCommandEvent &)
+{
+
+}
+
+
+void Frame::OnExportFontBin(wxCommandEvent &)
 {
 
 }

@@ -53,7 +53,9 @@ private:
 
     void OnImportFont(wxCommandEvent &);
 
-    void OnExportFont(wxCommandEvent &);
+    void OnExportFontC(wxCommandEvent &);
+
+    void OnExportFontBin(wxCommandEvent &);
     /// Очистить символы, не входящие в основной набор
     void OnClearBadSymbols(wxCommandEvent &);
 };
