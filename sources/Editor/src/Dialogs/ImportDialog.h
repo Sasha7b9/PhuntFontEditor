@@ -1,8 +1,10 @@
 #pragma once
-#include "Dialogs/Dialog.h"
+#pragma warning(push, 0)
+#include <wx/wx.h>
+#pragma warning(pop)
 
 
-class ImportDialog : public Dialog
+class ImportDialog : public wxDialog
 {
 public:
     ImportDialog(const wxString &title);
@@ -10,4 +12,10 @@ public:
 protected:
 
     void OnChoiceFont(wxCommandEvent &);
+
+private:
+
+    void OnButtonOk(wxCommandEvent &);
+
+    void OnButtonCancel(wxCommandEvent &);
 };

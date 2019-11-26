@@ -9,7 +9,9 @@
 
 enum
 {
-    ID_BUTTON_FONT = 100
+    ID_BUTTON_OK,
+    ID_BUTTON_CANCEL,
+    ID_BUTTON_FONT
 };
 
 
@@ -29,11 +31,21 @@ static TextControl *tcOffsetY = nullptr;
 static int offsetY = 0;
 
 
-ImportDialog::ImportDialog(const wxString &title) : Dialog(title)
+ImportDialog::ImportDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, title)
 {
 #define BORDER 5
 #define SPACER 10
 #define _ALIGN wxALIGN_CENTER | wxALL
+
+
+    wxButton *btnOk = new wxButton(this, ID_BUTTON_OK, wxT("Импортировать"), wxDefaultPosition, BUTTON_SIZE);
+    Connect(ID_BUTTON_OK, wxEVT_BUTTON, wxCommandEventHandler(ImportDialog::OnButtonOk));
+    wxButton *btnCancel = new wxButton(this, ID_BUTTON_CANCEL, wxT("Отменить"), wxDefaultPosition, BUTTON_SIZE);
+    Connect(ID_BUTTON_CANCEL, wxEVT_BUTTON, wxCommandEventHandler(ImportDialog::OnButtonCancel));
+    wxBoxSizer *boxButtons = new wxBoxSizer(wxHORIZONTAL);
+    boxButtons->Add(btnOk, 1, wxALIGN_CENTER);
+    boxButtons->AddSpacer(20);
+    boxButtons->Add(btnCancel, 1, wxALIGN_CENTER);
 
     wxBoxSizer *vBox = new wxBoxSizer(wxVERTICAL);
 
@@ -59,7 +71,10 @@ ImportDialog::ImportDialog(const wxString &title) : Dialog(title)
     vBox->Add(tcOffsetX, 0, _ALIGN, BORDER);
     vBox->Add(tcOffsetY, 0, _ALIGN, BORDER);
 
-    SetBoxSizer(vBox, { 200, 200 });
+    vBox->AddSpacer(10);
+    vBox->Add(boxButtons);
+
+    SetSizer(vBox);
 }
 
 
@@ -79,4 +94,16 @@ void ImportDialog::OnChoiceFont(wxCommandEvent &)
 
         textFont->SetLabel(wxString::Format("%s %d %s", font.GetFaceName(), pointSize, wxT("Пример")));
     }
+}
+
+
+void ImportDialog::OnButtonOk(wxCommandEvent &)
+{
+
+}
+
+
+void ImportDialog::OnButtonCancel(wxCommandEvent &)
+{
+    Destroy();
 }
