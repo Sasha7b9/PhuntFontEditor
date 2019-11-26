@@ -3,11 +3,6 @@
 #include "Dialogs/ImportDialog.h"
 
 
-Symbol::Symbol(int w, int h) : width(w), height(h)
-{
-}
-
-
 Symbol::~Symbol()
 {
     delete bitmap;
@@ -35,8 +30,11 @@ wxString Symbol::UTFfrom1251(uint8 code)
 }
 
 
-void Symbol::Build(const wxFont &font, uint8 number)
+void Symbol::Build(const wxFont &font, uint8 number, int w, int h)
 {
+    width = w;
+    height = h;
+
     delete bitmap;
 
     bitmap = new wxBitmap(width, height);
@@ -90,10 +88,12 @@ void Font::Rebuild()
     ImportDialog::GetDataImport(data);
 
     font = data.font;
+    size.x = data.width;
+    size.y = data.height;
 
     for (int i = 0; i < 256; i++)
     {
-        symbols[i].Build(font, static_cast<uint8>(i));
+        symbols[i].Build(font, static_cast<uint8>(i), size.x, size.y);
     }
 
     Resize();

@@ -14,3 +14,9 @@ TextControl::TextControl(wxWindow *parent, const wxString &value, const wxString
 
     SetSizer(box);
 }
+
+
+bool TextControl::ToLong(long &value)
+{
+    return tc->GetLineText(0).ToLong(&value);
+}

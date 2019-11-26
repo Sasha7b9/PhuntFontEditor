@@ -19,16 +19,16 @@ enum
 static wxStaticText *textFont = nullptr;
 /// Ширина символа
 static TextControl *tcWidthSymbol = nullptr;
-static int width = 8;
+static long width = 8;
 /// Высота символа
 static TextControl *tcHeightSymbol = nullptr;
-static int height = 8;
+static long height = 8;
 /// Смещение шрифта по горизонтали
 static TextControl *tcOffsetX = nullptr;
-static int offsetX = 0;
+static long offsetX = 0;
 /// Смещение шрифта по вертикали
 static TextControl *tcOffsetY = nullptr;
-static int offsetY = 0;
+static long offsetY = 0;
 
 static wxFont font(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New"));
 
@@ -113,6 +113,11 @@ static void TuneTextFont()
 
 void ImportDialog::OnButtonOk(wxCommandEvent &)
 {
+    tcWidthSymbol->ToLong(width);
+    tcHeightSymbol->ToLong(height);
+    tcOffsetX->ToLong(offsetX);
+    tcOffsetY->ToLong(offsetY);
+
     TheCanvas->Rebuild();
 }
 

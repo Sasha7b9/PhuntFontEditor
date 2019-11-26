@@ -9,6 +9,8 @@ class TextControl : public wxPanel
 public:
     TextControl(wxWindow *parent, const wxString &value, const wxString &label);
 
+    bool ToLong(long &value);
+
 private:
     wxTextCtrl *tc = nullptr;
 };
