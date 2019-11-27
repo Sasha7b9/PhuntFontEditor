@@ -88,13 +88,13 @@ const wxBrush *BitmapSymbol::GetBrush()
 
 void BitmapSymbol::Draw(wxMemoryDC &dc, int x, int y)
 {
-    dc.DrawBitmap(image, x, y);
+    dc.DrawBitmap(imgDrawable, x, y);
 }
 
 
 void BitmapSymbol::Resize(int scale)
 {
-    image = bmpSymbol->ConvertToImage().Rescale(width * scale, height * scale);
+    imgDrawable = bmpSymbol->ConvertToImage().Rescale(width * scale, height * scale);
 }
 
 

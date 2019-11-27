@@ -31,10 +31,10 @@ public:
     static BitmapSymbol *Null();
 
 private:
-
-    wxImage image;
     /// Здесь хранится исходное изображение в масштабе 1:1
     wxBitmap *bmpSymbol = nullptr;
+    /// Готовое к отрисовке изображение
+    wxImage imgDrawable;
 
     // Если true, символ будет включён в итоговый шрифт
     bool enabled = true;
