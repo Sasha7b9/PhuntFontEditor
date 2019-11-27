@@ -436,8 +436,6 @@ void SymbolImp::PrepareRow(std::vector<uint8> &row, std::vector<uint8> &vec)
 {
     uint numBit = 0;
 
-    int bytesInRow = BytesInRow();
-
     for (int byte = 0; byte < BytesInRow(); byte++)
     {
         uint8 data = 0;
