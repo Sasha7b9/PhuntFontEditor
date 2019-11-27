@@ -9,7 +9,20 @@ const uint8 *Symbol::GetRow(int row) const
 {
     const uint8 *data = reinterpret_cast<const uint8 *>(&d);
 
-    return data + bytesInRow * row;
+    return data + BytesInRow() * row;
+}
+
+
+uint8 Symbol::BytesInRow() const
+{
+    uint8 result = static_cast<uint8>(width / 8);
+
+    if (width % 8)
+    {
+        result++;
+    }
+
+    return result;
 }
 
 

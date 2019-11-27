@@ -18,7 +18,7 @@ private:
 
     static void CalculateOffsets(const int sizes[256], uint16 offsets[256]);
 
-    static void WriteFont(wxTextFile &file, const wxString &nameFont, const int sizes[256], const uint16 offsets[256]);
+    static void WriteFont(wxTextFile &file, const wxString &nameFont, const uint16 offsets[256]);
 
     static void DeleteSymbols();
 };

@@ -8,9 +8,6 @@
 #define ADD_FLINE_3(s, x1, x2, x3) file.AddLine(wxString::Format(s, x1, x2, x3))
 
 
-static int gI = 0;
-
-
 //#define TRACE(num)                                          \
 //if(gI == 0x20)                                              \
 //{                                                           \
@@ -39,6 +36,8 @@ public:
     };
     /// Возвращает размер соответствующего символа BitmapSymbol
     int GetSize() const;
+    /// Возвращает в vec последовательность байт, соответсвующую символу
+    void PrepareBytes(std::vector<uint8> &vec);
 private:
     /// Обрабатывемый символ
     BitmapSymbol *symbol;
@@ -70,6 +69,8 @@ private:
     bool Empty();
     /// Возвращает сумму элементов вектора
     int SumRow(std::vector<uint8> &vec) const;
+    /// Добавить в vec байты очередной строки
+    void PrepareRow(std::vector<uint8> &row, std::vector<uint8> &vec);
 };
 
 
@@ -78,8 +79,6 @@ static SymbolImp *symbols[256];
 
 void FontImporter::Import(BitmapFont &font, wxTextFile &file, const wxString &nameFont)
 {
-    gI = 0;
-
     uint16 offsets[256];        // Здесь смещения всех символов
 
     int sizes[256];             // Здесь размеры всех символов
@@ -90,7 +89,7 @@ void FontImporter::Import(BitmapFont &font, wxTextFile &file, const wxString &na
 
     CalculateOffsets(sizes, offsets);
 
-    WriteFont(file, nameFont, sizes, offsets);
+    WriteFont(file, nameFont, offsets);
 
     DeleteSymbols();
 }
@@ -98,27 +97,46 @@ void FontImporter::Import(BitmapFont &font, wxTextFile &file, const wxString &na
 
 void FontImporter::CreateSymbols(BitmapFont &font)
 {
+    int i = 0;
+
     for (int row = 0; row < 16; row++)
     {
         for (int col = 0; col < 16; col++)
         {
-            symbols[gI++] = new SymbolImp(&font.symbols[row][col]);
+            symbols[i++] = new SymbolImp(&font.symbols[row][col]);
         }
     }
 }
 
 
-void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const int sizes[256], const uint16 offsets[256])
+void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const uint16 offsets[256])
 {
     ADD_FLINE_1("unsigned int %s[] =", nameFont);
     ADD_LINE("{");
 
     for (int i = 0; i < 256; i++)
     {
-        if (symbols[i]->symbol->enabled)
+        //ADD_FLINE_3("/* 0x%02X %03d */   %d,", i, sizes[i], offsets[i]);
+        ADD_FLINE_2("/* 0x%02X */   %d,", i, offsets[i]);
+    }
+
+    for (int i = 0; i < 256; i++)
+    {
+        ADD_FLINE_1("/* Symbol 0x%02X */", i);
+
+        ADD_FLINE_2("    %d, %d,", symbols[i]->GetWidth(), symbols[i]->GetHeight());
+
+        std::vector<uint8> bytes;
+        symbols[i]->PrepareBytes(bytes);
+
+        wxString string("    ");
+
+        for (uint numByte = 0; numByte < bytes.size(); numByte++)
         {
-            file.AddLine(wxString::Format("/* 0x%02X %03d */   %d,", i, sizes[i], offsets[i]));
+            string.Append(wxString::Format("0x%02X, ", bytes[numByte]));
         }
+
+        ADD_LINE(string);
     }
 }
 
@@ -382,4 +400,43 @@ bool SymbolImp::Empty()
     }
 
     return true;
+}
+
+
+void SymbolImp::PrepareBytes(std::vector<uint8> &vec)
+{
+    vec.clear();
+    for (uint row = 0; row < bits.size(); row++)
+    {
+        PrepareRow(bits[row], vec);
+    }
+}
+
+
+void SymbolImp::PrepareRow(std::vector<uint8> &row, std::vector<uint8> &vec)
+{
+    uint numBit = 0;
+
+    for (int byte = 0; byte < BytesInRow(); byte++)
+    {
+        uint8 data = 0;
+        for (int bit = 0; bit < 8; bit++)
+        {
+            if (numBit < row.size())
+            {
+                if (row[numBit])
+                {
+                    data |= 1;
+                }
+            }
+            
+            if (bit < 7)
+            {
+                data = static_cast<uint8>(data << 1);
+            }
+
+            numBit++;
+        }
+        vec.push_back(data);
+    }
 }

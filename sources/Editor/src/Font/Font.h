@@ -5,13 +5,13 @@ struct Symbol
 {
     uint8 width;            ///< Ширина символа в битах
     uint8 height;           ///< Высота символа в битах
-    uint8 bytesInRow;       ///< Количество байт на строку
     uint8 *d;               ///< Данные. Каждая строка имеет целое число байт. Лишние биты не используются. Младший бит идёт первым.
 
     uint8 GetWidth() const { return width; }
     uint8 GetHeight() const { return height; }
     int GetBit(int row, int col) const;       ///< Возвращает 0, если точки нет, и произовльное значение в обратном случае
     const uint8 *GetRow(int row) const;
+    uint8 BytesInRow() const;
 };
 
 
