@@ -33,8 +33,6 @@ public:
 private:
     /// Здесь хранится исходное изображение в масштабе 1:1
     wxBitmap *bmpSymbol = nullptr;
-    /// Отмасштабированное изображение из bmpSymbol. Перед выводом оно должно быть скопировано в imgDrawable и нанесено что нужно
-    wxImage imgScaled;
     /// Готовое к отрисовке изображение
     wxImage imgDrawable;
 
@@ -70,6 +68,12 @@ public:
     BitmapSymbol *GetSymbol(uint8 num);
     /// Возращает местоположение символа на холсте
     wxRect GetRectForSymbol(const BitmapSymbol *symbol) const;
+    /// Переключить состояине символа в позиции мыши с координатами mouseX, mouseY
+    void ToggleStateSymbol(int mouseX, int mouseY);
+
+    BitmapSymbol *GetSymbolUnderMouse(int x, int y);
+
+    void GetSymbolXY(BitmapSymbol *symbol, int *x, int *y);
 
 private:
 

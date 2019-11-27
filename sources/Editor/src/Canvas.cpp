@@ -102,7 +102,7 @@ void Canvas::HighlightPixel(wxPaintDC &dc)
 
 void Canvas::HighlightSymbol(wxPaintDC &dc)
 {
-    BitmapSymbol *symbol = GetSymbolUnderMouse(mouseX, mouseY);
+    BitmapSymbol *symbol = font.GetSymbolUnderMouse(mouseX, mouseY);
 
     dc.SetPen(wxPen(*wxBLUE, 5, wxPENSTYLE_SOLID));
     dc.SetBrush(wxBrush(*wxBLUE, wxBRUSHSTYLE_TRANSPARENT));
@@ -112,20 +112,6 @@ void Canvas::HighlightSymbol(wxPaintDC &dc)
     dc.DrawLine(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
     dc.DrawLine(rect.x, rect.y + rect.height, rect.x + rect.width, rect.y);
     dc.DrawRectangle(rect);
-}
-
-
-BitmapSymbol *Canvas::GetSymbolUnderMouse(int x, int y)
-{
-    if (x < 0 || y < 0)
-    {
-        return BitmapSymbol::Null();
-    }
-
-    int col = x / font.size.x / font.scale;
-    int row = y / font.size.y / font.scale;
-
-    return font.GetSymbol(row, col);
 }
 
 
@@ -198,7 +184,7 @@ void Canvas::OnMouseLeftDown(wxMouseEvent &)
 {
     if (mode == Mode::SelectSymbols)
     {
-        GetSymbolUnderMouse(mouseX, mouseY)->ToggleState();
+        font.ToggleStateSymbol(mouseX, mouseY);
     }
 }
 
