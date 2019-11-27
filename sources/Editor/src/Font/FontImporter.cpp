@@ -66,9 +66,9 @@ private:
     
     void Log() const;
     /// Возвращает true, если все биты раны 0
-    bool Empty();
+    bool Empty() const;
     /// Возвращает сумму элементов вектора
-    int SumRow(std::vector<uint8> &vec) const;
+    int SumRow(const std::vector<uint8> &vec) const;
     /// Добавить в vec байты очередной строки
     void PrepareRow(std::vector<uint8> &row, std::vector<uint8> &vec);
 };
@@ -122,7 +122,13 @@ void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const u
 
     for (int i = 0; i < 256; i++)
     {
-        ADD_FLINE_1("/* Symbol 0x%02X */", i);
+        if (!symbols[i]->symbol->enabled)
+        {
+            continue;;
+        }
+
+        ADD_LINE("");
+        ADD_FLINE_2("/* Symbol 0x%02X, offset %d */", i, offsets[i]);
 
         ADD_FLINE_2("    %d, %d,", symbols[i]->GetWidth(), symbols[i]->GetHeight());
 
@@ -186,8 +192,8 @@ int SymbolImp::GetSize() const
     {
         return 0;
     }
-    //                                 width   height  bytesInRow
-    return GetHeight() * BytesInRow() +    1   +   1   +    1;
+    //                                 width   height
+    return GetHeight() * BytesInRow() +  1   +   1;
 }
 
 
@@ -260,6 +266,11 @@ int SymbolImp::FindPositionFirstBit() const
 
 int SymbolImp::FindPositionLastBit() const
 {
+    if (Empty())
+    {
+        return static_cast<int>(bits[0].size() - 1);
+    }
+
     int result = 0;
 
     for (int row = 0; row < GetHeight(); row++)
@@ -363,7 +374,7 @@ void SymbolImp::DeleteBottomEmptyBits()
 }
 
 
-int SymbolImp::SumRow(std::vector<uint8> &vec) const
+int SymbolImp::SumRow(const std::vector<uint8> &vec) const
 {
     int result = 0;
 
@@ -389,7 +400,7 @@ void SymbolImp::Log() const
 }
 
 
-bool SymbolImp::Empty()
+bool SymbolImp::Empty() const
 {
     for (uint row = 0; row < bits.size(); row++)
     {
@@ -406,6 +417,7 @@ bool SymbolImp::Empty()
 void SymbolImp::PrepareBytes(std::vector<uint8> &vec)
 {
     vec.clear();
+
     for (uint row = 0; row < bits.size(); row++)
     {
         PrepareRow(bits[row], vec);
@@ -416,6 +428,8 @@ void SymbolImp::PrepareBytes(std::vector<uint8> &vec)
 void SymbolImp::PrepareRow(std::vector<uint8> &row, std::vector<uint8> &vec)
 {
     uint numBit = 0;
+
+    int bytesInRow = BytesInRow();
 
     for (int byte = 0; byte < BytesInRow(); byte++)
     {
