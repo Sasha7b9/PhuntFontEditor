@@ -11,14 +11,14 @@
 static int gI = 0;
 
 
-#define TRACE(num)                                          \
-if(gI == 0x21)                                              \
-{                                                           \
-    std::cout << "Point " <<  num <<  std::endl;            \
-    std::cout << "width = " << GetWidth() << std::endl;     \
-    std::cout << "height = " << GetHeight() << std::endl;   \
-    Log();                                                  \
-}
+//#define TRACE(num)                                          \
+//if(gI == 0x20)                                              \
+//{                                                           \
+//    std::cout << "Point " <<  num <<  std::endl;            \
+//    std::cout << "width = " << GetWidth() << std::endl;     \
+//    std::cout << "height = " << GetHeight() << std::endl;   \
+//    Log();                                                  \
+//}
 
 
 /// Структура символа для импортёра
@@ -29,20 +29,13 @@ public:
     SymbolImp(BitmapSymbol *s) : symbol(s)
     {
         CreateBits();
-
-        TRACE(1);
-
+//        TRACE(1);
         DeleteFirstEmptyBits();
-
-        TRACE(2);
-
+//        TRACE(2);
         DeleteLastEmptyBits();
-
-        TRACE(3);
-
+//        TRACE(3);
         DeleteBottomEmptyBits();
-
-        TRACE(4);
+//        TRACE(4);
     };
     /// Возвращает размер соответствующего символа BitmapSymbol
     int GetSize() const;
@@ -73,13 +66,14 @@ private:
     int BytesInRow() const;
     
     void Log() const;
+    /// Возвращает true, если все биты раны 0
+    bool Empty();
+    /// Возвращает сумму элементов вектора
+    int SumRow(std::vector<uint8> &vec) const;
 };
 
 
 static SymbolImp *symbols[256];
-
-/// Возвращает сумму элементов вектора
-static int Sum(std::vector<uint8> &vec);
 
 
 void FontImporter::Import(BitmapFont &font, wxTextFile &file, const wxString &nameFont)
@@ -298,6 +292,11 @@ void FontImporter::DeleteSymbols()
 
 void SymbolImp::DeleteFirstEmptyBits()
 {
+    if (Empty())
+    {
+        return;
+    }
+
     int pos = FindPositionFirstBit();
 
     if (pos != 0)
@@ -315,6 +314,11 @@ void SymbolImp::DeleteFirstEmptyBits()
 
 void SymbolImp::DeleteLastEmptyBits()
 {
+    if (Empty())
+    {
+        return;
+    }
+
     int pos = FindPositionLastBit();
 
     if (pos != static_cast<int>(bits[0].size() - 1))
@@ -334,14 +338,14 @@ void SymbolImp::DeleteLastEmptyBits()
 
 void SymbolImp::DeleteBottomEmptyBits()
 {
-    while (bits.size() > 1 && Sum(bits[bits.size() - 1]) == 0)
+    while (bits.size() > 1 && SumRow(bits[bits.size() - 1]) == 0)
     {
         bits.pop_back();
     }
 }
 
 
-static int Sum(std::vector<uint8> &vec)
+int SymbolImp::SumRow(std::vector<uint8> &vec) const
 {
     int result = 0;
 
@@ -364,4 +368,18 @@ void SymbolImp::Log() const
         }
         std::cout << std::endl;
     }
+}
+
+
+bool SymbolImp::Empty()
+{
+    for (uint row = 0; row < bits.size(); row++)
+    {
+        if (SumRow(bits[row]) != 0)
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
