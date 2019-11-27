@@ -104,13 +104,13 @@ void BitmapFont::Resize()
     {
         for (int col = 0; col < 16; col++)
         {
-            symbols[row][col].Resize(pixelsInPoint);
+            symbols[row][col].Resize(scale);
         }
     }
 
     delete bitmap;
 
-    bitmap = new wxBitmap(16 * size.x * pixelsInPoint, 16 * size.y * pixelsInPoint);
+    bitmap = new wxBitmap(16 * size.x * scale, 16 * size.y * scale);
 
     wxMemoryDC dc;
     dc.SelectObject(*bitmap);
@@ -118,8 +118,8 @@ void BitmapFont::Resize()
     {
         for (int col = 0; col < 16; col++)
         {
-            int x0 = col * size.x * pixelsInPoint;
-            int y0 = row * size.y * pixelsInPoint;
+            int x0 = col * size.x * scale;
+            int y0 = row * size.y * scale;
 
             symbols[row][col].Draw(dc, x0, y0);
         }
@@ -221,10 +221,10 @@ wxRect BitmapFont::GetRectForSymbol(const BitmapSymbol *symbol) const
             {
                 wxRect rect;
 
-                rect.x = col * size.x * pixelsInPoint;
-                rect.y = row * size.y * pixelsInPoint;
-                rect.width = size.x * pixelsInPoint;
-                rect.height = size.y * pixelsInPoint;
+                rect.x = col * size.x * scale;
+                rect.y = row * size.y * scale;
+                rect.width = size.x * scale;
+                rect.height = size.y * scale;
 
                 return rect;
             }

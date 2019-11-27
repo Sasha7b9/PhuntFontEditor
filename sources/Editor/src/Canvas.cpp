@@ -44,16 +44,16 @@ void Canvas::OnPaint(wxPaintEvent &)
 
     font.Draw(dc);
 
-    if (font.pixelsInPoint > 5)
+    if (font.scale > 5)
     {
         dc.SetPen(wxPen(wxColor(0xa0, 0xa0, 0xa0)));
 
-        for (int i = 0; i < GetSize().x; i += font.pixelsInPoint)
+        for (int i = 0; i < GetSize().x; i += font.scale)
         {
             dc.DrawLine(i, 0, i, GetSize().y);
         }
 
-        for (int i = 0; i < GetSize().y; i += font.pixelsInPoint)
+        for (int i = 0; i < GetSize().y; i += font.scale)
         {
             dc.DrawLine(0, i, GetSize().x, i);
         }
@@ -61,12 +61,12 @@ void Canvas::OnPaint(wxPaintEvent &)
 
     dc.SetPen(*wxBLACK);
     
-    for (int i = 0; i < GetSize().x; i += font.size.x * font.pixelsInPoint)
+    for (int i = 0; i < GetSize().x; i += font.size.x * font.scale)
     {
         dc.DrawLine(i, 0, i, GetSize().y);
     }
     
-    for (int i = 0; i < GetSize().y; i += font.size.y * font.pixelsInPoint)
+    for (int i = 0; i < GetSize().y; i += font.size.y * font.scale)
     {
         dc.DrawLine(0, i, GetSize().x, i);
     }
@@ -93,10 +93,10 @@ void Canvas::HighlightPixel(wxPaintDC &dc)
     dc.SetPen(*wxBLACK_PEN);
     dc.SetBrush(*wxBLACK_BRUSH);
 
-    int x = mouseX / font.pixelsInPoint * font.pixelsInPoint;
-    int y = mouseY / font.pixelsInPoint * font.pixelsInPoint;
+    int x = mouseX / font.scale * font.scale;
+    int y = mouseY / font.scale * font.scale;
 
-    dc.DrawRectangle(x, y, font.pixelsInPoint, font.pixelsInPoint);
+    dc.DrawRectangle(x, y, font.scale, font.scale);
 }
 
 
@@ -122,8 +122,8 @@ BitmapSymbol *Canvas::GetSymbolUnderMouse(int x, int y)
         return BitmapSymbol::Null();
     }
 
-    int col = x / font.size.x / font.pixelsInPoint;
-    int row = y / font.size.y / font.pixelsInPoint;
+    int col = x / font.size.x / font.scale;
+    int row = y / font.size.y / font.scale;
 
     return font.GetSymbol(row, col);
 }
@@ -139,9 +139,9 @@ void Canvas::OnMouseMove(wxMouseEvent &event) //-V2009
 
 void Canvas::Increase()
 {
-    if (font.pixelsInPoint < 32)
+    if (font.scale < 32)
     {
-        font.pixelsInPoint++;
+        font.scale++;
 
         Resize();
 
@@ -156,9 +156,9 @@ void Canvas::Increase()
 
 void Canvas::Decrease()
 {
-    if (font.pixelsInPoint > 2)
+    if (font.scale > 2)
     {
-        font.pixelsInPoint--;
+        font.scale--;
 
         Resize();
 
@@ -180,7 +180,7 @@ void Canvas::OnMouseLeave(wxMouseEvent &)
 
 wxSize Canvas::CurrentSize()
 {
-    return { 16 * font.size.x * font.pixelsInPoint + 1, 16 * font.size.y * font.pixelsInPoint + 1 };
+    return { 16 * font.size.x * font.scale + 1, 16 * font.size.y * font.scale + 1 };
 }
 
 

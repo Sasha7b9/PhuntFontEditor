@@ -33,6 +33,8 @@ public:
 private:
     /// Здесь хранится исходное изображение в масштабе 1:1
     wxBitmap *bmpSymbol = nullptr;
+    /// Отмасштабированное изображение из bmpSymbol. Перед выводом оно должно быть скопировано в imgDrawable и нанесено что нужно
+    wxImage imgScaled;
     /// Готовое к отрисовке изображение
     wxImage imgDrawable;
 
@@ -51,7 +53,7 @@ public:
     /// Размер символа в точках
     wxSize size = { 0, 0 };
     /// Столько писелей занимает одна точка шрифта в люому направлении
-    int pixelsInPoint = 8;
+    int scale = 8;
 
     BitmapSymbol symbols[16][16];
     /// Создаёт новый шрифт
