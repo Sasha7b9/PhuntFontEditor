@@ -67,22 +67,10 @@ void BitmapSymbol::Clear()
     wxMemoryDC memDC;
     memDC.SelectObject(*bmpSymbol);
 
-    memDC.SetPen(*GetPen());
-    memDC.SetBrush(*GetBrush());
+    memDC.SetPen(*wxWHITE_PEN);
+    memDC.SetBrush(*wxWHITE_BRUSH);
 
     memDC.DrawRectangle(0, 0, width, height);
-}
-
-
-const wxPen *BitmapSymbol::GetPen()
-{
-    return enabled ? wxWHITE_PEN : wxGREY_PEN;
-}
-
-
-const wxBrush *BitmapSymbol::GetBrush()
-{
-    return enabled ? wxWHITE_BRUSH : wxGREY_BRUSH;
 }
 
 

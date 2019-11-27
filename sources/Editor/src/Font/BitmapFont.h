@@ -38,9 +38,6 @@ private:
 
     // Если true, символ будет включён в итоговый шрифт
     bool enabled = true;
-
-    const wxPen *GetPen();
-    const wxBrush *GetBrush();
 };
 
 
