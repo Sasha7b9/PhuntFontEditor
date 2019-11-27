@@ -14,8 +14,6 @@ public:
 
     static wxString UTFfrom1251(uint8 code);
 
-    wxBitmap *bitmap = nullptr;
-
     void Build(const wxFont &font, uint8 number, int w, int h, int offsetX, int offsetY);
     
     void Clear();
@@ -35,6 +33,9 @@ public:
 private:
 
     wxImage image;
+    /// Здесь хранится исходное изображение в масштабе 1:1
+    wxBitmap *bmpSymbol = nullptr;
+
     // Если true, символ будет включён в итоговый шрифт
     bool enabled = true;
 

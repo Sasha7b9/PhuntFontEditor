@@ -6,7 +6,7 @@
 
 BitmapSymbol::~BitmapSymbol()
 {
-    delete bitmap;
+    delete bmpSymbol;
 }
 
 
@@ -36,15 +36,15 @@ void BitmapSymbol::Build(const wxFont &font, uint8 number, int w, int h, int off
     width = w;
     height = h;
 
-    delete bitmap;
+    delete bmpSymbol;
 
-    bitmap = new wxBitmap(width, height);
+    bmpSymbol = new wxBitmap(width, height);
 
     wxMemoryDC memDC;
 
     memDC.SetFont(font);
 
-    memDC.SelectObject(*bitmap);
+    memDC.SelectObject(*bmpSymbol);
 
     wxPen pen(wxColour(0xff, 0xff, 0xff));
     wxBrush brush(wxColour(0xff, 0xff, 0xff));
@@ -64,11 +64,11 @@ void BitmapSymbol::Build(const wxFont &font, uint8 number, int w, int h, int off
 
 void BitmapSymbol::Clear()
 {
-    delete bitmap;
-    bitmap = new wxBitmap(width, height);
+    delete bmpSymbol;
+    bmpSymbol = new wxBitmap(width, height);
 
     wxMemoryDC memDC;
-    memDC.SelectObject(*bitmap);
+    memDC.SelectObject(*bmpSymbol);
 
     memDC.SetPen(*GetPen());
     memDC.SetBrush(*GetBrush());
@@ -97,7 +97,7 @@ void BitmapSymbol::Draw(wxMemoryDC &dc, int x, int y)
 
 void BitmapSymbol::Resize(int scale)
 {
-    image = bitmap->ConvertToImage().Rescale(width * scale, height * scale);
+    image = bmpSymbol->ConvertToImage().Rescale(width * scale, height * scale);
 }
 
 
