@@ -15,12 +15,6 @@ static wxCoord mouseX;
 static wxCoord mouseY;
 
 
-/// ѕодсветить клетку, на которую указывает мышь
-static void HighlightCell(wxPaintDC &dc);
-/// ƒействующий размер холста
-static wxSize CurrentSize();
-
-
 Canvas::Canvas(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 {
     sw = static_cast<wxScrolledWindow *>(parent);
@@ -76,11 +70,24 @@ void Canvas::OnPaint(wxPaintEvent &)
         dc.DrawLine(0, i, GetSize().x, i);
     }
     
-    HighlightCell(dc);
+    DrawCursor(dc);
 }
 
 
-static void HighlightCell(wxPaintDC &dc)
+void Canvas::DrawCursor(wxPaintDC &dc)
+{
+    if (mode == Mode::Edit)
+    {
+        HighlightPixel(dc);
+    }
+    else
+    {
+
+    }
+}
+
+
+void Canvas::HighlightPixel(wxPaintDC &dc)
 {
     dc.SetPen(*wxBLACK_PEN);
     dc.SetBrush(*wxBLACK_BRUSH);
@@ -142,7 +149,7 @@ void Canvas::OnMouseLeave(wxMouseEvent &)
 }
 
 
-static wxSize CurrentSize()
+wxSize Canvas::CurrentSize()
 {
     return { 16 * font.size.x * font.pixelsInPoint + 1, 16 * font.size.y * font.pixelsInPoint + 1 };
 }

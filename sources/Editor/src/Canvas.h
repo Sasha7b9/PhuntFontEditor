@@ -39,6 +39,13 @@ private:
 
     void Resize();
 
+    void DrawCursor(wxPaintDC &dc);
+    /// Подсветить точку символа, на которую указывает мышь
+    void HighlightPixel(wxPaintDC &dc);
+    /// Действующий размер холста
+    wxSize CurrentSize();
+
+
     wxScrolledWindow *sw = nullptr;
 
     enum Mode
