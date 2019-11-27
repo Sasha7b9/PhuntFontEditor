@@ -193,7 +193,14 @@ void Canvas::ClearBadSymbols()
 }
 
 
-void Canvas::ImportFont(wxTextFile &file)
+void Canvas::ImportFont(wxTextFile &file, const wxString &nameFont)
 {
-    FontImporter::Import(font, file);
+    FontImporter::Import(font, file, nameFont);
 }
+
+
+void Canvas::EnableModeCheckSymbols(bool)
+{
+
+}
+

@@ -41,10 +41,11 @@ enum
 	UNDO,
 	REDO,
 
-    TOOL_CHANGE_FONT,
-    TOOL_SCALE_UP,
-    TOOL_SCALE_DOWN,
-    TOOL_CLEAR_BAD_SYMBOLS
+    TOOL_IMPORT_FONT,                           // Импорт шрифта
+    TOOL_SCALE_UP,                              // Увеличить масштаб
+    TOOL_SCALE_DOWN,                            // Уменьшить масштаб
+    TOOL_CLEAR_BAD_SYMBOLS,                     // Очистить сиволы из дополнительного набора
+    TOOL_CHOICE_SAVED                           // Выбрать символы, которые будут включены в шрифт
 };
 
 enum
@@ -91,23 +92,24 @@ Frame::Frame(const wxString &title)
 
     SetSizeAndPosition();
 
-    Bind(wxEVT_MENU,       &Frame::OnQuit,            this, MENU_FILE_QUIT);
-    Bind(wxEVT_MENU,       &Frame::OnOpenFile,        this, FILE_OPEN);
-    Bind(wxEVT_MENU,       &Frame::OnSaveFile,        this, FILE_SAVE);
-    Bind(wxEVT_MENU,       &Frame::OnNewFile,         this, FILE_NEW);
-    Bind(wxEVT_MENU,       &Frame::OnImportFont,      this, FILE_IMPORT);
-    Bind(wxEVT_MENU,       &Frame::OnExportFontC,     this, FILE_EXPORT_C);
-    Bind(wxEVT_MENU,       &Frame::OnExportFontBin,   this, FILE_EXPORT_BIN);
-    Bind(wxEVT_MENU,       &Frame::OnImportFont,      this, TOOL_CHANGE_FONT);
-    Bind(wxEVT_MENU,       &Frame::OnUndo,            this, UNDO);
-    Bind(wxEVT_MENU,       &Frame::OnRedo,            this, REDO);
-    Bind(wxEVT_TIMER,      &Frame::OnTimer,           this, TIMER_ID);
-    Bind(wxEVT_SIZE,       &Frame::OnResize,          this);
-    Bind(wxEVT_PAINT,      &Frame::OnRepaint,         this);
-    Bind(wxEVT_KEY_DOWN,   &Frame::OnKeyDown,         this);
-    Bind(wxEVT_MENU,       &Frame::OnScaleDown,       this, TOOL_SCALE_DOWN);
-    Bind(wxEVT_MENU,       &Frame::OnScaleUp,         this, TOOL_SCALE_UP);
-    Bind(wxEVT_MENU,       &Frame::OnClearBadSymbols, this, TOOL_CLEAR_BAD_SYMBOLS);
+    Bind(wxEVT_MENU,       &Frame::OnQuit,               this, MENU_FILE_QUIT);
+    Bind(wxEVT_MENU,       &Frame::OnOpenFile,           this, FILE_OPEN);
+    Bind(wxEVT_MENU,       &Frame::OnSaveFile,           this, FILE_SAVE);
+    Bind(wxEVT_MENU,       &Frame::OnNewFile,            this, FILE_NEW);
+    Bind(wxEVT_MENU,       &Frame::OnImportFont,         this, FILE_IMPORT);
+    Bind(wxEVT_MENU,       &Frame::OnExportFontC,        this, FILE_EXPORT_C);
+    Bind(wxEVT_MENU,       &Frame::OnExportFontBin,      this, FILE_EXPORT_BIN);
+    Bind(wxEVT_MENU,       &Frame::OnImportFont,         this, TOOL_IMPORT_FONT);
+    Bind(wxEVT_MENU,       &Frame::OnUndo,               this, UNDO);
+    Bind(wxEVT_MENU,       &Frame::OnRedo,               this, REDO);
+    Bind(wxEVT_TIMER,      &Frame::OnTimer,              this, TIMER_ID);
+    Bind(wxEVT_SIZE,       &Frame::OnResize,             this);
+    Bind(wxEVT_PAINT,      &Frame::OnRepaint,            this);
+    Bind(wxEVT_KEY_DOWN,   &Frame::OnKeyDown,            this);
+    Bind(wxEVT_MENU,       &Frame::OnScaleDown,          this, TOOL_SCALE_DOWN);
+    Bind(wxEVT_MENU,       &Frame::OnScaleUp,            this, TOOL_SCALE_UP);
+    Bind(wxEVT_MENU,       &Frame::OnClearBadSymbols,    this, TOOL_CLEAR_BAD_SYMBOLS);
+    Bind(wxEVT_MENU,       &Frame::OnChoiceSavedSymbols, this, TOOL_CHOICE_SAVED);
 
     Show(true);
 
@@ -225,6 +227,7 @@ void Frame::CreateMenu()
     wxBitmap imgScaleDown(wxImage(wxT("icons/minus.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgScaleUp(wxImage(wxT("icons/plus.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgClear(wxImage(wxT("icons/clear.bmp"), wxBITMAP_TYPE_BMP));
+    wxBitmap imgToggle(wxImage(wxT("icons/toggle.bmp"), wxBITMAP_TYPE_BMP));
 
     wxToolBar* toolBar = CreateToolBar();
     toolBar->AddTool(FILE_OPEN, wxT("Открыть"), imgOpen, wxT("Загрузить ранее созданный сигнал из файла"));
@@ -236,7 +239,7 @@ void Frame::CreateMenu()
     toolBar->AddTool(REDO, wxT("Восстановить"), imgRedo, wxT("Восстановить следующее действие"));
 
     toolBar->AddSeparator();
-    toolBar->AddTool(TOOL_CHANGE_FONT, wxT("Выбрать шрифт"), imgChangeFont, wxT("Выбрать шрифт"));
+    toolBar->AddTool(TOOL_IMPORT_FONT, wxT("Выбрать шрифт"), imgChangeFont, wxT("Выбрать шрифт"));
 
     toolBar->AddSeparator();
     toolBar->AddTool(TOOL_SCALE_DOWN, wxT("Уменьшить масштаб"), imgScaleDown, wxT("Уменьшение масштаба"));
@@ -244,6 +247,7 @@ void Frame::CreateMenu()
 
     toolBar->AddSeparator();
     toolBar->AddTool(TOOL_CLEAR_BAD_SYMBOLS, wxT("Очистить дополнительные символы"), imgClear, wxT("Стереть дополнительные символы"));
+    toolBar->AddTool(TOOL_CHOICE_SAVED, wxT("Выбрать символы для сохранения"), imgToggle, wxT(""), wxITEM_CHECK);
 
     toolBar->Realize();
 }
@@ -336,7 +340,7 @@ void Frame::OnExportFontC(wxCommandEvent &)
 
         file.Create();
 
-        TheCanvas->ImportFont(file);
+        TheCanvas->ImportFont(file, "font5");
 
         file.Write();
 
@@ -395,4 +399,10 @@ void Frame::OnExportFontBin(wxCommandEvent &)
 void Frame::OnClearBadSymbols(wxCommandEvent &)
 {
     TheCanvas->ClearBadSymbols();
+}
+
+
+void Frame::OnChoiceSavedSymbols(wxCommandEvent &event)
+{
+    TheCanvas->EnableModeCheckSymbols(event.IsChecked());
 }

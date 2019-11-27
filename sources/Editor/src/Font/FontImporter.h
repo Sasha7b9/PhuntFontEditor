@@ -8,5 +8,5 @@
 class FontImporter
 {
 public:
-    static void Import(BitmapFont &font, wxTextFile &file);
+    static void Import(BitmapFont &font, wxTextFile &file, const wxString &nameFont);
 };

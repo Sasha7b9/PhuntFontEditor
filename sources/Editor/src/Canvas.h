@@ -21,7 +21,9 @@ public:
     /// Очистить символы, не входящие в основной набор
     void ClearBadSymbols();
 
-    void ImportFont(wxTextFile &file);
+    void ImportFont(wxTextFile &file, const wxString &nameFont);
+    /// Включить/выключить режим выбора символов
+    void EnableModeCheckSymbols(bool enable);
 
 private:
 

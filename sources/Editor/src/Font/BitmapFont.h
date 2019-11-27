@@ -23,10 +23,19 @@ struct BitmapSymbol
     void Draw(wxMemoryDC &dc, int x, int y);
 
     void Resize(int scale);
+    // Сделать символ активным - будет в итоговом шрифте
+    void Enable();
+    // Сделать символ неактивным - не будет в итоговом шрифте
+    void Disable();
 
 private:
 
     wxImage image;
+    // Если true, символ будет включён в итоговый шрифт
+    bool enabled = true;
+
+    const wxPen *GetPen();
+    const wxBrush *GetBrush();
 };
 
 

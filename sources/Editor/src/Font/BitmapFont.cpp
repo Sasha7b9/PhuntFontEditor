@@ -70,10 +70,22 @@ void BitmapSymbol::Clear()
     wxMemoryDC memDC;
     memDC.SelectObject(*bitmap);
 
-    memDC.SetPen(*wxWHITE_PEN);
-    memDC.SetBrush(*wxWHITE_BRUSH);
+    memDC.SetPen(*GetPen());
+    memDC.SetBrush(*GetBrush());
 
-    memDC.Clear();
+    memDC.DrawRectangle(0, 0, width, height);
+}
+
+
+const wxPen *BitmapSymbol::GetPen()
+{
+    return enabled ? wxWHITE_PEN : wxGREY_PEN;
+}
+
+
+const wxBrush *BitmapSymbol::GetBrush()
+{
+    return enabled ? wxWHITE_BRUSH : wxGREY_BRUSH;
 }
 
 
@@ -150,13 +162,27 @@ void BitmapFont::ClearBadSymbols()
 {
     for (int i = 0; i < 0x20; i++)
     {
+        symbols[i].Disable();
         symbols[i].Clear();
     }
 
     for (int i = 0x7f; i < 0xc0; i++)
     {
+        symbols[i].Disable();
         symbols[i].Clear();
     }
 
     Resize();
+}
+
+
+void BitmapSymbol::Disable()
+{
+    enabled = false;
+}
+
+
+void BitmapSymbol::Enable()
+{
+    enabled = true;
 }
