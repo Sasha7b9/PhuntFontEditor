@@ -7,10 +7,9 @@
 
 struct BitmapSymbol
 {
-    BitmapSymbol() : width(0), height(0) {};
     ~BitmapSymbol();
-    int width;
-    int height;
+    int width = 0;
+    int height = 0;
 
     static wxString UTFfrom1251(uint8 code);
 

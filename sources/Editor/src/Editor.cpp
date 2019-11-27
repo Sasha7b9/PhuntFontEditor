@@ -402,7 +402,7 @@ void Frame::OnClearBadSymbols(wxCommandEvent &)
 }
 
 
-void Frame::OnChoiceSavedSymbols(wxCommandEvent &event)
+void Frame::OnChoiceSavedSymbols(wxCommandEvent &event) //-V2009
 {
     TheCanvas->EnableModeCheckSymbols(event.IsChecked());
 }
