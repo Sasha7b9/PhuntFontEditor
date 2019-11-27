@@ -46,11 +46,8 @@ void BitmapSymbol::Build(const wxFont &font, uint8 number, int w, int h, int off
 
     memDC.SelectObject(*bmpSymbol);
 
-    wxPen pen(wxColour(0xff, 0xff, 0xff));
-    wxBrush brush(wxColour(0xff, 0xff, 0xff));
-
-    memDC.SetPen(pen);
-    memDC.SetBrush(brush);
+    memDC.SetPen(wxPen(*wxWHITE_PEN));
+    memDC.SetBrush(wxBrush(*wxWHITE_BRUSH));
 
     memDC.Clear();
 
