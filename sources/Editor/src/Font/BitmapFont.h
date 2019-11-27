@@ -48,7 +48,7 @@ public:
     /// Столько писелей занимает одна точка шрифта в люому направлении
     int pixelsInPoint = 8;
 
-    BitmapSymbol symbols[256];
+    BitmapSymbol symbols[16][16];
     /// Создаёт новый шрифт
     void CreateNew();
 
@@ -59,6 +59,8 @@ public:
     void ClearBadSymbols();
 
     BitmapSymbol *GetSymbol(int row, int col);
+
+    BitmapSymbol *GetSymbol(uint8 num);
 
 private:
 

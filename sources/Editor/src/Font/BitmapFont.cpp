@@ -103,9 +103,12 @@ void BitmapSymbol::Resize(int scale)
 
 void BitmapFont::Resize()
 {
-    for (int i = 0; i < 256; i++)
+    for (int row = 0; row < 16; row++)
     {
-        symbols[i].Resize(pixelsInPoint);
+        for (int col = 0; col < 16; col++)
+        {
+            symbols[row][col].Resize(pixelsInPoint);
+        }
     }
 
     delete bitmap;
@@ -114,8 +117,6 @@ void BitmapFont::Resize()
 
     wxMemoryDC dc;
     dc.SelectObject(*bitmap);
-    int num = 0;
-
     for (int row = 0; row < 16; row++)
     {
         for (int col = 0; col < 16; col++)
@@ -123,7 +124,7 @@ void BitmapFont::Resize()
             int x0 = col * size.x * pixelsInPoint;
             int y0 = row * size.y * pixelsInPoint;
 
-            symbols[num++].Draw(dc, x0, y0);
+            symbols[row][col].Draw(dc, x0, y0);
         }
     }
 }
@@ -137,9 +138,14 @@ void BitmapFont::CreateNew()
     size.x = data.width;
     size.y = data.height;
 
-    for (int i = 0; i < 256; i++)
+    int i = 0;
+
+    for (int row = 0; row < 16; row++)
     {
-        symbols[i].Build(data.font, static_cast<uint8>(i), size.x, size.y, data.offsetX, data.offsetY);
+        for (int col = 0; col < 16; col++)
+        {
+            symbols[row][col].Build(data.font, static_cast<uint8>(i++), size.x, size.y, data.offsetX, data.offsetY);
+        }
     }
 
     Resize();
@@ -160,16 +166,16 @@ BitmapFont::~BitmapFont()
 
 void BitmapFont::ClearBadSymbols()
 {
-    for (int i = 0; i < 0x20; i++)
+    for (uint8 i = 0; i < 0x20; i++)
     {
-        symbols[i].Disable();
-        symbols[i].Clear();
+        GetSymbol(i)->Disable();
+        GetSymbol(i)->Clear();
     }
 
-    for (int i = 0x7f; i < 0xc0; i++)
+    for (uint8 i = 0x7f; i < 0xc0; i++)
     {
-        symbols[i].Disable();
-        symbols[i].Clear();
+        GetSymbol(i)->Disable();
+        GetSymbol(i)->Clear();
     }
 
     Resize();
@@ -190,5 +196,13 @@ void BitmapSymbol::Enable()
 
 BitmapSymbol *BitmapFont::GetSymbol(int row, int col)
 {
-    return &symbols[row * 16 + col];
+    return &symbols[row][col];
+}
+
+
+BitmapSymbol *BitmapFont::GetSymbol(uint8 num)
+{
+    BitmapSymbol *symbol = &symbols[0][0];
+
+    return &symbol[num];
 }

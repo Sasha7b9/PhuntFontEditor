@@ -98,7 +98,7 @@ void Canvas::HighlightPixel(wxPaintDC &dc)
 
 void Canvas::HighlightSymbol(wxPaintDC &)
 {
-    BitmapSymbol *symbol = GetSymbolUnderMouse(mouseX, mouseY);
+    //BitmapSymbol *symbol = GetSymbolUnderMouse(mouseX, mouseY);
 }
 
 
