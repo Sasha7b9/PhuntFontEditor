@@ -108,7 +108,7 @@ void FontImporter::CreateSymbols(BitmapFont &font)
 }
 
 
-void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const int [256], const uint16 [256])
+void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const int sizes[256], const uint16 offsets[256])
 {
     ADD_FLINE_1("unsigned int %s[] =", nameFont);
     ADD_LINE("{");
@@ -117,7 +117,7 @@ void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const i
     {
         if (symbols[i]->symbol->enabled)
         {
-            ADD_FLINE_3(" num = 0x%X, width = %d, height = %d", i, symbols[i]->GetWidth(), symbols[i]->GetHeight());
+            file.AddLine(wxString::Format("/* 0x%02X %03d */   %d,", i, sizes[i], offsets[i]));
         }
     }
 }
@@ -181,9 +181,9 @@ int SymbolImp::BitsInRow() const
 
 int SymbolImp::BytesInRow() const
 {
-    int result = BitsInRow() / 8;
+    int result = BitsInRow() / 8 ;
 
-    if (result % 8)
+    if (BitsInRow() % 8)
     {
         result++;
     }
