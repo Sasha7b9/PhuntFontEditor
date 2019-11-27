@@ -21,4 +21,6 @@ private:
     static void WriteFont(wxTextFile &file, const wxString &nameFont, const uint16 offsets[256]);
 
     static void DeleteSymbols();
+
+    static int CalculateFullSize();
 };

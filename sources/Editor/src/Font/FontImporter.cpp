@@ -111,7 +111,7 @@ void FontImporter::CreateSymbols(BitmapFont &font)
 
 void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const uint16 offsets[256])
 {
-    ADD_FLINE_1("unsigned int %s[] =", nameFont);
+    ADD_FLINE_2("unsigned int %s[%d] =", nameFont, CalculateFullSize());
     ADD_LINE("{");
 
     for (int i = 0; i < 256; i++)
@@ -142,8 +142,15 @@ void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const u
             string.Append(wxString::Format("0x%02X, ", bytes[numByte]));
         }
 
+        if(i == 255)
+        {
+            string.RemoveLast(2);
+        }
+
         ADD_LINE(string);
     }
+
+    ADD_LINE("};");
 }
 
 
@@ -453,4 +460,18 @@ void SymbolImp::PrepareRow(std::vector<uint8> &row, std::vector<uint8> &vec)
         }
         vec.push_back(data);
     }
+}
+
+
+int FontImporter::CalculateFullSize()
+{
+    int result = sizeof(uint16) * 256;
+
+    for(int i = 0; i < 256; i++)
+    {
+        result += symbols[i]->GetSize();
+    }
+
+    return result;
+
 }
