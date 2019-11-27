@@ -21,9 +21,10 @@ Canvas::Canvas(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 
     SetDoubleBuffered(true);
 
-    Bind(wxEVT_PAINT,        &Canvas::OnPaint,      this);
-    Bind(wxEVT_MOTION,       &Canvas::OnMouseMove,  this);
-    Bind(wxEVT_LEAVE_WINDOW, &Canvas::OnMouseLeave, this);
+    Bind(wxEVT_PAINT,        &Canvas::OnPaint,         this);
+    Bind(wxEVT_MOTION,       &Canvas::OnMouseMove,     this);
+    Bind(wxEVT_RIGHT_DOWN,   &Canvas::OnMouseLeftDown, this);
+    Bind(wxEVT_LEAVE_WINDOW, &Canvas::OnMouseLeave,    this);
 
     TuneScrollBar();
 
@@ -100,17 +101,14 @@ void Canvas::HighlightSymbol(wxPaintDC &dc)
 {
     BitmapSymbol *symbol = GetSymbolUnderMouse(mouseX, mouseY);
 
-    if (symbol)
-    {
-        dc.SetPen(wxPen(*wxBLUE, 5, wxSOLID));
-        dc.SetBrush(wxBrush(*wxBLUE, wxTRANSPARENT));
+    dc.SetPen(wxPen(*wxBLUE, 5, wxPENSTYLE_SOLID));
+    dc.SetBrush(wxBrush(*wxBLUE, wxBRUSHSTYLE_TRANSPARENT));
 
-        wxRect rect = font.GetRectForSymbol(symbol);
+    wxRect rect = font.GetRectForSymbol(symbol);
 
-        dc.DrawLine(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
-        dc.DrawLine(rect.x, rect.y + rect.height, rect.x + rect.width, rect.y);
-        dc.DrawRectangle(rect);
-    }
+    dc.DrawLine(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
+    dc.DrawLine(rect.x, rect.y + rect.height, rect.x + rect.width, rect.y);
+    dc.DrawRectangle(rect);
 }
 
 
@@ -118,7 +116,7 @@ BitmapSymbol *Canvas::GetSymbolUnderMouse(int x, int y)
 {
     if (x < 0 || y < 0)
     {
-        return nullptr;
+        return BitmapSymbol::Null();
     }
 
     int col = x / font.size.x / font.pixelsInPoint;
@@ -190,6 +188,12 @@ void Canvas::TuneScrollBar()
     sw->SetScrollbars(1, 1, size.x, size.y);
 
     SetPosition({ 0, 0 });
+}
+
+
+void Canvas::OnMouseLeftDown(wxMouseEvent &)
+{
+    GetSymbolUnderMouse(mouseX, mouseY)->ToggleState();
 }
 
 

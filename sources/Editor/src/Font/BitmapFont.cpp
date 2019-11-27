@@ -194,6 +194,12 @@ void BitmapSymbol::Enable()
 }
 
 
+void BitmapSymbol::ToggleState()
+{
+    enabled = !enabled;
+}
+
+
 BitmapSymbol *BitmapFont::GetSymbol(int row, int col)
 {
     return &symbols[row][col];
@@ -229,4 +235,11 @@ wxRect BitmapFont::GetRectForSymbol(const BitmapSymbol *symbol) const
     }
 
     return wxRect();
+}
+
+
+BitmapSymbol *BitmapSymbol::Null()
+{
+    static BitmapSymbol symbol;
+    return &symbol;
 }

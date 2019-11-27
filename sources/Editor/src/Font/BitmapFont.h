@@ -28,6 +28,10 @@ public:
     // Сделать символ неактивным - не будет в итоговом шрифте
     void Disable();
 
+    void ToggleState();
+
+    static BitmapSymbol *Null();
+
 private:
 
     wxImage image;
