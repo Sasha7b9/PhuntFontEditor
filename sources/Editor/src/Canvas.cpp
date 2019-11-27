@@ -185,6 +185,7 @@ void Canvas::OnMouseLeftDown(wxMouseEvent &)
     if (mode == Mode::SelectSymbols)
     {
         font.ToggleStateSymbol(mouseX, mouseY);
+        Refresh();
     }
 }
 

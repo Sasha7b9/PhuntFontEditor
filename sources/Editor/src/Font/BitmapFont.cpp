@@ -294,6 +294,7 @@ void BitmapFont::ToggleStateSymbol(int mouseX, int mouseY)
     BitmapSymbol *symbol = GetSymbolUnderMouse(mouseX, mouseY);
 
     symbol->ToggleState();
+    symbol->Resize(scale);
 
     int x = 0, y = 0;
 
