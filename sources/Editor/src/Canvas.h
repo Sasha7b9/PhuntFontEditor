@@ -5,6 +5,9 @@
 #pragma warning(pop)
 
 
+class BitmapSymbol;
+
+
 class Canvas : public wxPanel
 {
 public:
@@ -42,9 +45,12 @@ private:
     void DrawCursor(wxPaintDC &dc);
     /// Подсветить точку символа, на которую указывает мышь
     void HighlightPixel(wxPaintDC &dc);
+    /// Выделить/снять выделение с символа, который находчится под курсором
+    void HighlightSymbol(wxPaintDC &dc);
     /// Действующий размер холста
     wxSize CurrentSize();
 
+    BitmapSymbol *GetSymbolUnderMouse(int mouseX, int mouseY);
 
     wxScrolledWindow *sw = nullptr;
 

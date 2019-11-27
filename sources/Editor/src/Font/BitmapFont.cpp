@@ -186,3 +186,9 @@ void BitmapSymbol::Enable()
 {
     enabled = true;
 }
+
+
+BitmapSymbol *BitmapFont::GetSymbol(int row, int col)
+{
+    return &symbols[row * 16 + col];
+}

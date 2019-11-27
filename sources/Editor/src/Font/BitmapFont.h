@@ -5,8 +5,9 @@
 #include <vector>
 
 
-struct BitmapSymbol
+class BitmapSymbol
 {
+public:
     ~BitmapSymbol();
     int width = 0;
     int height = 0;
@@ -56,6 +57,8 @@ public:
     void Draw(wxPaintDC &dc);
     /// Очистить символы, не входящие в основной набор
     void ClearBadSymbols();
+
+    BitmapSymbol *GetSymbol(int row, int col);
 
 private:
 

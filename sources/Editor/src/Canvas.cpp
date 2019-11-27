@@ -82,7 +82,7 @@ void Canvas::DrawCursor(wxPaintDC &dc)
     }
     else
     {
-
+        HighlightSymbol(dc);
     }
 }
 
@@ -92,11 +92,22 @@ void Canvas::HighlightPixel(wxPaintDC &dc)
     dc.SetPen(*wxBLACK_PEN);
     dc.SetBrush(*wxBLACK_BRUSH);
 
-    int x = (mouseX / (font.pixelsInPoint)) * (font.pixelsInPoint);
+    dc.DrawRectangle(mouseX, mouseY, font.pixelsInPoint, font.pixelsInPoint);
+}
 
-    int y = (mouseY / (font.pixelsInPoint)) * (font.pixelsInPoint);
 
-    dc.DrawRectangle(x, y, font.pixelsInPoint, font.pixelsInPoint);
+void Canvas::HighlightSymbol(wxPaintDC &)
+{
+    BitmapSymbol *symbol = GetSymbolUnderMouse(mouseX, mouseY);
+}
+
+
+BitmapSymbol *Canvas::GetSymbolUnderMouse(int x, int y)
+{
+    int col = x / font.size.x / font.pixelsInPoint;
+    int row = y / font.size.y / font.pixelsInPoint;
+
+    return font.GetSymbol(row, col);
 }
 
 
@@ -210,4 +221,6 @@ void Canvas::EnableModeSelectSymbols(bool enable)
 {
     mode = enable ? Mode::SelectSymbols : Mode::Edit;
 }
+
+
 
