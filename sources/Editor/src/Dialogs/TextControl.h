@@ -13,6 +13,8 @@ public:
 
     void FromLong(long value);
 
+    wxString GetLineText();
+
 private:
     wxTextCtrl *tc = nullptr;
 };

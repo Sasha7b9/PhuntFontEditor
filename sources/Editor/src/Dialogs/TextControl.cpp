@@ -27,3 +27,9 @@ void TextControl::FromLong(long value)
     tc->Clear();
     tc->WriteText(wxString::Format("%d", value));
 }
+
+
+wxString TextControl::GetLineText()
+{
+    return tc->GetLineText(0);
+}

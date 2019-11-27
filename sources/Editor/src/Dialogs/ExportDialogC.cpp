@@ -1,6 +1,7 @@
 #include "defines.h"
 #include "Canvas.h"
 #include "Dialogs/ExportDialogC.h"
+#include "Dialogs/TextControl.h"
 #pragma warning(push, 0)
 #include <wx/textfile.h>
 #pragma warning(pop)
@@ -11,6 +12,13 @@ enum
     ID_BUTTON_EXPORT,
     ID_BUTTON_CANCEL
 };
+
+
+static TextControl *tcNameFont = nullptr;
+static wxString nameFont(wxT("font"));
+
+static TextControl *tcNameFile = nullptr;
+static wxString nameFile(wxT("font.c"));
 
 
 ExportDialogC::ExportDialogC(const wxString &title) : wxDialog(nullptr, wxID_ANY, title)
@@ -28,8 +36,14 @@ ExportDialogC::ExportDialogC(const wxString &title) : wxDialog(nullptr, wxID_ANY
     boxButtons->AddSpacer(20);
     boxButtons->Add(btnCancel, 1, wxALIGN_CENTER);
 
-    wxBoxSizer *vBox = new wxBoxSizer(wxVERTICAL);
+    tcNameFont = new TextControl(this, nameFont, wxT("Имя шрифта"));
 
+    tcNameFile = new TextControl(this, nameFile, wxT("Имя файла"));
+
+    wxBoxSizer *vBox = new wxBoxSizer(wxVERTICAL);
+    
+    vBox->Add(tcNameFont);
+    vBox->Add(tcNameFile);
     vBox->Add(boxButtons, 0, _ALIGN, BORDER);
 
     SetSizer(vBox);
@@ -38,17 +52,18 @@ ExportDialogC::ExportDialogC(const wxString &title) : wxDialog(nullptr, wxID_ANY
 
 void ExportDialogC::OnButtonExport(wxCommandEvent &)
 {
-    wxFileDialog dlg(nullptr, wxT("Экспорт"), wxEmptyString, wxEmptyString, wxT("*.c"), wxFD_SAVE);
-    
+    nameFont = tcNameFont->GetLineText();
+    nameFile = tcNameFile->GetLineText();
+
+    wxFileDialog dlg(nullptr, wxT("Экспорт"), wxEmptyString, nameFile, wxT("*.c"), wxFD_SAVE);
+
     if (dlg.ShowModal() == wxID_OK)
     {
-        wxString fileName = dlg.GetPath();
-    
-        wxTextFile file(fileName);
+        wxTextFile file(dlg.GetPath());
     
         file.Create();
     
-        TheCanvas->ImportFont(file, "font5");
+        TheCanvas->ImportFont(file, nameFont);
     
         file.Write();
     
@@ -61,5 +76,5 @@ void ExportDialogC::OnButtonExport(wxCommandEvent &)
 
 void ExportDialogC::OnButtonCancel(wxCommandEvent &)
 {
-
+    Destroy();
 }
