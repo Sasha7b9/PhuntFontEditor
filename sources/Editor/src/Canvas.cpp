@@ -23,7 +23,7 @@ Canvas::Canvas(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 
     Bind(wxEVT_PAINT,        &Canvas::OnPaint,         this);
     Bind(wxEVT_MOTION,       &Canvas::OnMouseMove,     this);
-    Bind(wxEVT_RIGHT_DOWN,   &Canvas::OnMouseLeftDown, this);
+    Bind(wxEVT_LEFT_DOWN,    &Canvas::OnMouseLeftDown, this);
     Bind(wxEVT_LEAVE_WINDOW, &Canvas::OnMouseLeave,    this);
 
     TuneScrollBar();
@@ -93,7 +93,10 @@ void Canvas::HighlightPixel(wxPaintDC &dc)
     dc.SetPen(*wxBLACK_PEN);
     dc.SetBrush(*wxBLACK_BRUSH);
 
-    dc.DrawRectangle(mouseX, mouseY, font.pixelsInPoint, font.pixelsInPoint);
+    int x = mouseX / font.pixelsInPoint * font.pixelsInPoint;
+    int y = mouseY / font.pixelsInPoint * font.pixelsInPoint;
+
+    dc.DrawRectangle(x, y, font.pixelsInPoint, font.pixelsInPoint);
 }
 
 
@@ -193,7 +196,10 @@ void Canvas::TuneScrollBar()
 
 void Canvas::OnMouseLeftDown(wxMouseEvent &)
 {
-    GetSymbolUnderMouse(mouseX, mouseY)->ToggleState();
+    if (mode == Mode::SelectSymbols)
+    {
+        GetSymbolUnderMouse(mouseX, mouseY)->ToggleState();
+    }
 }
 
 
