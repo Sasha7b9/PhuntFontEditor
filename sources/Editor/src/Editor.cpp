@@ -94,7 +94,7 @@ Frame::Frame(const wxString &title)
 
     Bind(wxEVT_MENU,       &Frame::OnQuit,              this, MENU_FILE_QUIT);
     Bind(wxEVT_MENU,       &Frame::OnOpenFile,          this, FILE_OPEN);
-    Bind(wxEVT_MENU,       &Frame::OnSaveFile,          this, FILE_SAVE);
+    Bind(wxEVT_MENU,       &Frame::OnExportFontC,          this, FILE_SAVE);
     Bind(wxEVT_MENU,       &Frame::OnNewFile,           this, FILE_NEW);
     Bind(wxEVT_MENU,       &Frame::OnImportFont,        this, FILE_IMPORT);
     Bind(wxEVT_MENU,       &Frame::OnExportFontC,       this, FILE_EXPORT_C);

@@ -223,6 +223,7 @@ void Canvas::Resize()
 void Canvas::ClearBadSymbols()
 {
     font.ClearBadSymbols();
+    Refresh();
 }
 
 

@@ -8,6 +8,19 @@
 #define ADD_FLINE_3(s, x1, x2, x3) file.AddLine(wxString::Format(s, x1, x2, x3))
 
 
+static int gI = 0;
+
+
+#define TRACE(num)                                          \
+if(gI == 0x21)                                              \
+{                                                           \
+    std::cout << "Point " <<  num <<  std::endl;            \
+    std::cout << "width = " << GetWidth() << std::endl;     \
+    std::cout << "height = " << GetHeight() << std::endl;   \
+    Log();                                                  \
+}
+
+
 /// Структура символа для импортёра
 class SymbolImp
 {
@@ -16,9 +29,20 @@ public:
     SymbolImp(BitmapSymbol *s) : symbol(s)
     {
         CreateBits();
+
+        TRACE(1);
+
         DeleteFirstEmptyBits();
+
+        TRACE(2);
+
         DeleteLastEmptyBits();
+
+        TRACE(3);
+
         DeleteBottomEmptyBits();
+
+        TRACE(4);
     };
     /// Возвращает размер соответствующего символа BitmapSymbol
     int GetSize() const;
@@ -47,6 +71,8 @@ private:
     int BitsInRow() const;
     /// Возвращает число байт на строку
     int BytesInRow() const;
+    
+    void Log() const;
 };
 
 
@@ -58,6 +84,8 @@ static int Sum(std::vector<uint8> &vec);
 
 void FontImporter::Import(BitmapFont &font, wxTextFile &file, const wxString &nameFont)
 {
+    gI = 0;
+
     uint16 offsets[256];        // Здесь смещения всех символов
 
     int sizes[256];             // Здесь размеры всех символов
@@ -76,23 +104,17 @@ void FontImporter::Import(BitmapFont &font, wxTextFile &file, const wxString &na
 
 void FontImporter::CreateSymbols(BitmapFont &font)
 {
-    int i = 0;
-
     for (int row = 0; row < 16; row++)
     {
         for (int col = 0; col < 16; col++)
         {
-            if (i == 0x21)
-            {
-                i = i;
-            }
-            symbols[i++] = new SymbolImp(&font.symbols[row][col]);
+            symbols[gI++] = new SymbolImp(&font.symbols[row][col]);
         }
     }
 }
 
 
-void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const int sizes[256], const uint16 offsets[256])
+void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const int [256], const uint16 [256])
 {
     ADD_FLINE_1("unsigned int %s[] =", nameFont);
     ADD_LINE("{");
@@ -189,9 +211,9 @@ void SymbolImp::CreateBits()
         {
             wxColour color;
 
-            dc.GetPixel(row, col, &color);
+            dc.GetPixel(col, row, &color);
 
-            bits[static_cast<uint>(row)].push_back(color.Red() ? 1U : 0U);
+            bits[static_cast<uint>(row)].push_back(color.Red() ? 0U : 1U);
         }
     }
 }
@@ -230,7 +252,9 @@ int SymbolImp::FindPositionLastBit() const
 
     for (int row = 0; row < GetHeight(); row++)
     {
-        for (int col = GetWidth() - 1; col >= 0; col--)
+        int start = GetWidth() - 1;
+
+        for (int col = start; col >= 0; col--)
         {
             if (bits[static_cast<uint>(row)][static_cast<uint>(col)])
             {
@@ -238,7 +262,7 @@ int SymbolImp::FindPositionLastBit() const
                 {
                     result = col;
                 }
-                if (result == GetWidth() - 1)
+                if (result == start)
                 {
                     return result;
                 }
@@ -295,7 +319,7 @@ void SymbolImp::DeleteLastEmptyBits()
 
     if (pos != static_cast<int>(bits[0].size() - 1))
     {
-        int delta = static_cast<int>(bits[0].size()) - pos;
+        int delta = static_cast<int>(bits[0].size()) - pos - 1;
 
         for (uint i = 0; i < bits.size(); i++)
         {
@@ -327,4 +351,17 @@ static int Sum(std::vector<uint8> &vec)
     }
 
     return result;
+}
+
+
+void SymbolImp::Log() const
+{
+    for (uint row = 0; row < bits.size(); row++)
+    {
+        for (uint col = 0; col < bits[row].size(); col++)
+        {
+            std::cout << ((bits[row][col]) ? "X" : ".");
+        }
+        std::cout << std::endl;
+    }
 }
