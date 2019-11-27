@@ -24,6 +24,7 @@ Canvas::Canvas(wxWindow *parent) : wxPanel(parent, wxID_ANY)
     Bind(wxEVT_PAINT,        &Canvas::OnPaint,         this);
     Bind(wxEVT_MOTION,       &Canvas::OnMouseMove,     this);
     Bind(wxEVT_LEFT_DOWN,    &Canvas::OnMouseLeftDown, this);
+    Bind(wxEVT_LEFT_DCLICK,  &Canvas::OnMouseLeftDown, this);
     Bind(wxEVT_LEAVE_WINDOW, &Canvas::OnMouseLeave,    this);
 
     TuneScrollBar();
