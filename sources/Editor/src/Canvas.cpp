@@ -228,7 +228,7 @@ void Canvas::ClearBadSymbols()
 
 void Canvas::ImportFont(wxTextFile &file, const wxString &nameFont)
 {
-    FontImporter::Import(&font, file, nameFont);
+    FontImporter::Import(font, file, nameFont);
 }
 
 

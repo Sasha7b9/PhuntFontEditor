@@ -8,6 +8,7 @@
 class BitmapSymbol
 {
     friend class SymbolImp;
+    friend class FontImporter;
 public:
     ~BitmapSymbol();
     int width = 0;

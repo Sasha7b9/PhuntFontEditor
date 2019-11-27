@@ -8,9 +8,11 @@
 class FontImporter
 {
 public:
-    static void Import(BitmapFont *font, wxTextFile &file, const wxString &nameFont);
+    static void Import(BitmapFont &font, wxTextFile &file, const wxString &nameFont);
 
 private:
+
+    static void CreateSymbols(BitmapFont &font);
     /// Рассчитать размеры символов
     static void CalculateSizes(int *sizes);
 
@@ -18,5 +20,5 @@ private:
 
     static void WriteFont(wxTextFile &file, const wxString &nameFont, const int sizes[256], const uint16 offsets[256]);
 
-    static BitmapFont *font;
+    static void DeleteSymbols();
 };

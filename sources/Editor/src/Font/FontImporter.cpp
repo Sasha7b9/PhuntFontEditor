@@ -2,31 +2,39 @@
 #include "Font/FontImporter.h"
 
 
-#define ADD_LINE(x)            file.AddLine(x)
-#define ADD_FLINE_1(s, x)      file.AddLine(wxString::Format(s, x))
-#define ADD_FLINE_2(s, x1, x2) file.AddLine(wxString::Format(s, x1, x2))
-
-
-BitmapFont *FontImporter::font = nullptr;
+#define ADD_LINE(x)                file.AddLine(x)
+#define ADD_FLINE_1(s, x)          file.AddLine(wxString::Format(s, x))
+#define ADD_FLINE_2(s, x1, x2)     file.AddLine(wxString::Format(s, x1, x2))
+#define ADD_FLINE_3(s, x1, x2, x3) file.AddLine(wxString::Format(s, x1, x2, x3))
 
 
 /// Структура символа для импортёра
 class SymbolImp
 {
+    friend class FontImporter;
 public:
     SymbolImp(BitmapSymbol *s) : symbol(s)
     {
         CreateBits();
+        DeleteFirstEmptyBits();
+        DeleteLastEmptyBits();
+        DeleteBottomEmptyBits();
     };
-    /// Функция заполняем массив bits. При этом удаляются пустые начальные биты строк и пустые конечные биты строк
-    void CreateBits();
     /// Возвращает размер соответствующего символа BitmapSymbol
     int GetSize() const;
 private:
     /// Обрабатывемый символ
     BitmapSymbol *symbol;
+    /// Функция заполняем массив bits. При этом удаляются пустые начальные биты строк и пустые конечные биты строк
+    void CreateBits();
     /// Здесь хранятся биты символа
     std::vector<std::vector<uint8>> bits;
+    /// Удалить первые "пустые" биты
+    void DeleteFirstEmptyBits();
+    /// Удалить последние "пустые" биты
+    void DeleteLastEmptyBits();
+    /// Удалить нижние "пустые" биты
+    void DeleteBottomEmptyBits();
     /// Найти позицию первого ненулевого бита в символе
     int FindPositionFirstBit() const;
     /// Найти позицию последнего ненулевого бита в символе
@@ -35,22 +43,52 @@ private:
     int GetHeight() const;
     /// Возвращает ширину символа
     int GetWidth() const;
+    /// Возвращает число бит в строке
+    int BitsInRow() const;
+    /// Возвращает число байт на строку
+    int BytesInRow() const;
 };
 
 
-void FontImporter::Import(BitmapFont *f, wxTextFile &file, const wxString &nameFont)
-{
-    font = f;
+static SymbolImp *symbols[256];
 
+/// Возвращает сумму элементов вектора
+static int Sum(std::vector<uint8> &vec);
+
+
+void FontImporter::Import(BitmapFont &font, wxTextFile &file, const wxString &nameFont)
+{
     uint16 offsets[256];        // Здесь смещения всех символов
 
     int sizes[256];             // Здесь размеры всех символов
+
+    CreateSymbols(font);
 
     CalculateSizes(sizes);
 
     CalculateOffsets(sizes, offsets);
 
     WriteFont(file, nameFont, sizes, offsets);
+
+    DeleteSymbols();
+}
+
+
+void FontImporter::CreateSymbols(BitmapFont &font)
+{
+    int i = 0;
+
+    for (int row = 0; row < 16; row++)
+    {
+        for (int col = 0; col < 16; col++)
+        {
+            if (i == 0x21)
+            {
+                i = i;
+            }
+            symbols[i++] = new SymbolImp(&font.symbols[row][col]);
+        }
+    }
 }
 
 
@@ -61,7 +99,10 @@ void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const i
 
     for (int i = 0; i < 256; i++)
     {
-        ADD_FLINE_2("    %d %d", sizes[i], offsets[i]);
+        if (symbols[i]->symbol->enabled)
+        {
+            ADD_FLINE_3(" num = 0x%X, width = %d, height = %d", i, symbols[i]->GetWidth(), symbols[i]->GetHeight());
+        }
     }
 }
 
@@ -74,9 +115,8 @@ void FontImporter::CalculateSizes(int *sizes)
     {
         for (int col = 0; col < 16; col++)
         {
-            SymbolImp symbol(&font->symbols[row][col]);
-
-            sizes[i++] = symbol.GetSize();
+            sizes[i] = symbols[i]->GetSize();
+            i++;
         }
     }
 }
@@ -112,20 +152,27 @@ int SymbolImp::GetSize() const
     {
         return 0;
     }
-
-    int first = FindPositionFirstBit();
-    int last = FindPositionLastBit();
-
-    int bitsInRow = last - first + 1;
-
-    int bytesInRow = bitsInRow / 8;
-
-    if (bitsInRow % 8)
-    {
-        bytesInRow++;
-    }
     //                                 width   height  bytesInRow
-    return GetHeight() * bytesInRow +    1   +   1   +    1;
+    return GetHeight() * BytesInRow() +    1   +   1   +    1;
+}
+
+
+int SymbolImp::BitsInRow() const
+{
+    return FindPositionLastBit() + 1;
+}
+
+
+int SymbolImp::BytesInRow() const
+{
+    int result = BitsInRow() / 8;
+
+    if (result % 8)
+    {
+        result++;
+    }
+
+    return result;
 }
 
 
@@ -213,4 +260,71 @@ int SymbolImp::GetHeight() const
 int SymbolImp::GetWidth() const
 {
     return static_cast<int>(bits[0].size());
+}
+
+
+void FontImporter::DeleteSymbols()
+{
+    for (int i = 0; i < 256; i++)
+    {
+        delete symbols[i];
+    }
+}
+
+
+void SymbolImp::DeleteFirstEmptyBits()
+{
+    int pos = FindPositionFirstBit();
+
+    if (pos != 0)
+    {
+        for (uint i = 0; i < bits.size(); i++)
+        {
+            for (int p = 0; p < pos; p++)
+            {
+                bits[i].erase(bits[i].begin());
+            }
+        }
+    }
+}
+
+
+void SymbolImp::DeleteLastEmptyBits()
+{
+    int pos = FindPositionLastBit();
+
+    if (pos != static_cast<int>(bits[0].size() - 1))
+    {
+        int delta = static_cast<int>(bits[0].size()) - pos;
+
+        for (uint i = 0; i < bits.size(); i++)
+        {
+            for (int p = 0; p < delta; p++)
+            {
+                bits[i].pop_back();
+            }
+        }
+    }
+}
+
+
+void SymbolImp::DeleteBottomEmptyBits()
+{
+    while (bits.size() > 1 && Sum(bits[bits.size() - 1]) == 0)
+    {
+        bits.pop_back();
+    }
+}
+
+
+static int Sum(std::vector<uint8> &vec)
+{
+    int result = 0;
+
+    for (uint i = 0; i < vec.size(); i++)
+    {
+        result += vec[i];
+    }
+
+    return result;
 }
