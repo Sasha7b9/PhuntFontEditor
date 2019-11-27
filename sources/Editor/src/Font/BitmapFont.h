@@ -7,6 +7,7 @@
 
 class BitmapSymbol
 {
+    friend class SymbolImp;
 public:
     ~BitmapSymbol();
     int width = 0;

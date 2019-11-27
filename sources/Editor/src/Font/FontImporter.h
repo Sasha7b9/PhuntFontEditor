@@ -8,5 +8,15 @@
 class FontImporter
 {
 public:
-    static void Import(BitmapFont &font, wxTextFile &file, const wxString &nameFont);
+    static void Import(BitmapFont *font, wxTextFile &file, const wxString &nameFont);
+
+private:
+    /// Рассчитать размеры символов
+    static void CalculateSizes(int *sizes);
+
+    static void CalculateOffsets(const int sizes[256], uint16 offsets[256]);
+
+    static void WriteFont(wxTextFile &file, const wxString &nameFont, const int sizes[256], const uint16 offsets[256]);
+
+    static BitmapFont *font;
 };
