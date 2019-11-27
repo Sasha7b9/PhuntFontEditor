@@ -61,6 +61,8 @@ public:
     BitmapSymbol *GetSymbol(int row, int col);
 
     BitmapSymbol *GetSymbol(uint8 num);
+    /// Возращает местоположение символа на холсте
+    wxRect GetRectForSymbol(const BitmapSymbol *symbol) const;
 
 private:
 

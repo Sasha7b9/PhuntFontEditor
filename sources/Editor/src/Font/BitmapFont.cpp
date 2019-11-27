@@ -206,3 +206,27 @@ BitmapSymbol *BitmapFont::GetSymbol(uint8 num)
 
     return &symbol[num];
 }
+
+
+wxRect BitmapFont::GetRectForSymbol(const BitmapSymbol *symbol) const
+{
+    for (int row = 0; row < 16; row++)
+    {
+        for (int col = 0; col < 16; col++)
+        {
+            if (&symbols[row][col] == symbol)
+            {
+                wxRect rect;
+
+                rect.x = col * size.x * pixelsInPoint;
+                rect.y = row * size.y * pixelsInPoint;
+                rect.width = size.x * pixelsInPoint;
+                rect.height = size.y * pixelsInPoint;
+
+                return rect;
+            }
+        }
+    }
+
+    return wxRect();
+}

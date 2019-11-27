@@ -96,9 +96,18 @@ void Canvas::HighlightPixel(wxPaintDC &dc)
 }
 
 
-void Canvas::HighlightSymbol(wxPaintDC &)
+void Canvas::HighlightSymbol(wxPaintDC &dc)
 {
-    //BitmapSymbol *symbol = GetSymbolUnderMouse(mouseX, mouseY);
+    BitmapSymbol *symbol = GetSymbolUnderMouse(mouseX, mouseY);
+
+    wxPen pen(*wxBLACK, 3, wxSOLID);
+
+    dc.SetPen(pen);
+
+    wxRect rect = font.GetRectForSymbol(symbol);
+
+    dc.DrawLine(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
+    dc.DrawLine(rect.x, rect.y + rect.height, rect.x + rect.width, rect.y);
 }
 
 
