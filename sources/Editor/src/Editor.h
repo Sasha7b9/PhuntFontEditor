@@ -59,5 +59,5 @@ private:
     /// Очистить символы, не входящие в основной набор
     void OnClearBadSymbols(wxCommandEvent &);
     /// Инструмент выбора сохраняемых символов
-    void OnChoiceSavedSymbols(wxCommandEvent &);
+    void OnSelectSymbols(wxCommandEvent &);
 };

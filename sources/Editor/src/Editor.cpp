@@ -45,7 +45,7 @@ enum
     TOOL_SCALE_UP,                              // Увеличить масштаб
     TOOL_SCALE_DOWN,                            // Уменьшить масштаб
     TOOL_CLEAR_BAD_SYMBOLS,                     // Очистить сиволы из дополнительного набора
-    TOOL_CHOICE_SAVED                           // Выбрать символы, которые будут включены в шрифт
+    TOOL_SELECT_SYMBOLS                         // Выбрать символы, которые будут включены в шрифт
 };
 
 enum
@@ -92,24 +92,24 @@ Frame::Frame(const wxString &title)
 
     SetSizeAndPosition();
 
-    Bind(wxEVT_MENU,       &Frame::OnQuit,               this, MENU_FILE_QUIT);
-    Bind(wxEVT_MENU,       &Frame::OnOpenFile,           this, FILE_OPEN);
-    Bind(wxEVT_MENU,       &Frame::OnSaveFile,           this, FILE_SAVE);
-    Bind(wxEVT_MENU,       &Frame::OnNewFile,            this, FILE_NEW);
-    Bind(wxEVT_MENU,       &Frame::OnImportFont,         this, FILE_IMPORT);
-    Bind(wxEVT_MENU,       &Frame::OnExportFontC,        this, FILE_EXPORT_C);
-    Bind(wxEVT_MENU,       &Frame::OnExportFontBin,      this, FILE_EXPORT_BIN);
-    Bind(wxEVT_MENU,       &Frame::OnImportFont,         this, TOOL_IMPORT_FONT);
-    Bind(wxEVT_MENU,       &Frame::OnUndo,               this, UNDO);
-    Bind(wxEVT_MENU,       &Frame::OnRedo,               this, REDO);
-    Bind(wxEVT_TIMER,      &Frame::OnTimer,              this, TIMER_ID);
-    Bind(wxEVT_SIZE,       &Frame::OnResize,             this);
-    Bind(wxEVT_PAINT,      &Frame::OnRepaint,            this);
-    Bind(wxEVT_KEY_DOWN,   &Frame::OnKeyDown,            this);
-    Bind(wxEVT_MENU,       &Frame::OnScaleDown,          this, TOOL_SCALE_DOWN);
-    Bind(wxEVT_MENU,       &Frame::OnScaleUp,            this, TOOL_SCALE_UP);
-    Bind(wxEVT_MENU,       &Frame::OnClearBadSymbols,    this, TOOL_CLEAR_BAD_SYMBOLS);
-    Bind(wxEVT_MENU,       &Frame::OnChoiceSavedSymbols, this, TOOL_CHOICE_SAVED);
+    Bind(wxEVT_MENU,       &Frame::OnQuit,              this, MENU_FILE_QUIT);
+    Bind(wxEVT_MENU,       &Frame::OnOpenFile,          this, FILE_OPEN);
+    Bind(wxEVT_MENU,       &Frame::OnSaveFile,          this, FILE_SAVE);
+    Bind(wxEVT_MENU,       &Frame::OnNewFile,           this, FILE_NEW);
+    Bind(wxEVT_MENU,       &Frame::OnImportFont,        this, FILE_IMPORT);
+    Bind(wxEVT_MENU,       &Frame::OnExportFontC,       this, FILE_EXPORT_C);
+    Bind(wxEVT_MENU,       &Frame::OnExportFontBin,     this, FILE_EXPORT_BIN);
+    Bind(wxEVT_MENU,       &Frame::OnImportFont,        this, TOOL_IMPORT_FONT);
+    Bind(wxEVT_MENU,       &Frame::OnUndo,              this, UNDO);
+    Bind(wxEVT_MENU,       &Frame::OnRedo,              this, REDO);
+    Bind(wxEVT_TIMER,      &Frame::OnTimer,             this, TIMER_ID);
+    Bind(wxEVT_SIZE,       &Frame::OnResize,            this);
+    Bind(wxEVT_PAINT,      &Frame::OnRepaint,           this);
+    Bind(wxEVT_KEY_DOWN,   &Frame::OnKeyDown,           this);
+    Bind(wxEVT_MENU,       &Frame::OnScaleDown,         this, TOOL_SCALE_DOWN);
+    Bind(wxEVT_MENU,       &Frame::OnScaleUp,           this, TOOL_SCALE_UP);
+    Bind(wxEVT_MENU,       &Frame::OnClearBadSymbols,   this, TOOL_CLEAR_BAD_SYMBOLS);
+    Bind(wxEVT_MENU,       &Frame::OnSelectSymbols,     this, TOOL_SELECT_SYMBOLS);
 
     Show(true);
 
@@ -247,7 +247,7 @@ void Frame::CreateMenu()
 
     toolBar->AddSeparator();
     toolBar->AddTool(TOOL_CLEAR_BAD_SYMBOLS, wxT("Очистить дополнительные символы"), imgClear, wxT("Стереть дополнительные символы"));
-    toolBar->AddTool(TOOL_CHOICE_SAVED, wxT("Выбрать символы для сохранения"), imgToggle, wxT(""), wxITEM_CHECK);
+    toolBar->AddTool(TOOL_SELECT_SYMBOLS, wxT("Выбрать символы для сохранения"), imgToggle, wxT(""), wxITEM_CHECK);
 
     toolBar->Realize();
 }
@@ -402,7 +402,7 @@ void Frame::OnClearBadSymbols(wxCommandEvent &)
 }
 
 
-void Frame::OnChoiceSavedSymbols(wxCommandEvent &event) //-V2009
+void Frame::OnSelectSymbols(wxCommandEvent &event) //-V2009
 {
-    TheCanvas->EnableModeCheckSymbols(event.IsChecked());
+    TheCanvas->EnableModeSelectSymbols(event.IsChecked());
 }

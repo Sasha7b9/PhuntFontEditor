@@ -23,7 +23,7 @@ public:
 
     void ImportFont(wxTextFile &file, const wxString &nameFont);
     /// Включить/выключить режим выбора символов
-    void EnableModeCheckSymbols(bool enable);
+    void EnableModeSelectSymbols(bool enable);
 
 private:
 
@@ -37,9 +37,15 @@ private:
 
     void TuneScrollBar();
 
+    void Resize();
+
     wxScrolledWindow *sw = nullptr;
 
-    void Resize();
+    enum Mode
+    {
+        Edit,           ///< Основной режим, в котором можно редактировать символы
+        SelectSymbols   ///< Режим выбора символов
+    } mode = Edit;
 };
 
 

@@ -199,8 +199,8 @@ void Canvas::ImportFont(wxTextFile &file, const wxString &nameFont)
 }
 
 
-void Canvas::EnableModeCheckSymbols(bool)
+void Canvas::EnableModeSelectSymbols(bool enable)
 {
-
+    mode = enable ? Mode::SelectSymbols : Mode::Edit;
 }
 
