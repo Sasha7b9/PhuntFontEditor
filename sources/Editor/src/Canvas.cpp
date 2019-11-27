@@ -100,19 +100,27 @@ void Canvas::HighlightSymbol(wxPaintDC &dc)
 {
     BitmapSymbol *symbol = GetSymbolUnderMouse(mouseX, mouseY);
 
-    wxPen pen(*wxBLACK, 3, wxSOLID);
+    if (symbol)
+    {
+        dc.SetPen(wxPen(*wxBLUE, 5, wxSOLID));
+        dc.SetBrush(wxBrush(*wxBLUE, wxTRANSPARENT));
 
-    dc.SetPen(pen);
+        wxRect rect = font.GetRectForSymbol(symbol);
 
-    wxRect rect = font.GetRectForSymbol(symbol);
-
-    dc.DrawLine(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
-    dc.DrawLine(rect.x, rect.y + rect.height, rect.x + rect.width, rect.y);
+        dc.DrawLine(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
+        dc.DrawLine(rect.x, rect.y + rect.height, rect.x + rect.width, rect.y);
+        dc.DrawRectangle(rect);
+    }
 }
 
 
 BitmapSymbol *Canvas::GetSymbolUnderMouse(int x, int y)
 {
+    if (x < 0 || y < 0)
+    {
+        return nullptr;
+    }
+
     int col = x / font.size.x / font.pixelsInPoint;
     int row = y / font.size.y / font.pixelsInPoint;
 
