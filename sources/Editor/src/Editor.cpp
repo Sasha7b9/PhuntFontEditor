@@ -12,6 +12,7 @@
 
 #include "defines.h"
 #include "Canvas.h"
+#include "Dialogs/ExportDialogC.h"
 #include "Dialogs/ImportDialog.h"
 
 extern void update();
@@ -330,22 +331,8 @@ void Frame::OnSaveFile(wxCommandEvent &)
 
 void Frame::OnExportFontC(wxCommandEvent &)
 {
-    wxFileDialog dlg(nullptr, wxT("Экспорт"), wxEmptyString, wxEmptyString, wxT("*.c"), wxFD_SAVE);
-
-    if (dlg.ShowModal() == wxID_OK)
-    {
-        wxString fileName = dlg.GetPath();
-
-        wxTextFile file(fileName);
-
-        file.Create();
-
-        TheCanvas->ImportFont(file, "font5");
-
-        file.Write();
-
-        file.Close();
-    }
+    ExportDialogC dlg(wxT("Экспорт шрифта в Си-файл"));
+    dlg.ShowModal();
 }
 
 
