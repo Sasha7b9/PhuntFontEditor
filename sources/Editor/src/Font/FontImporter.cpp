@@ -57,6 +57,8 @@ private:
     int FindPositionLastBit() const;
     /// Возвращает высоту символа
     int GetHeight() const;
+    /// Возвращает номер первой непустой строки
+    int GetFirstRow() const;
     /// Возвращает ширину символа
     int GetWidth() const;
     /// Возвращает число бит в строке
@@ -111,7 +113,7 @@ void FontImporter::CreateSymbols(BitmapFont &font)
 
 void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const uint16 offsets[256])
 {
-    ADD_FLINE_2("unsigned char %s[%d] =", nameFont, CalculateFullSize());
+    ADD_FLINE_2("const unsigned char %s[%d] =", nameFont, CalculateFullSize());
     ADD_LINE("{");
 
     for (int i = 0; i < 256; i++)
@@ -131,7 +133,7 @@ void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const u
         ADD_LINE("");
         ADD_FLINE_2("/* Symbol 0x%02X, offset %d */", i, offsets[i]);
 
-        ADD_FLINE_2("    %d, %d,", symbols[i]->GetWidth(), symbols[i]->GetHeight());
+        ADD_FLINE_3("    %d, %d, %d,", symbols[i]->GetWidth(), symbols[i]->GetHeight(), symbols[i]->GetFirstRow());
 
         std::vector<uint8> bytes;
         symbols[i]->PrepareBytes(bytes);
@@ -200,8 +202,8 @@ int SymbolImp::GetSize() const
     {
         return 0;
     }
-    //                                 width   height
-    return GetHeight() * BytesInRow() +  1   +   1;
+    //                                                width   height  firstRow
+    return (GetHeight() - GetFirstRow()) * BytesInRow() +  1   +   1    +  1;
 }
 
 
@@ -312,6 +314,25 @@ int SymbolImp::GetHeight() const
 }
 
 
+int SymbolImp::GetFirstRow() const
+{
+    if (Empty())
+    {
+        return 0;
+    }
+
+    for (uint i = 0; i < bits.size(); i++)
+    {
+        if (SumRow(bits[i]))
+        {
+            return static_cast<int>(i);
+        }
+    }
+
+    return 0;
+}
+
+
 int SymbolImp::GetWidth() const
 {
     return static_cast<int>(bits[0].size());
@@ -414,7 +435,7 @@ void SymbolImp::PrepareBytes(std::vector<uint8> &vec)
 {
     vec.clear();
 
-    for (uint row = 0; row < bits.size(); row++)
+    for (uint row = static_cast<uint>(GetFirstRow()); row < bits.size(); row++)
     {
         PrepareRow(bits[row], vec);
     }

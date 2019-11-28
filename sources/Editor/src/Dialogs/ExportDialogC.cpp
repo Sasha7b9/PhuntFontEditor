@@ -18,7 +18,7 @@ static TextControl *tcNameFont = nullptr;
 static wxString nameFont(wxT("font"));
 
 static TextControl *tcNameFile = nullptr;
-static wxString nameFile(wxT("font.c"));
+static wxString nameFile(wxT("font.inc"));
 
 
 ExportDialogC::ExportDialogC(const wxString &title) : wxDialog(nullptr, wxID_ANY, title)
@@ -55,7 +55,7 @@ void ExportDialogC::OnButtonExport(wxCommandEvent &)
     nameFont = tcNameFont->GetLineText();
     nameFile = tcNameFile->GetLineText();
 
-    wxFileDialog dlg(nullptr, wxT("Ёкспорт"), wxEmptyString, nameFile, wxT("*.c"), wxFD_SAVE);
+    wxFileDialog dlg(nullptr, wxT("Ёкспорт"), wxEmptyString, nameFile, wxT("*.inc"), wxFD_SAVE);
 
     if (dlg.ShowModal() == wxID_OK)
     {
