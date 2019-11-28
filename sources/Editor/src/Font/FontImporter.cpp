@@ -111,12 +111,14 @@ void FontImporter::CreateSymbols(BitmapFont &font)
 
 void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const uint16 offsets[256])
 {
-    ADD_FLINE_2("unsigned int %s[%d] =", nameFont, CalculateFullSize());
+    ADD_FLINE_2("unsigned char %s[%d] =", nameFont, CalculateFullSize());
     ADD_LINE("{");
 
     for (int i = 0; i < 256; i++)
     {
-        ADD_FLINE_2("/* 0x%02X */   %d,", i, offsets[i]);
+        BitSet16 bs(offsets[i]);
+
+        ADD_FLINE_3("/* 0x%02X */   0x%02X, 0x%02X,", i, bs.byte[0], bs.byte[1]);
     }
 
     for (int i = 0; i < 256; i++)
@@ -170,7 +172,7 @@ void FontImporter::CalculateSizes(int *sizes)
 
 void FontImporter::CalculateOffsets(const int sizes[256], uint16 offsets[256])
 {
-    int lastOffset = 256;        // Это смещение будет у следующего непустого символа
+    int lastOffset = sizeof(uint16) * 256;      // Это смещение будет у следующего непустого символа. Первое значение будет помещено сразу после таблицы смещений
 
     for (int i = 0; i < 256; i++)
     {
