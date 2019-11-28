@@ -116,7 +116,6 @@ void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const u
 
     for (int i = 0; i < 256; i++)
     {
-        //ADD_FLINE_3("/* 0x%02X %03d */   %d,", i, sizes[i], offsets[i]);
         ADD_FLINE_2("/* 0x%02X */   %d,", i, offsets[i]);
     }
 
@@ -351,14 +350,9 @@ void SymbolImp::DeleteLastEmptyBits()
 
         if (pos != static_cast<int>(bits[0].size() - 1))
         {
-            int delta = static_cast<int>(bits[0].size()) - pos - 1;
-
             for (uint i = 0; i < bits.size(); i++)
             {
-                for (int p = 0; p < delta; p++)
-                {
-                    bits[i].pop_back();
-                }
+                bits[i].erase(bits[i].begin() + pos + 1, bits[i].end());
             }
         }
     }
