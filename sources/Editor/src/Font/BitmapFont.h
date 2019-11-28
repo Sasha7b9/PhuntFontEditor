@@ -14,8 +14,6 @@ public:
     int width = 0;
     int height = 0;
 
-    static wxString UTFfrom1251(uint8 code);
-
     void Build(const wxFont &font, uint8 number, int w, int h, int offsetX, int offsetY);
     
     void Clear();
@@ -37,9 +35,10 @@ private:
     wxBitmap *bmpSymbol = nullptr;
     /// Готовое к отрисовке изображение
     wxImage imgDrawable;
-
     // Если true, символ будет включён в итоговый шрифт
     bool enabled = true;
+
+    static wxString UTFfrom1251(uint8 code);
 };
 
 
