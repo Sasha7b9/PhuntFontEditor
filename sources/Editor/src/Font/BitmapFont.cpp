@@ -143,7 +143,7 @@ void BitmapFont::Resize()
 }
 
 
-void BitmapFont::GetSymbolXY(BitmapSymbol *symbol, int *x, int *y)
+void BitmapFont::GetSymbolXY(const BitmapSymbol *symbol, int *x, int *y)
 {
     for (int row = 0; row < 16; row++)
     {

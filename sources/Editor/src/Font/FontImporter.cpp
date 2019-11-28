@@ -9,7 +9,7 @@
 
 
 //#define TRACE(num)                                          \
-//if(gI == 0x20)                                              \
+//if(gI == 0x21)                                              \
 //{                                                           \
 //    std::cout << "Point " <<  num <<  std::endl;            \
 //    std::cout << "width = " << GetWidth() << std::endl;     \
@@ -70,7 +70,7 @@ private:
     /// Возвращает сумму элементов вектора
     int SumRow(const std::vector<uint8> &vec) const;
     /// Добавить в vec байты очередной строки
-    void PrepareRow(std::vector<uint8> &row, std::vector<uint8> &vec);
+    void PrepareRow(const std::vector<uint8> &row, std::vector<uint8> &vec);
 };
 
 
@@ -328,20 +328,15 @@ void FontImporter::DeleteSymbols()
 
 void SymbolImp::DeleteFirstEmptyBits()
 {
-    if (Empty())
+    if (!Empty())
     {
-        return;
-    }
+        int pos = FindPositionFirstBit();
 
-    int pos = FindPositionFirstBit();
-
-    if (pos != 0)
-    {
-        for (uint i = 0; i < bits.size(); i++)
+        if (pos != 0)
         {
-            for (int p = 0; p < pos; p++)
+            for (uint i = 0; i < bits.size(); i++)
             {
-                bits[i].erase(bits[i].begin());
+                bits[i].erase(bits[i].begin(), bits[i].begin() + pos);
             }
         }
     }
@@ -350,22 +345,20 @@ void SymbolImp::DeleteFirstEmptyBits()
 
 void SymbolImp::DeleteLastEmptyBits()
 {
-    if (Empty())
+    if (!Empty())
     {
-        return;
-    }
+        int pos = FindPositionLastBit();
 
-    int pos = FindPositionLastBit();
-
-    if (pos != static_cast<int>(bits[0].size() - 1))
-    {
-        int delta = static_cast<int>(bits[0].size()) - pos - 1;
-
-        for (uint i = 0; i < bits.size(); i++)
+        if (pos != static_cast<int>(bits[0].size() - 1))
         {
-            for (int p = 0; p < delta; p++)
+            int delta = static_cast<int>(bits[0].size()) - pos - 1;
+
+            for (uint i = 0; i < bits.size(); i++)
             {
-                bits[i].pop_back();
+                for (int p = 0; p < delta; p++)
+                {
+                    bits[i].pop_back();
+                }
             }
         }
     }
@@ -432,7 +425,7 @@ void SymbolImp::PrepareBytes(std::vector<uint8> &vec)
 }
 
 
-void SymbolImp::PrepareRow(std::vector<uint8> &row, std::vector<uint8> &vec)
+void SymbolImp::PrepareRow(const std::vector<uint8> &row, std::vector<uint8> &vec)
 {
     uint numBit = 0;
 

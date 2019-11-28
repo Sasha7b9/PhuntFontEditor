@@ -72,7 +72,7 @@ public:
 
     BitmapSymbol *GetSymbolUnderMouse(int x, int y);
 
-    void GetSymbolXY(BitmapSymbol *symbol, int *x, int *y);
+    void GetSymbolXY(const BitmapSymbol *symbol, int *x, int *y);
 
 private:
 
