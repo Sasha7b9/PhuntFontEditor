@@ -17,7 +17,7 @@ wxString BitmapSymbol::UTFfrom1251(uint8 code)
         return static_cast<wxChar>(0x0410 + code - 192);
     }
 
-    if (code == 0x7F)                                            /// "ќмега"
+    if (code == 0x01)                                            /// "ќмега"
     {
         return static_cast<wxChar>(0x03a9);
     }
@@ -204,7 +204,7 @@ void BitmapFont::ClearBadSymbols()
         GetSymbol(i)->Clear();
     }
 
-    for (uint8 i = 0x7f; i < 0xc0; i++)
+    for (uint8 i = 0x80; i < 0xc0; i++)
     {
         GetSymbol(i)->Disable();
         GetSymbol(i)->Clear();
