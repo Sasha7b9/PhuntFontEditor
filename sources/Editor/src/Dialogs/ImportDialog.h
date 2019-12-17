@@ -20,6 +20,8 @@ public:
     ImportDialog(const wxString &title);
 
     static void GetDataImport(DataImport &data);
+    /// Импортируемый шрифт
+    static wxFont font;
 
 protected:
 
@@ -30,4 +32,8 @@ private:
     void OnButtonApply(wxCommandEvent &);
 
     void OnButtonClose(wxCommandEvent &);
+    /// Сформировать строку описания шрифта
+    static void TuneTextFont();
+    /// Установить все полагающиеся надписи в соотвествии с текущими настройками
+    static void TuneTexts();
 };

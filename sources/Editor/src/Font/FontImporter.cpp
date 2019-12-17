@@ -113,6 +113,8 @@ void FontImporter::CreateSymbols(BitmapFont &font)
 
 void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const uint16 offsets[256])
 {
+    WriteParametersFont(file);
+
     ADD_FLINE_2("const unsigned char %s[%d] =", nameFont, CalculateFullSize());
     ADD_LINE("{");
 
@@ -154,6 +156,14 @@ void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const u
     }
 
     ADD_LINE("};");
+}
+
+
+void FontImporter::WriteParametersFont(wxTextFile &file)
+{
+    ADD_LINE("/*");
+    ADD_FLINE_1("    Name - %s", "unknown");
+    ADD_LINE("*/");
 }
 
 

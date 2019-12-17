@@ -30,12 +30,7 @@ static long offsetX = 0;
 static TextControl *tcOffsetY = nullptr;
 static long offsetY = 0;
 
-static wxFont font(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New"));
-
-/// Сформировать строку описания шрифта
-static void TuneTextFont();
-/// Установить все полагающиеся надписи в соотвествии с текущими настройками
-static void TuneTexts();
+wxFont ImportDialog::font(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New"));
 
 
 ImportDialog::ImportDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, title)
@@ -127,7 +122,7 @@ void ImportDialog::GetDataImport(DataImport &data)
 }
 
 
-static void TuneTexts()
+void ImportDialog::TuneTexts()
 {
     TuneTextFont();
 
@@ -138,7 +133,7 @@ static void TuneTexts()
 }
 
 
-static void TuneTextFont()
+void ImportDialog::TuneTextFont()
 {
     int size = font.GetPointSize();
 
