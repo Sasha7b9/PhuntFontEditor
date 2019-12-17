@@ -27,4 +27,6 @@ private:
     static int CalculateFullSize();
 
     static char *NameWidth(wxFontWeight width);
+
+    static char *NameStyle(wxFontStyle style);
 };

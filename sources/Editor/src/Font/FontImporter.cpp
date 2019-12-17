@@ -166,7 +166,11 @@ void FontImporter::WriteParametersFont(wxTextFile &file)
     ADD_FLINE_1("    Name - %s", ImportDialog::font.GetFaceName());
     ADD_FLINE_1("    Size - %d", ImportDialog::font.GetPointSize());
     ADD_FLINE_1("    Width - %s", NameWidth(ImportDialog::font.GetWeight()));
-    ADD_FLINE_1("    Style - %s", ImportDialog::font.GetStyle() == wxFONTSTYLE_ITALIC ? "yes" : "no");
+    ADD_FLINE_1("    Style - %s", NameStyle(ImportDialog::font.GetStyle()));
+    ADD_FLINE_1("    Cell width - %d", ImportDialog::widthCell);
+    ADD_FLINE_1("    Cell height - %d", ImportDialog::heightCell);
+    ADD_FLINE_1("    Offset x - %d", ImportDialog::offsetSymbolX);
+    ADD_FLINE_1("    Offset y - %d", ImportDialog::offsetSymbolY);
     ADD_LINE("*/");
 }
 
@@ -203,6 +207,34 @@ char *FontImporter::NameWidth(wxFontWeight width)
         break;
     case wxFONTWEIGHT_EXTRAHEAVY:
         result = "extraheavy";
+        break;
+    case wxFONTWEIGHT_NORMAL:
+        result = "normal";
+        break;
+    case wxFONTWEIGHT_INVALID:
+        break;
+    }
+
+    return result;
+}
+
+
+char *FontImporter::NameStyle(wxFontStyle style)
+{
+    char *result = "invalid";
+
+    switch(style)
+    {
+    case wxFONTSTYLE_NORMAL:
+        result = "normal";
+        break;
+    case wxFONTSTYLE_ITALIC:
+        result = "italic";
+        break;
+    case wxFONTSTYLE_SLANT:
+        result = "slant";
+        break;
+    case wxFONTSTYLE_MAX:
         break;
     }
 

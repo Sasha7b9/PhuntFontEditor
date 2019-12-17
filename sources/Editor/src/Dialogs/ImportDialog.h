@@ -22,6 +22,14 @@ public:
     static void GetDataImport(DataImport &data);
     /// Импортируемый шрифт
     static wxFont font;
+    /// Ширина символа
+    static long widthCell;
+    /// Высота символа
+    static long heightCell;
+    /// Смещение шрифта по горизонтали
+    static long offsetSymbolX;
+    /// Смещение шрифта по вертикали
+    static long offsetSymbolY;
 
 protected:
 

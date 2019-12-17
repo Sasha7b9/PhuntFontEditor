@@ -17,18 +17,19 @@ enum
 
 /// Информация о выбранном шрифте
 static wxStaticText *textFont = nullptr;
-/// Ширина символа
-static TextControl *tcWidthSymbol = nullptr;
-static long width = 16;
-/// Высота символа
-static TextControl *tcHeightSymbol = nullptr;
-static long height = 16;
-/// Смещение шрифта по горизонтали
+
+long ImportDialog::widthCell = 16;
+static TextControl *tcWidthCell = nullptr;
+
+long ImportDialog::heightCell = 16;
+static TextControl *tcHeightCell = nullptr;
+
+long ImportDialog::offsetSymbolX = 0;
 static TextControl *tcOffsetX = nullptr;
-static long offsetX = 0;
-/// Смещение шрифта по вертикали
+
+long ImportDialog::offsetSymbolY = 0;
 static TextControl *tcOffsetY = nullptr;
-static long offsetY = 0;
+
 
 wxFont ImportDialog::font(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New"));
 
@@ -59,17 +60,17 @@ ImportDialog::ImportDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, 
     boxFont->AddSpacer(SPACER);
     boxFont->Add(textFont, 0, wxALIGN_CENTER_VERTICAL, BORDER);
 
-    tcWidthSymbol = new TextControl(this, wxT("8"), wxT("ширина символа"));
+    tcWidthCell = new TextControl(this, wxT("8"), wxT("ширина символа"));
 
-    tcHeightSymbol = new TextControl(this, wxT("8"), wxT("высота символа"));
+    tcHeightCell = new TextControl(this, wxT("8"), wxT("высота символа"));
 
     tcOffsetX = new TextControl(this, wxT("0"), wxT("смещение по x"));
 
     tcOffsetY = new TextControl(this, wxT("0"), wxT("смещение по y"));
 
     vBox->Add(boxFont, 0, wxALIGN_LEFT, BORDER);
-    vBox->Add(tcWidthSymbol, 0, _ALIGN, BORDER);
-    vBox->Add(tcHeightSymbol, 0, _ALIGN, BORDER);
+    vBox->Add(tcWidthCell, 0, _ALIGN, BORDER);
+    vBox->Add(tcHeightCell, 0, _ALIGN, BORDER);
     vBox->Add(tcOffsetX, 0, _ALIGN, BORDER);
     vBox->Add(tcOffsetY, 0, _ALIGN, BORDER);
 
@@ -97,10 +98,10 @@ void ImportDialog::OnChoiceFont(wxCommandEvent &)
 
 void ImportDialog::OnButtonApply(wxCommandEvent &)
 {
-    tcWidthSymbol->ToLong(width);
-    tcHeightSymbol->ToLong(height);
-    tcOffsetX->ToLong(offsetX);
-    tcOffsetY->ToLong(offsetY);
+    tcWidthCell->ToLong(widthCell);
+    tcHeightCell->ToLong(heightCell);
+    tcOffsetX->ToLong(offsetSymbolX);
+    tcOffsetY->ToLong(offsetSymbolY);
 
     TheCanvas->Rebuild();
 }
@@ -114,10 +115,10 @@ void ImportDialog::OnButtonClose(wxCommandEvent &)
 
 void ImportDialog::GetDataImport(DataImport &data)
 {
-    data.width = width;
-    data.height = height;
-    data.offsetX = offsetX;
-    data.offsetY = offsetY;
+    data.width = widthCell;
+    data.height = heightCell;
+    data.offsetX = offsetSymbolX;
+    data.offsetY = offsetSymbolY;
     data.font = font;
 }
 
@@ -126,10 +127,10 @@ void ImportDialog::TuneTexts()
 {
     TuneTextFont();
 
-    tcWidthSymbol->FromLong(width);
-    tcHeightSymbol->FromLong(height);
-    tcOffsetX->FromLong(offsetX);
-    tcOffsetY->FromLong(offsetY);
+    tcWidthCell->FromLong(widthCell);
+    tcHeightCell->FromLong(heightCell);
+    tcOffsetX->FromLong(offsetSymbolX);
+    tcOffsetY->FromLong(offsetSymbolY);
 }
 
 
