@@ -1,4 +1,5 @@
 #include "defines.h"
+#include "Dialogs/ImportDialog.h"
 #include "Font/FontImporter.h"
 
 
@@ -162,8 +163,50 @@ void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const u
 void FontImporter::WriteParametersFont(wxTextFile &file)
 {
     ADD_LINE("/*");
-    ADD_FLINE_1("    Name - %s", "unknown");
+    ADD_FLINE_1("    Name - %s", ImportDialog::font.GetFaceName());
+    ADD_FLINE_1("    Size - %d", ImportDialog::font.GetPointSize());
+    ADD_FLINE_1("    Width - %s", NameWidth(ImportDialog::font.GetWeight()));
+    ADD_FLINE_1("    Style - %s", ImportDialog::font.GetStyle() == wxFONTSTYLE_ITALIC ? "yes" : "no");
     ADD_LINE("*/");
+}
+
+
+char *FontImporter::NameWidth(wxFontWeight width)
+{
+    char *result = "invalid";
+
+    switch(width)
+    {
+    case wxFONTWEIGHT_THIN:
+        result = "thin";
+        break;
+    case wxFONTWEIGHT_EXTRALIGHT:
+        result = "extralight";
+        break;
+    case wxFONTWEIGHT_LIGHT:
+        result = "light";
+        break;
+    case wxFONTWEIGHT_MEDIUM:
+        result = "medium";
+        break;
+    case wxFONTWEIGHT_SEMIBOLD:
+        result = "semibold";
+        break;
+    case wxFONTWEIGHT_BOLD:
+        result = "bold";
+        break;
+    case wxFONTWEIGHT_EXTRABOLD:
+        result = "extrabold";
+        break;
+    case wxFONTWEIGHT_HEAVY:
+        result = "heavy";
+        break;
+    case wxFONTWEIGHT_EXTRAHEAVY:
+        result = "extraheavy";
+        break;
+    }
+
+    return result;
 }
 
 

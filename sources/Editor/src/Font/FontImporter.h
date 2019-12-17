@@ -25,4 +25,6 @@ private:
     static void DeleteSymbols();
 
     static int CalculateFullSize();
+
+    static char *NameWidth(wxFontWeight width);
 };
