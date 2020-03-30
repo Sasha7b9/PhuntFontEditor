@@ -19,6 +19,7 @@ ThirdParty - https://github.com/Sasha7b9/ThirdParty
 Сборка сторонних библиотек.
 1. Перейдите в каталог Editor/ThirdParty/scripts и запустите файл promt.bat
 2. Выполните команду "install_python_libs.bat". Необходимые библиотеки python установлены
+3. Со страницы https://www.wxwidgets.org/downloads/ скачайте файл Windows ZIP и распакуйте его в созданный каталог Editor/ThirdParty/wxWidgets
 3. Выполните команду "install_libs.bat". Библиотеки, необходимые для сборки редактора, собраны.
 
 
