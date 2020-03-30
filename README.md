@@ -17,6 +17,14 @@ PhuntFontEditor - https://github.com/Sasha7b9/PhuntFontEditor
 ThirdParty - https://github.com/Sasha7b9/ThirdParty
 
 Сборка сторонних библиотек.
-1. Перейдите в каталог Editor/ThirdParty/scripts и запустите promt.bat
-2. Выполните команду "install_python_libs.bat"
-3. Выполните команду "install_libs.bat"
+1. Перейдите в каталог Editor/ThirdParty/scripts и запустите файл promt.bat
+2. Выполните команду "install_python_libs.bat". Необходимые библиотеки python установлены
+3. Выполните команду "install_libs.bat". Библиотеки, необходимые для сборки редактора, собраны.
+
+
+Сборка редактора.
+1. Перейдите в каталог Editor/PhuntFontEditor/sources/scripts и запустите файл promt.bat
+2. Выполните команду "make_build.bat"
+3. Выполните команду "run.bat". Это запустит редактор.
+
+Для редактирования исходного кода выполните "edit.bat"
