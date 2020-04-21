@@ -34,6 +34,7 @@ add_executable(Editor ${SOURCES})
 
 target_link_libraries(Editor ../../../../../ThirdParty/wxWidgets/generated/lib/vc_dll/wxbase31ud)
 target_link_libraries(Editor ../../../../../ThirdParty/wxWidgets/generated/lib/vc_dll/wxmsw31ud_core)
+target_link_libraries(Editor ../../../../../ThirdParty/wxWidgets/generated/lib/vc_dll/wxbase31ud_xml)
 
 target_link_libraries(Editor WinMM.lib)
 target_link_libraries(Editor version.lib)

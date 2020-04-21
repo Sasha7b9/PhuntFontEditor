@@ -12,4 +12,6 @@ public:
 private:
     void OnButtonExport(wxCommandEvent &);
     void OnButtonCancel(wxCommandEvent &);
+
+    void WriteFileXML(const wxString &nameFileFont);
 };

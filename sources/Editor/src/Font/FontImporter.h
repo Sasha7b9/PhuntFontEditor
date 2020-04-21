@@ -10,6 +10,10 @@ class FontImporter
 public:
     static void Import(BitmapFont &font, wxTextFile &file, const wxString &nameFont);
 
+    static char *NameWidth(wxFontWeight width);
+
+    static char *NameStyle(wxFontStyle style);
+
 private:
 
     static void CreateSymbols(BitmapFont &font);
@@ -25,8 +29,4 @@ private:
     static void DeleteSymbols();
 
     static int CalculateFullSize();
-
-    static char *NameWidth(wxFontWeight width);
-
-    static char *NameStyle(wxFontStyle style);
 };

@@ -1,9 +1,12 @@
 #include "defines.h"
 #include "Canvas.h"
 #include "Dialogs/ExportDialogC.h"
+#include "Dialogs/ImportDialog.h"
 #include "Dialogs/TextControl.h"
+#include "Font/FontImporter.h"
 #pragma warning(push, 0)
 #include <wx/textfile.h>
+#include <wx/xml/xml.h>
 #pragma warning(pop)
 
 
@@ -57,7 +60,7 @@ void ExportDialogC::OnButtonExport(wxCommandEvent &)
     if (dlg.ShowModal() == wxID_OK)
     {
         wxTextFile file(dlg.GetPath());
-    
+
         file.Create();
     
         TheCanvas->ImportFont(file, nameFont);
@@ -67,7 +70,38 @@ void ExportDialogC::OnButtonExport(wxCommandEvent &)
         file.Close();
 
         Destroy();
+
+        WriteFileXML(file.GetName());
     }
+}
+
+
+void ExportDialogC::WriteFileXML(const wxString &nameFileFont)
+{
+    DataImport data;
+    ImportDialog::GetDataImport(&data);
+
+    wxString nameFile = nameFileFont;
+    nameFile[nameFile.size() - 1] = 'l';
+    nameFile[nameFile.size() - 2] = 'm';
+    nameFile[nameFile.size() - 3] = 'x';
+
+    wxXmlDocument xml;
+
+    wxXmlNode *root = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, _T("FontProperties"));
+    wxXmlNode *node = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, _T("Common"));
+    root->AddChild(node);
+
+    node->AddAttribute(_T("Name"), data.font.GetFaceName());
+    node->AddAttribute(_T("Size"), wxString::Format(wxT("%i"), data.font.GetPointSize()));
+    node->AddAttribute(_T("FontWidth"), FontImporter::NameWidth(data.font.GetWeight()));
+    node->AddAttribute(_T("FontStyle"), FontImporter::NameStyle(data.font.GetStyle()));
+
+    xml.SetRoot(root);
+
+    //root->AddChild(node = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, _T("Name font")));
+
+    xml.Save(nameFile, 2);
 }
 
 
