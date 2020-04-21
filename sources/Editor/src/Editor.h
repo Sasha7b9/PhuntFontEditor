@@ -51,13 +51,17 @@ private:
 
     void OnScaleDown(wxCommandEvent &);
 
+    // Импортировать системный шрифт
     void OnImportFont(wxCommandEvent &);
 
+    // Экспортировать шрифт в си-файл
     void OnExportFontC(wxCommandEvent &);
 
     void OnExportFontBin(wxCommandEvent &);
+    
     // Очистить символы, не входящие в основной набор
     void OnClearBadSymbols(wxCommandEvent &);
+    
     // Инструмент выбора сохраняемых символов
     void OnSelectSymbols(wxCommandEvent &);
 };
