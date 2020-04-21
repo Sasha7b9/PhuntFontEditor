@@ -17,14 +17,18 @@ public:
     void OnPaint(wxPaintEvent &);
 
     void Rebuild();
+    
     // Увеличить масштаб
     void Increase();
+    
     // Уменьшить масштаб
     void Decrease();
+    
     // Очистить символы, не входящие в основной набор
     void ClearBadSymbols();
 
     void ImportFont(wxTextFile &file, const wxString &nameFont);
+    
     // Включить/выключить режим выбора символов
     void EnableModeSelectSymbols(bool enable);
 
@@ -45,10 +49,13 @@ private:
     void Resize();
 
     void DrawCursor(wxPaintDC &dc);
+    
     // Подсветить точку символа, на которую указывает мышь
     void HighlightPixel(wxPaintDC &dc);
+    
     // Выделить/снять выделение с символа, который находчится под курсором
     void HighlightSymbol(wxPaintDC &dc);
+    
     // Действующий размер холста
     wxSize CurrentSize();
 
@@ -58,8 +65,8 @@ private:
 
     enum Mode
     {
-        Edit,           ///< Основной режим, в котором можно редактировать символы
-        SelectSymbols   ///< Режим выбора символов
+        Edit,           // Основной режим, в котором можно редактировать символы
+        SelectSymbols   // Режим выбора символов
     } mode = Edit;
 };
 
