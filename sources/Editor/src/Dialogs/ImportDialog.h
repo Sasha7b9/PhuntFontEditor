@@ -19,7 +19,7 @@ class ImportDialog : public wxDialog
 public:
     ImportDialog(const wxString &title);
 
-    static void GetDataImport(DataImport &data);
+    static void GetDataImport(DataImport *data);
     
     // Импортируемый шрифт
     static wxFont font;
@@ -33,6 +33,7 @@ public:
     // Смещение шрифта по горизонтали
     static long offsetSymbolX;
     
+private:
     // Смещение шрифта по вертикали
     static long offsetSymbolY;
 

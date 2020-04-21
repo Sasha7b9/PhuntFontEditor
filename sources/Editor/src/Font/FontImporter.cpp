@@ -162,6 +162,9 @@ void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const u
 
 void FontImporter::WriteParametersFont(wxTextFile &file)
 {
+    DataImport data;
+    ImportDialog::GetDataImport(&data);
+
     ADD_LINE("/*");
     ADD_FLINE_1("    Name - %s", ImportDialog::font.GetFaceName());
     ADD_FLINE_1("    Size - %d", ImportDialog::font.GetPointSize());
@@ -170,7 +173,7 @@ void FontImporter::WriteParametersFont(wxTextFile &file)
     ADD_FLINE_1("    Cell width - %d", ImportDialog::widthCell);
     ADD_FLINE_1("    Cell height - %d", ImportDialog::heightCell);
     ADD_FLINE_1("    Offset x - %d", ImportDialog::offsetSymbolX);
-    ADD_FLINE_1("    Offset y - %d", ImportDialog::offsetSymbolY);
+    ADD_FLINE_1("    Offset y - %d", data.offsetY);
     ADD_LINE("*/");
 }
 

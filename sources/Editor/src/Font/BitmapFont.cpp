@@ -165,7 +165,7 @@ void BitmapFont::GetSymbolXY(const BitmapSymbol *symbol, int *x, int *y)
 void BitmapFont::CreateNew()
 {
     DataImport data;
-    ImportDialog::GetDataImport(data);
+    ImportDialog::GetDataImport(&data);
 
     size.x = data.width;
     size.y = data.height;

@@ -113,13 +113,13 @@ void ImportDialog::OnButtonClose(wxCommandEvent &)
 }
 
 
-void ImportDialog::GetDataImport(DataImport &data)
+void ImportDialog::GetDataImport(DataImport *data)
 {
-    data.width = widthCell;
-    data.height = heightCell;
-    data.offsetX = offsetSymbolX;
-    data.offsetY = offsetSymbolY;
-    data.font = font;
+    data->width = widthCell;
+    data->height = heightCell;
+    data->offsetX = offsetSymbolX;
+    data->offsetY = offsetSymbolY;
+    data->font = font;
 }
 
 
