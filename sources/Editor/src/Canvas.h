@@ -17,15 +17,15 @@ public:
     void OnPaint(wxPaintEvent &);
 
     void Rebuild();
-    /// Увеличить масштаб
+    // Увеличить масштаб
     void Increase();
-    /// Уменьшить масштаб
+    // Уменьшить масштаб
     void Decrease();
-    /// Очистить символы, не входящие в основной набор
+    // Очистить символы, не входящие в основной набор
     void ClearBadSymbols();
 
     void ImportFont(wxTextFile &file, const wxString &nameFont);
-    /// Включить/выключить режим выбора символов
+    // Включить/выключить режим выбора символов
     void EnableModeSelectSymbols(bool enable);
 
 private:
@@ -45,11 +45,11 @@ private:
     void Resize();
 
     void DrawCursor(wxPaintDC &dc);
-    /// Подсветить точку символа, на которую указывает мышь
+    // Подсветить точку символа, на которую указывает мышь
     void HighlightPixel(wxPaintDC &dc);
-    /// Выделить/снять выделение с символа, который находчится под курсором
+    // Выделить/снять выделение с символа, который находчится под курсором
     void HighlightSymbol(wxPaintDC &dc);
-    /// Действующий размер холста
+    // Действующий размер холста
     wxSize CurrentSize();
 
     BitmapSymbol *GetSymbolUnderMouse(int mouseX, int mouseY);

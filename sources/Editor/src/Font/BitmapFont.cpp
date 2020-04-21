@@ -17,7 +17,7 @@ wxString BitmapSymbol::UTFfrom1251(uint8 code)
         return static_cast<wxChar>(0x0410 + code - 192);
     }
 
-    if (code == 0x01)                                            /// "ќмега"
+    if (code == 0x01)                                            // "ќмега"
     {
         return static_cast<wxChar>(0x03a9);
     }

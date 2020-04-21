@@ -20,15 +20,15 @@ public:
     ImportDialog(const wxString &title);
 
     static void GetDataImport(DataImport &data);
-    /// Импортируемый шрифт
+    // Импортируемый шрифт
     static wxFont font;
-    /// Ширина символа
+    // Ширина символа
     static long widthCell;
-    /// Высота символа
+    // Высота символа
     static long heightCell;
-    /// Смещение шрифта по горизонтали
+    // Смещение шрифта по горизонтали
     static long offsetSymbolX;
-    /// Смещение шрифта по вертикали
+    // Смещение шрифта по вертикали
     static long offsetSymbolY;
 
 protected:
@@ -40,8 +40,8 @@ private:
     void OnButtonApply(wxCommandEvent &);
 
     void OnButtonClose(wxCommandEvent &);
-    /// Сформировать строку описания шрифта
+    // Сформировать строку описания шрифта
     static void TuneTextFont();
-    /// Установить все полагающиеся надписи в соотвествии с текущими настройками
+    // Установить все полагающиеся надписи в соотвествии с текущими настройками
     static void TuneTexts();
 };

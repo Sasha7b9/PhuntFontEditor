@@ -13,7 +13,7 @@ public:
 private:
 
     static void CreateSymbols(BitmapFont &font);
-    /// Рассчитать размеры символов
+    // Рассчитать размеры символов
     static void CalculateSizes(int *sizes);
 
     static void CalculateOffsets(const int sizes[256], uint16 offsets[256]);

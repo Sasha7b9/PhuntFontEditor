@@ -15,7 +15,7 @@ enum
 };
 
 
-/// Информация о выбранном шрифте
+// Информация о выбранном шрифте
 static wxStaticText *textFont = nullptr;
 
 long ImportDialog::widthCell = 16;

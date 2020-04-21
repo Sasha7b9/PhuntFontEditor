@@ -31,9 +31,9 @@ public:
     static BitmapSymbol *Null();
 
 private:
-    /// Здесь хранится исходное изображение в масштабе 1:1
+    // Здесь хранится исходное изображение в масштабе 1:1
     wxBitmap *bmpSymbol = nullptr;
-    /// Готовое к отрисовке изображение
+    // Готовое к отрисовке изображение
     wxImage imgDrawable;
     // Если true, символ будет включён в итоговый шрифт
     bool enabled = true;
@@ -46,27 +46,27 @@ class BitmapFont
 {
 public:
     ~BitmapFont();
-    /// Размер символа в точках
+    // Размер символа в точках
     wxSize size = { 0, 0 };
-    /// Столько писелей занимает одна точка шрифта в люому направлении
+    // Столько писелей занимает одна точка шрифта в люому направлении
     int scale = 8;
 
     BitmapSymbol symbols[16][16];
-    /// Создаёт новый шрифт
+    // Создаёт новый шрифт
     void CreateNew();
 
     void Resize();
 
     void Draw(wxPaintDC &dc);
-    /// Очистить символы, не входящие в основной набор
+    // Очистить символы, не входящие в основной набор
     void ClearBadSymbols();
 
     BitmapSymbol *GetSymbol(int row, int col);
 
     BitmapSymbol *GetSymbol(uint8 num);
-    /// Возращает местоположение символа на холсте
+    // Возращает местоположение символа на холсте
     wxRect GetRectForSymbol(const BitmapSymbol *symbol) const;
-    /// Переключить состояине символа в позиции мыши с координатами mouseX, mouseY
+    // Переключить состояине символа в позиции мыши с координатами mouseX, mouseY
     void ToggleStateSymbol(int mouseX, int mouseY);
 
     BitmapSymbol *GetSymbolUnderMouse(int x, int y);

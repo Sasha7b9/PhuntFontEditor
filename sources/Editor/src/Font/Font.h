@@ -18,8 +18,8 @@ struct Symbol
 
 struct HeaderFont
 {
-    uint16 offsets[256];            /// Здесь хранятся смещения всех символов относительно &offsets[0]
-    Symbol *symbols;                /// Первый символ. Со смещением 256
+    uint16 offsets[256];            // Здесь хранятся смещения всех символов относительно &offsets[0]
+    Symbol *symbols;                // Первый символ. Со смещением 256
 };
 
 
@@ -29,7 +29,7 @@ uint8 font[25];
 struct Font
 {
     void SetFont(uint8 *f) { font = f; };
-    Symbol *GetSymbol(uint8 code);   /// Возвращает указатель на символ с кодом code
+    Symbol *GetSymbol(uint8 code);   // Возвращает указатель на символ с кодом code
 private:
     uint8 *font;
 };
