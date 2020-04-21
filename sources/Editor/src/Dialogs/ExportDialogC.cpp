@@ -17,9 +17,6 @@ enum
 static TextControl *tcNameFont = nullptr;
 static wxString nameFont(wxT("font"));
 
-static TextControl *tcNameFile = nullptr;
-static wxString nameFile(wxT("font.inc"));
-
 
 ExportDialogC::ExportDialogC(const wxString &title) : wxDialog(nullptr, wxID_ANY, title)
 {
@@ -38,12 +35,9 @@ ExportDialogC::ExportDialogC(const wxString &title) : wxDialog(nullptr, wxID_ANY
 
     tcNameFont = new TextControl(this, nameFont, wxT("Имя шрифта"));
 
-    tcNameFile = new TextControl(this, nameFile, wxT("Имя файла"));
-
     wxBoxSizer *vBox = new wxBoxSizer(wxVERTICAL);
     
     vBox->Add(tcNameFont);
-    vBox->Add(tcNameFile);
     vBox->Add(boxButtons, 0, _ALIGN, BORDER);
 
     SetSizer(vBox);
@@ -53,7 +47,10 @@ ExportDialogC::ExportDialogC(const wxString &title) : wxDialog(nullptr, wxID_ANY
 void ExportDialogC::OnButtonExport(wxCommandEvent &)
 {
     nameFont = tcNameFont->GetLineText();
-    nameFile = tcNameFile->GetLineText();
+
+    char nameFile[100] = { 0 };
+    std::strcpy(nameFile, nameFont.c_str());
+    std::strcat(nameFile, ".inc");
 
     wxFileDialog dlg(nullptr, wxT("Экспорт"), wxEmptyString, nameFile, wxT("*.inc"), wxFD_SAVE);
 
