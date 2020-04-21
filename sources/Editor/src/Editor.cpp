@@ -35,7 +35,6 @@ enum
 
     FILE_OPEN,
     FILE_SAVE,
-    FILE_NEW,                                   // Очистить форму
     FILE_IMPORT,                                // Импортировать шрифт
     FILE_EXPORT_C,                              // Экспортировать шрифт в си-файл
     FILE_EXPORT_BIN,                            // Экспортировать шрифт в двоичный файл
@@ -95,8 +94,7 @@ Frame::Frame(const wxString &title)
 
     Bind(wxEVT_MENU,       &Frame::OnQuit,              this, MENU_FILE_QUIT);
     Bind(wxEVT_MENU,       &Frame::OnOpenFile,          this, FILE_OPEN);
-    Bind(wxEVT_MENU,       &Frame::OnExportFontC,          this, FILE_SAVE);
-    Bind(wxEVT_MENU,       &Frame::OnNewFile,           this, FILE_NEW);
+    Bind(wxEVT_MENU,       &Frame::OnExportFontC,       this, FILE_SAVE);
     Bind(wxEVT_MENU,       &Frame::OnImportFont,        this, FILE_IMPORT);
     Bind(wxEVT_MENU,       &Frame::OnExportFontC,       this, FILE_EXPORT_C);
     Bind(wxEVT_MENU,       &Frame::OnExportFontBin,     this, FILE_EXPORT_BIN);
@@ -221,7 +219,6 @@ void Frame::CreateMenu()
 
     wxBitmap imgOpen(wxImage(wxT("icons/open.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgSave(wxImage(wxT("icons/save.bmp"), wxBITMAP_TYPE_BMP));
-    wxBitmap imgNew(wxImage(wxT("icons/new.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgChangeFont(wxImage(wxT("icons/font.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgUndo(wxImage(wxT("icons/undo.bmp"), wxBITMAP_TYPE_BMP));
     wxBitmap imgRedo(wxImage(wxT("icons/redo.bmp"), wxBITMAP_TYPE_BMP));
@@ -231,9 +228,8 @@ void Frame::CreateMenu()
     wxBitmap imgToggle(wxImage(wxT("icons/toggle.bmp"), wxBITMAP_TYPE_BMP));
 
     wxToolBar* toolBar = CreateToolBar();
-    toolBar->AddTool(FILE_OPEN, wxT("Открыть"), imgOpen, wxT("Загрузить ранее созданный сигнал из файла"));
-    toolBar->AddTool(FILE_SAVE, wxT("Сохранить"), imgSave, wxT("Сохранить сигнал в файл"));
-    toolBar->AddTool(FILE_NEW, wxT("Новый"), imgNew, wxT("Создать новый сигнал"));
+    toolBar->AddTool(FILE_OPEN, wxT("Открыть"), imgOpen, wxT("Загрузить шрифт из файла описания"));
+    toolBar->AddTool(FILE_SAVE, wxT("Сохранить"), imgSave, wxT("Сохранить шрифт в файл описания"));
 
     toolBar->AddSeparator();
     toolBar->AddTool(UNDO, wxT("Отменить"), imgUndo, wxT("Отменить предыдущее действие"));
@@ -274,8 +270,6 @@ void Frame::ShowContextMenu(const wxPoint &pos, bool underPoint)
         menuPoint.Append(CONTEXT_MENU_DELETE, "Удалить");
         menuPoint.Append(CONTEXT_MENU_PARAMETERS, "Параметры");
         menuPoint.AppendSubMenu(menuAlign, "Выровнять");
-
-        menuContext.Append(FILE_NEW, "Очистить");
     }
 
     PopupMenu(underPoint ? &menuPoint : &menuContext, pos.x, pos.y);
