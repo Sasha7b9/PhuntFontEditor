@@ -23,9 +23,6 @@ struct HeaderFont
 };
 
 
-uint8 font[25];
-
-
 struct Font
 {
     void SetFont(uint8 *f) { font = f; };

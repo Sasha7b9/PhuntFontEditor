@@ -3,6 +3,7 @@
 #include "Dialogs/ExportDialogC.h"
 #include "Dialogs/ImportDialog.h"
 #include "Dialogs/TextControl.h"
+#include "Font/Font.h"
 #include "Font/FontImporter.h"
 #pragma warning(push, 0)
 #include <wx/textfile.h>
@@ -89,19 +90,36 @@ void ExportDialogC::WriteFileXML(const wxString &nameFileFont)
     wxXmlDocument xml;
 
     wxXmlNode *root = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, _T("FontProperties"));
-    wxXmlNode *node = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, _T("Common"));
-    root->AddChild(node);
+    wxXmlNode *common = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, _T("Common"));
+    root->AddChild(common);
 
-    node->AddAttribute(_T("Name"), data.font.GetFaceName());
-    node->AddAttribute(_T("Size"), wxString::Format(wxT("%i"), data.font.GetPointSize()));
-    node->AddAttribute(_T("FontWidth"), FontImporter::NameWidth(data.font.GetWeight()));
-    node->AddAttribute(_T("FontStyle"), FontImporter::NameStyle(data.font.GetStyle()));
+    common->AddAttribute(_T("Name"), data.font.GetFaceName());
+    common->AddAttribute(_T("Size"), wxString::Format(wxT("%i"), data.font.GetPointSize()));
+    common->AddAttribute(_T("FontWidth"), FontImporter::NameWidth(data.font.GetWeight()));
+    common->AddAttribute(_T("FontStyle"), FontImporter::NameStyle(data.font.GetStyle()));
+
+    wxXmlNode *cell = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, _T("Cell"));
+    common->AddChild(cell);
+
+    cell->AddAttribute(_T("Width"), wxString::Format(wxT("%i"), data.width));
+    cell->AddAttribute(_T("Height"), wxString::Format(wxT("%i"), data.height));
+    cell->AddAttribute(_T("OffsetX"), wxString::Format(wxT("%i"), data.offsetX));
+    cell->AddAttribute(_T("OffsetY"), wxString::Format(wxT("%i"), data.offsetY));
+
+    for (int i = 0; i < 256; i++)
+    {
+        WriteInfoSymbolXML(static_cast<uint8>(i), common);
+    }
 
     xml.SetRoot(root);
 
-    //root->AddChild(node = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, _T("Name font")));
-
     xml.Save(nameFile, 2);
+}
+
+
+void ExportDialogC::WriteInfoSymbolXML(uint8 /*code*/, wxXmlNode * /*node*/)
+{
+    //Symbol *symbol = Font::GetSymbol(code);
 }
 
 
