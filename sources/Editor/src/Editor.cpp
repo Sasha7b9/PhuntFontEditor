@@ -37,7 +37,6 @@ enum
     FILE_SAVE,
     FILE_IMPORT,                                // »мпортировать шрифт
     FILE_EXPORT_C,                              // Ёкспортировать шрифт в си-файл
-    FILE_EXPORT_BIN,                            // Ёкспортировать шрифт в двоичный файл
 	UNDO,
 	REDO,
 
@@ -97,7 +96,6 @@ Frame::Frame(const wxString &title)
     Bind(wxEVT_MENU,       &Frame::OnExportFontC,       this, FILE_SAVE);
     Bind(wxEVT_MENU,       &Frame::OnImportFont,        this, FILE_IMPORT);
     Bind(wxEVT_MENU,       &Frame::OnExportFontC,       this, FILE_EXPORT_C);
-    Bind(wxEVT_MENU,       &Frame::OnExportFontBin,     this, FILE_EXPORT_BIN);
     Bind(wxEVT_MENU,       &Frame::OnImportFont,        this, TOOL_IMPORT_FONT);
     Bind(wxEVT_MENU,       &Frame::OnUndo,              this, UNDO);
     Bind(wxEVT_MENU,       &Frame::OnRedo,              this, REDO);
@@ -204,10 +202,9 @@ void Frame::CreateMenu()
     fileMenu->AppendSeparator();
     fileMenu->Append(FILE_IMPORT, wxT("»мпорт"), wxT("»мпортировать системный шрифт"));
 
-    wxMenu *menuImport = new wxMenu;
-    menuImport->Append(FILE_EXPORT_C, wxT("Ёкспортировать в —и-файл"));
-    menuImport->Append(FILE_EXPORT_BIN, wxT("Ёкспортировать в двоичный файл"));
-    fileMenu->AppendSubMenu(menuImport, wxT("Ёкспорт"));
+    wxMenu *menuExport = new wxMenu;
+    menuExport->Append(FILE_EXPORT_C, wxT("Ёкспортировать в —и-файл"));
+    fileMenu->AppendSubMenu(menuExport, wxT("Ёкспорт"));
 
     fileMenu->AppendSeparator();
     fileMenu->Append(MENU_FILE_QUIT, wxT("¬ыход\tAlt+X"), wxT("«акрыть редактор"));
@@ -368,12 +365,6 @@ void Frame::OnImportFont(wxCommandEvent &)
 {
     ImportDialog dlg(wxT("»мпорт шрифта"));
     dlg.ShowModal();
-}
-
-
-void Frame::OnExportFontBin(wxCommandEvent &)
-{
-
 }
 
 

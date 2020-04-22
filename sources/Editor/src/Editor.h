@@ -57,8 +57,6 @@ private:
     // Ёкспортировать шрифт в си-файл
     void OnExportFontC(wxCommandEvent &);
 
-    void OnExportFontBin(wxCommandEvent &);
-    
     // ќчистить символы, не вход€щие в основной набор
     void OnClearBadSymbols(wxCommandEvent &);
     
