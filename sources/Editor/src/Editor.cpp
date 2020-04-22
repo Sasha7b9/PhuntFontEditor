@@ -292,33 +292,6 @@ void Frame::OnImportDescriptionFromXML(wxCommandEvent &)
     }
 }
 
-void Frame::OnSaveFile(wxCommandEvent &)
-{
-    wxFileDialog saveDialog(nullptr, wxT("Сохранить"), wxEmptyString, wxEmptyString, wxT("*.txt"), wxFD_SAVE);
-
-    if (saveDialog.ShowModal() == wxID_OK)
-    {
-        wxString fileName = saveDialog.GetPath();
-        
-        wxTextFile file(fileName);
-
-        if(file.Exists())
-        {
-            wxMessageDialog message(this, wxT("Файл с таким именем уже существует. Перезаписать?"), wxMessageBoxCaptionStr, wxOK | wxCANCEL | wxCENTRE);
-            if(message.ShowModal() == wxID_CANCEL)
-            {
-                return;
-            }
-        }
-        
-        file.Create();
-
-        file.Write();
-
-        file.Close();
-    }
-}
-
 
 void Frame::OnExportFontC(wxCommandEvent &)
 {

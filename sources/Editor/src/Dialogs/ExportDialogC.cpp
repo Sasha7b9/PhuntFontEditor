@@ -62,12 +62,21 @@ void ExportDialogC::OnButtonExport(wxCommandEvent &)
     {
         wxTextFile file(dlg.GetPath());
 
+        if(file.Exists())
+        {
+            wxMessageDialog message(this, wxT("Файл с таким именем уже существует. Перезаписать?"), wxMessageBoxCaptionStr, wxOK | wxCANCEL | wxCENTRE);
+            if(message.ShowModal() == wxID_CANCEL)
+            {
+                return;
+            }
+        }
+
         file.Create();
-    
+
         TheCanvas->ImportFont(file, nameFont);
-    
+
         file.Write();
-    
+
         file.Close();
 
         Destroy();
