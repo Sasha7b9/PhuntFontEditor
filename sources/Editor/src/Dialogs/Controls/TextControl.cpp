@@ -15,21 +15,13 @@ TextControl::TextControl(wxWindow *parent, const wxString &value, const wxString
 }
 
 
-//bool TextControl::ToLong(long &value)
-//{
-//    return tc->GetLineText(0).ToLong(&value);
-//}
-
-
-bool TextControl::ToInt(int *value)
+int TextControl::ToInt()
 {
     long l = 0;
 
-    bool result = tc->GetLineText(0).ToLong(&l);
+    tc->GetLineText(0).ToLong(&l);
 
-    *value = static_cast<int>(l);
-
-    return result;
+    return static_cast<int>(l);
 }
 
 

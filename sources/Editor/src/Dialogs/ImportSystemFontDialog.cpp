@@ -90,10 +90,10 @@ void ImportSystemFontDialog::OnChoiceFont(wxCommandEvent &)
 
 void ImportSystemFontDialog::OnButtonApply(wxCommandEvent &)
 {
-    tcWidthCell->ToInt(&settings.width);
-    tcHeightCell->ToInt(&settings.height);
-    tcOffsetX->ToInt(&settings.offsetX);
-    tcOffsetY->ToInt(&settings.offsetY);
+    settings.width = tcWidthCell->ToInt();
+    settings.height = tcHeightCell->ToInt();
+    settings.offsetX = tcOffsetX->ToInt();
+    settings.offsetY = tcOffsetY->ToInt();
 
     TheCanvas->Rebuild();
 }

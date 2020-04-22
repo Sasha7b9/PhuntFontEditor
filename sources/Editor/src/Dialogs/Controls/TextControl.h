@@ -9,7 +9,7 @@ class TextControl : public wxPanel
 public:
     TextControl(wxWindow *parent, const wxString &value, const wxString &label);
 
-    bool ToInt(int *value);
+    int ToInt();
 
     void WriteInt(int value);
 
