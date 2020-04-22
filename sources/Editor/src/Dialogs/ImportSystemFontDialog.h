@@ -19,7 +19,7 @@ class ImportSystemFontDialog : public wxDialog
 public:
     ImportSystemFontDialog(const wxString &title);
 
-    static void GetDataImport(SettingsFont *settings);
+    static SettingsFont GetSettingsFont();
    
 protected:
 

@@ -105,9 +105,9 @@ void ImportSystemFontDialog::OnButtonClose(wxCommandEvent &)
 }
 
 
-void ImportSystemFontDialog::GetDataImport(SettingsFont *set)
+SettingsFont ImportSystemFontDialog::GetSettingsFont()
 {
-    *set = settings;
+    return settings;
 }
 
 

@@ -162,8 +162,7 @@ void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const u
 
 void FontImporter::WriteParametersFont(wxTextFile &file)
 {
-    SettingsFont set;
-    ImportSystemFontDialog::GetDataImport(&set);
+    SettingsFont set = ImportSystemFontDialog::GetSettingsFont();
 
     ADD_LINE("/*");
     ADD_FLINE_1("    Name - %s", set.font.GetFaceName());

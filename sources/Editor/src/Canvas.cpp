@@ -205,8 +205,7 @@ void Canvas::OnMouseRightUp(wxMouseEvent &)
 
 void Canvas::Rebuild()
 {
-    SettingsFont settings;
-    ImportSystemFontDialog::GetDataImport(&settings);
+    SettingsFont settings = ImportSystemFontDialog::GetSettingsFont();
 
     font.CreateNew(settings);
 
