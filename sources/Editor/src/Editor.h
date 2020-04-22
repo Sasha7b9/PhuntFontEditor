@@ -38,8 +38,6 @@ private:
     // Импортировать шрифт из xml-файла с описанием
     void OnImportDescriptionFromXML(wxCommandEvent &);
 
-    void OnNewFile(wxCommandEvent &);
-
     // Импортировать системный шрифт
     void OnImportFont(wxCommandEvent &);
 

@@ -300,11 +300,6 @@ void Frame::OnExportFontC(wxCommandEvent &)
 }
 
 
-void Frame::OnNewFile(wxCommandEvent &)
-{
-}
-
-
 void Frame::OnKeyDown(wxKeyEvent &)
 {
 }
