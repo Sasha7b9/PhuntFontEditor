@@ -39,7 +39,7 @@ private:
     void OnImportDescriptionFromXML(wxCommandEvent &);
 
     // »мпортировать системный шрифт
-    void OnImportFont(wxCommandEvent &);
+    void OnImportSystemFont(wxCommandEvent &);
 
     // Ёкспортировать шрифт в си-файл
     void OnExportFontC(wxCommandEvent &);

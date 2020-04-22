@@ -34,8 +34,8 @@ enum
     ALIGN_RIGHT_DOWN,                           // Выровнять точку по правой нижней
 
     FILE_IMPORT_DESCRIPTION_FROM_XML,
+    FILE_IMPORT_SYSTEM_FONT,                    // Импортировать шрифт
     FILE_SAVE,
-    FILE_IMPORT,                                // Импортировать шрифт
     FILE_EXPORT_C,                              // Экспортировать шрифт в си-файл
 	UNDO,
 	REDO,
@@ -93,10 +93,10 @@ Frame::Frame(const wxString &title)
 
     Bind(wxEVT_MENU,     &Frame::OnQuit,                     this, MENU_FILE_QUIT);
     Bind(wxEVT_MENU,     &Frame::OnImportDescriptionFromXML, this, FILE_IMPORT_DESCRIPTION_FROM_XML);
+    Bind(wxEVT_MENU,     &Frame::OnImportSystemFont,         this, FILE_IMPORT_SYSTEM_FONT);
+    Bind(wxEVT_MENU,     &Frame::OnImportSystemFont,         this, TOOL_IMPORT_FONT);
     Bind(wxEVT_MENU,     &Frame::OnExportFontC,              this, FILE_SAVE);
-    Bind(wxEVT_MENU,     &Frame::OnImportFont,               this, FILE_IMPORT);
     Bind(wxEVT_MENU,     &Frame::OnExportFontC,              this, FILE_EXPORT_C);
-    Bind(wxEVT_MENU,     &Frame::OnImportFont,               this, TOOL_IMPORT_FONT);
     Bind(wxEVT_MENU,     &Frame::OnUndo,                     this, UNDO);
     Bind(wxEVT_MENU,     &Frame::OnRedo,                     this, REDO);
     Bind(wxEVT_TIMER,    &Frame::OnTimer,                    this, TIMER_ID);
@@ -200,7 +200,7 @@ void Frame::CreateMenu()
     fileMenu->Append(FILE_IMPORT_DESCRIPTION_FROM_XML, wxT("Загрузить\tCtrl+O"), wxT("Загрузить данные из файла"));
     fileMenu->Append(FILE_SAVE, wxT("Сохранить\tCtrl+S"), wxT("Сохранить данные в файл"));
     fileMenu->AppendSeparator();
-    fileMenu->Append(FILE_IMPORT, wxT("Импорт"), wxT("Импортировать системный шрифт"));
+    fileMenu->Append(FILE_IMPORT_SYSTEM_FONT, wxT("Импорт"), wxT("Импортировать системный шрифт"));
 
     wxMenu *menuExport = new wxMenu;
     menuExport->Append(FILE_EXPORT_C, wxT("Экспортировать в Си-файл"));
@@ -329,7 +329,7 @@ void Frame::OnScaleDown(wxCommandEvent &)
 }
 
 
-void Frame::OnImportFont(wxCommandEvent &)
+void Frame::OnImportSystemFont(wxCommandEvent &)
 {
     ImportDialog dlg(wxT("Импорт шрифта"));
     dlg.ShowModal();
