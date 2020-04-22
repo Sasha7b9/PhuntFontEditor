@@ -33,7 +33,7 @@ enum
     ALIGN_RIGHT_TOP,                            // Выровнять точку по правой верхней
     ALIGN_RIGHT_DOWN,                           // Выровнять точку по правой нижней
 
-    FILE_OPEN,
+    FILE_IMPORT_DESCRIPTION_FROM_XML,
     FILE_SAVE,
     FILE_IMPORT,                                // Импортировать шрифт
     FILE_EXPORT_C,                              // Экспортировать шрифт в си-файл
@@ -91,22 +91,22 @@ Frame::Frame(const wxString &title)
 
     SetSizeAndPosition();
 
-    Bind(wxEVT_MENU,       &Frame::OnQuit,              this, MENU_FILE_QUIT);
-    Bind(wxEVT_MENU,       &Frame::OnOpenFile,          this, FILE_OPEN);
-    Bind(wxEVT_MENU,       &Frame::OnExportFontC,       this, FILE_SAVE);
-    Bind(wxEVT_MENU,       &Frame::OnImportFont,        this, FILE_IMPORT);
-    Bind(wxEVT_MENU,       &Frame::OnExportFontC,       this, FILE_EXPORT_C);
-    Bind(wxEVT_MENU,       &Frame::OnImportFont,        this, TOOL_IMPORT_FONT);
-    Bind(wxEVT_MENU,       &Frame::OnUndo,              this, UNDO);
-    Bind(wxEVT_MENU,       &Frame::OnRedo,              this, REDO);
-    Bind(wxEVT_TIMER,      &Frame::OnTimer,             this, TIMER_ID);
-    Bind(wxEVT_SIZE,       &Frame::OnResize,            this);
-    Bind(wxEVT_PAINT,      &Frame::OnRepaint,           this);
-    Bind(wxEVT_KEY_DOWN,   &Frame::OnKeyDown,           this);
-    Bind(wxEVT_MENU,       &Frame::OnScaleDown,         this, TOOL_SCALE_DOWN);
-    Bind(wxEVT_MENU,       &Frame::OnScaleUp,           this, TOOL_SCALE_UP);
-    Bind(wxEVT_MENU,       &Frame::OnClearBadSymbols,   this, TOOL_CLEAR_BAD_SYMBOLS);
-    Bind(wxEVT_MENU,       &Frame::OnSelectSymbols,     this, TOOL_SELECT_SYMBOLS);
+    Bind(wxEVT_MENU,     &Frame::OnQuit,                     this, MENU_FILE_QUIT);
+    Bind(wxEVT_MENU,     &Frame::OnImportDescriptionFromXML, this, FILE_IMPORT_DESCRIPTION_FROM_XML);
+    Bind(wxEVT_MENU,     &Frame::OnExportFontC,              this, FILE_SAVE);
+    Bind(wxEVT_MENU,     &Frame::OnImportFont,               this, FILE_IMPORT);
+    Bind(wxEVT_MENU,     &Frame::OnExportFontC,              this, FILE_EXPORT_C);
+    Bind(wxEVT_MENU,     &Frame::OnImportFont,               this, TOOL_IMPORT_FONT);
+    Bind(wxEVT_MENU,     &Frame::OnUndo,                     this, UNDO);
+    Bind(wxEVT_MENU,     &Frame::OnRedo,                     this, REDO);
+    Bind(wxEVT_TIMER,    &Frame::OnTimer,                    this, TIMER_ID);
+    Bind(wxEVT_SIZE,     &Frame::OnResize,                   this);
+    Bind(wxEVT_PAINT,    &Frame::OnRepaint,                  this);
+    Bind(wxEVT_KEY_DOWN, &Frame::OnKeyDown,                  this);
+    Bind(wxEVT_MENU,     &Frame::OnScaleDown,                this, TOOL_SCALE_DOWN);
+    Bind(wxEVT_MENU,     &Frame::OnScaleUp,                  this, TOOL_SCALE_UP);
+    Bind(wxEVT_MENU,     &Frame::OnClearBadSymbols,          this, TOOL_CLEAR_BAD_SYMBOLS);
+    Bind(wxEVT_MENU,     &Frame::OnSelectSymbols,            this, TOOL_SELECT_SYMBOLS);
 
     Show(true);
 
@@ -197,7 +197,7 @@ wxRect Frame::GetMaxDisplay()
 void Frame::CreateMenu()
 {
     wxMenu *fileMenu = new wxMenu;
-    fileMenu->Append(FILE_OPEN, wxT("Загрузить\tCtrl+O"), wxT("Загрузить данные из файла"));
+    fileMenu->Append(FILE_IMPORT_DESCRIPTION_FROM_XML, wxT("Загрузить\tCtrl+O"), wxT("Загрузить данные из файла"));
     fileMenu->Append(FILE_SAVE, wxT("Сохранить\tCtrl+S"), wxT("Сохранить данные в файл"));
     fileMenu->AppendSeparator();
     fileMenu->Append(FILE_IMPORT, wxT("Импорт"), wxT("Импортировать системный шрифт"));
@@ -225,7 +225,7 @@ void Frame::CreateMenu()
     wxBitmap imgToggle(wxImage(wxT("icons/toggle.bmp"), wxBITMAP_TYPE_BMP));
 
     wxToolBar* toolBar = CreateToolBar();
-    toolBar->AddTool(FILE_OPEN, wxT("Открыть"), imgOpen, wxT("Загрузить шрифт из файла описания"));
+    toolBar->AddTool(FILE_IMPORT_DESCRIPTION_FROM_XML, wxT("Открыть"), imgOpen, wxT("Загрузить шрифт из файла описания"));
     toolBar->AddTool(FILE_SAVE, wxT("Сохранить"), imgSave, wxT("Сохранить шрифт в файл описания"));
 
     toolBar->AddSeparator();
@@ -273,9 +273,9 @@ void Frame::ShowContextMenu(const wxPoint &pos, bool underPoint)
 }
 
 
-void Frame::OnOpenFile(wxCommandEvent &)
+void Frame::OnImportDescriptionFromXML(wxCommandEvent &)
 {
-    wxFileDialog openDialog(nullptr, wxEmptyString, wxEmptyString, wxEmptyString, wxT("*.txt"), wxFD_OPEN);
+    wxFileDialog openDialog(nullptr, wxEmptyString, wxEmptyString, wxEmptyString, wxT("*.xml"), wxFD_OPEN);
 
     if (openDialog.ShowModal() == wxID_OK)
     {

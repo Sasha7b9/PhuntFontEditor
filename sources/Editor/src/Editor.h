@@ -35,27 +35,28 @@ private:
 
     void CreatePanels();
 
-	void OnUndo(wxCommandEvent &);
-
-	void OnRedo(wxCommandEvent &);
-
-    void OnOpenFile(wxCommandEvent &);
+    // »мпортировать шрифт из xml-файла с описанием
+    void OnImportDescriptionFromXML(wxCommandEvent &);
 
     void OnSaveFile(wxCommandEvent &);
 
     void OnNewFile(wxCommandEvent &);
-
-    void OnKeyDown(wxKeyEvent &);
-
-    void OnScaleUp(wxCommandEvent &);
-
-    void OnScaleDown(wxCommandEvent &);
 
     // »мпортировать системный шрифт
     void OnImportFont(wxCommandEvent &);
 
     // Ёкспортировать шрифт в си-файл
     void OnExportFontC(wxCommandEvent &);
+
+	void OnUndo(wxCommandEvent &);
+
+	void OnRedo(wxCommandEvent &);
+
+    void OnKeyDown(wxKeyEvent &);
+
+    void OnScaleUp(wxCommandEvent &);
+
+    void OnScaleDown(wxCommandEvent &);
 
     // ќчистить символы, не вход€щие в основной набор
     void OnClearBadSymbols(wxCommandEvent &);
