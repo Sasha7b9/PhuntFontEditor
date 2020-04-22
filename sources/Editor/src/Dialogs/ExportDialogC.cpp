@@ -1,7 +1,7 @@
 #include "defines.h"
 #include "Canvas.h"
 #include "Dialogs/ExportDialogC.h"
-#include "Dialogs/ImportDialog.h"
+#include "Dialogs/ImportSystemFontDialog.h"
 #include "Dialogs/TextControl.h"
 #include "Font/Font.h"
 #include "Font/FontImporter.h"
@@ -89,7 +89,7 @@ void ExportDialogC::OnButtonExport(wxCommandEvent &)
 void ExportDialogC::WriteFileXML(const wxString &nameFileFont)
 {
     DataImport data;
-    ImportDialog::GetDataImport(&data);
+    ImportSystemFontDialog::GetDataImport(&data);
 
     wxString nameFile = nameFileFont;
     nameFile[nameFile.size() - 1] = 'l';

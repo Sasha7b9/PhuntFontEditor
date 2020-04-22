@@ -1,6 +1,6 @@
 #include "defines.h"
 #include "Canvas.h"
-#include "Dialogs/ImportDialog.h"
+#include "Dialogs/ImportSystemFontDialog.h"
 #include "Dialogs/TextControl.h"
 #pragma warning(push, 0)
 #include <wx/fontdlg.h>
@@ -18,23 +18,23 @@ enum
 // Информация о выбранном шрифте
 static wxStaticText *textFont = nullptr;
 
-long ImportDialog::widthCell = 16;
+long ImportSystemFontDialog::widthCell = 16;
 static TextControl *tcWidthCell = nullptr;
 
-long ImportDialog::heightCell = 16;
+long ImportSystemFontDialog::heightCell = 16;
 static TextControl *tcHeightCell = nullptr;
 
-long ImportDialog::offsetSymbolX = 0;
+long ImportSystemFontDialog::offsetSymbolX = 0;
 static TextControl *tcOffsetX = nullptr;
 
-long ImportDialog::offsetSymbolY = 0;
+long ImportSystemFontDialog::offsetSymbolY = 0;
 static TextControl *tcOffsetY = nullptr;
 
 
-wxFont ImportDialog::font(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New"));
+wxFont ImportSystemFontDialog::font(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New"));
 
 
-ImportDialog::ImportDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, title)
+ImportSystemFontDialog::ImportSystemFontDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, title)
 {
 #define BORDER 5
 #define SPACER 10
@@ -42,9 +42,9 @@ ImportDialog::ImportDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, 
 
 
     wxButton *btnApply = new wxButton(this, ID_BUTTON_APPLY, wxT("Применить"), wxDefaultPosition, BUTTON_SIZE);
-    Connect(ID_BUTTON_APPLY, wxEVT_BUTTON, wxCommandEventHandler(ImportDialog::OnButtonApply));
+    Connect(ID_BUTTON_APPLY, wxEVT_BUTTON, wxCommandEventHandler(ImportSystemFontDialog::OnButtonApply));
     wxButton *btnClose = new wxButton(this, ID_BUTTON_CLOSE, wxT("Закрыть"), wxDefaultPosition, BUTTON_SIZE);
-    Connect(ID_BUTTON_CLOSE, wxEVT_BUTTON, wxCommandEventHandler(ImportDialog::OnButtonClose));
+    Connect(ID_BUTTON_CLOSE, wxEVT_BUTTON, wxCommandEventHandler(ImportSystemFontDialog::OnButtonClose));
     wxBoxSizer *boxButtons = new wxBoxSizer(wxHORIZONTAL);
     boxButtons->Add(btnApply, 1, wxALIGN_CENTER);
     boxButtons->AddSpacer(20);
@@ -54,7 +54,7 @@ ImportDialog::ImportDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, 
 
     wxBoxSizer *boxFont = new wxBoxSizer(wxHORIZONTAL);
     wxButton *btnFont = new wxButton(this, ID_BUTTON_FONT, wxT("Шрифт"), wxDefaultPosition, BUTTON_SIZE);
-    Connect(ID_BUTTON_FONT, wxEVT_BUTTON, wxCommandEventHandler(ImportDialog::OnChoiceFont));
+    Connect(ID_BUTTON_FONT, wxEVT_BUTTON, wxCommandEventHandler(ImportSystemFontDialog::OnChoiceFont));
     textFont = new wxStaticText(this, wxID_ANY, "");
     boxFont->Add(btnFont, wxALIGN_LEFT, BORDER);
     boxFont->AddSpacer(SPACER);
@@ -83,7 +83,7 @@ ImportDialog::ImportDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, 
 }
 
 
-void ImportDialog::OnChoiceFont(wxCommandEvent &)
+void ImportSystemFontDialog::OnChoiceFont(wxCommandEvent &)
 {
     wxFontDialog dlg(this);
     
@@ -96,7 +96,7 @@ void ImportDialog::OnChoiceFont(wxCommandEvent &)
 }
 
 
-void ImportDialog::OnButtonApply(wxCommandEvent &)
+void ImportSystemFontDialog::OnButtonApply(wxCommandEvent &)
 {
     tcWidthCell->ToLong(widthCell);
     tcHeightCell->ToLong(heightCell);
@@ -107,13 +107,13 @@ void ImportDialog::OnButtonApply(wxCommandEvent &)
 }
 
 
-void ImportDialog::OnButtonClose(wxCommandEvent &)
+void ImportSystemFontDialog::OnButtonClose(wxCommandEvent &)
 {
     Destroy();
 }
 
 
-void ImportDialog::GetDataImport(DataImport *data)
+void ImportSystemFontDialog::GetDataImport(DataImport *data)
 {
     data->width = widthCell;
     data->height = heightCell;
@@ -123,7 +123,7 @@ void ImportDialog::GetDataImport(DataImport *data)
 }
 
 
-void ImportDialog::TuneTexts()
+void ImportSystemFontDialog::TuneTexts()
 {
     TuneTextFont();
 
@@ -134,7 +134,7 @@ void ImportDialog::TuneTexts()
 }
 
 
-void ImportDialog::TuneTextFont()
+void ImportSystemFontDialog::TuneTextFont()
 {
     int size = font.GetPointSize();
 

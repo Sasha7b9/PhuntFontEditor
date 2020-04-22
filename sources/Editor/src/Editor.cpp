@@ -13,7 +13,7 @@
 #include "defines.h"
 #include "Canvas.h"
 #include "Dialogs/ExportDialogC.h"
-#include "Dialogs/ImportDialog.h"
+#include "Dialogs/ImportSystemFontDialog.h"
 
 extern void init();
 
@@ -312,7 +312,7 @@ void Frame::OnScaleDown(wxCommandEvent &)
 
 void Frame::OnImportSystemFont(wxCommandEvent &)
 {
-    ImportDialog dlg(wxT("Импорт шрифта"));
+    ImportSystemFontDialog dlg(wxT("Импорт шрифта"));
     dlg.ShowModal();
 }
 

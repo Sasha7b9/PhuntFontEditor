@@ -1,5 +1,5 @@
 #include "defines.h"
-#include "Dialogs/ImportDialog.h"
+#include "Dialogs/ImportSystemFontDialog.h"
 #include "Font/FontImporter.h"
 
 
@@ -163,7 +163,7 @@ void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const u
 void FontImporter::WriteParametersFont(wxTextFile &file)
 {
     DataImport data;
-    ImportDialog::GetDataImport(&data);
+    ImportSystemFontDialog::GetDataImport(&data);
 
     ADD_LINE("/*");
     ADD_FLINE_1("    Name - %s", data.font.GetFaceName());

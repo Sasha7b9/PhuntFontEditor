@@ -14,10 +14,10 @@ struct DataImport
 };
 
 
-class ImportDialog : public wxDialog
+class ImportSystemFontDialog : public wxDialog
 {
 public:
-    ImportDialog(const wxString &title);
+    ImportSystemFontDialog(const wxString &title);
 
     static void GetDataImport(DataImport *data);
    
