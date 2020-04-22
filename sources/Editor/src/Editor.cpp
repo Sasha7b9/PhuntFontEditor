@@ -33,13 +33,12 @@ enum
     ALIGN_RIGHT_TOP,                            // Выровнять точку по правой верхней
     ALIGN_RIGHT_DOWN,                           // Выровнять точку по правой нижней
 
-    FILE_IMPORT_DESCRIPTION_FROM_XML,
-    FILE_IMPORT_SYSTEM_FONT,                    // Импортировать шрифт
+    FILE_IMPORT_DESCRIPTION_FROM_XML,           // Импортировать шрифт из файла xml-описания
+    FILE_IMPORT_SYSTEM_FONT,                    // Импортировать системный шрифт
     FILE_EXPORT_TO_C,                           // Экспортировать шрифт в си-файл
 	UNDO,
 	REDO,
 
-    TOOL_IMPORT_FONT,                           // Импорт шрифта
     TOOL_SCALE_UP,                              // Увеличить масштаб
     TOOL_SCALE_DOWN,                            // Уменьшить масштаб
     TOOL_CLEAR_BAD_SYMBOLS,                     // Очистить сиволы из дополнительного набора
@@ -93,7 +92,6 @@ Frame::Frame(const wxString &title)
     Bind(wxEVT_MENU,     &Frame::OnQuit,                     this, MENU_FILE_QUIT);
     Bind(wxEVT_MENU,     &Frame::OnImportDescriptionFromXML, this, FILE_IMPORT_DESCRIPTION_FROM_XML);
     Bind(wxEVT_MENU,     &Frame::OnImportSystemFont,         this, FILE_IMPORT_SYSTEM_FONT);
-    Bind(wxEVT_MENU,     &Frame::OnImportSystemFont,         this, TOOL_IMPORT_FONT);
     Bind(wxEVT_MENU,     &Frame::OnExportFontToC,            this, FILE_EXPORT_TO_C);
     Bind(wxEVT_MENU,     &Frame::OnUndo,                     this, UNDO);
     Bind(wxEVT_MENU,     &Frame::OnRedo,                     this, REDO);
@@ -197,12 +195,12 @@ void Frame::CreateMenu()
     wxMenu *fileMenu = new wxMenu;
 
     wxMenu *menuImport = new wxMenu;
-    menuImport->Append(FILE_IMPORT_DESCRIPTION_FROM_XML, wxT("Загрузить\tCtrl+O"), wxT("Загрузить данные из файла"));
-    menuImport->Append(FILE_IMPORT_SYSTEM_FONT, wxT("Импорт"), wxT("Импортировать системный шрифт"));
+    menuImport->Append(FILE_IMPORT_DESCRIPTION_FROM_XML, wxT("Загрузить шрифт из xml-файла описания \tCtrl+O"));
+    menuImport->Append(FILE_IMPORT_SYSTEM_FONT, wxT("Загрузить системный шрифт"));
     fileMenu->AppendSubMenu(menuImport, wxT("Импорт"));
 
     wxMenu *menuExport = new wxMenu;
-    menuExport->Append(FILE_EXPORT_TO_C, wxT("Экспортировать в Си-файл"));
+    menuExport->Append(FILE_EXPORT_TO_C, wxT("Экспортировать в си-файл"));
     fileMenu->AppendSubMenu(menuExport, wxT("Экспорт"));
 
     fileMenu->AppendSeparator();
@@ -224,15 +222,15 @@ void Frame::CreateMenu()
     wxBitmap imgToggle(wxImage(wxT("icons/toggle.bmp"), wxBITMAP_TYPE_BMP));
 
     wxToolBar* toolBar = CreateToolBar();
-    toolBar->AddTool(FILE_IMPORT_DESCRIPTION_FROM_XML, wxT("Открыть"), imgOpen, wxT("Загрузить шрифт из файла описания"));
-    toolBar->AddTool(FILE_EXPORT_TO_C, wxT("Сохранить"), imgSave, wxT("Сохранить шрифт в файл описания"));
+    toolBar->AddTool(FILE_IMPORT_DESCRIPTION_FROM_XML, wxT(""), imgOpen, wxT("Загрузить шрифт из xml-файла описания"));
+    toolBar->AddTool(FILE_EXPORT_TO_C, wxT(""), imgSave, wxT("Сохранить шрифт в си-файл"));
 
     toolBar->AddSeparator();
     toolBar->AddTool(UNDO, wxT("Отменить"), imgUndo, wxT("Отменить предыдущее действие"));
     toolBar->AddTool(REDO, wxT("Восстановить"), imgRedo, wxT("Восстановить следующее действие"));
 
     toolBar->AddSeparator();
-    toolBar->AddTool(TOOL_IMPORT_FONT, wxT("Выбрать шрифт"), imgChangeFont, wxT("Выбрать шрифт"));
+    toolBar->AddTool(FILE_IMPORT_SYSTEM_FONT, wxT(""), imgChangeFont, wxT("Загрузить системный шрифт"));
 
     toolBar->AddSeparator();
     toolBar->AddTool(TOOL_SCALE_DOWN, wxT("Уменьшить масштаб"), imgScaleDown, wxT("Уменьшение масштаба"));
