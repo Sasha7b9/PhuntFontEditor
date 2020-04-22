@@ -15,23 +15,15 @@ enum
 };
 
 
+SettingsFont ImportSystemFontDialog::settings = { 16, 16, 0, 0, wxFont(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New")) };
+
 // Информация о выбранном шрифте
 static wxStaticText *textFont = nullptr;
 
-long ImportSystemFontDialog::widthCell = 16;
 static TextControl *tcWidthCell = nullptr;
-
-long ImportSystemFontDialog::heightCell = 16;
 static TextControl *tcHeightCell = nullptr;
-
-long ImportSystemFontDialog::offsetSymbolX = 0;
 static TextControl *tcOffsetX = nullptr;
-
-long ImportSystemFontDialog::offsetSymbolY = 0;
 static TextControl *tcOffsetY = nullptr;
-
-
-wxFont ImportSystemFontDialog::font(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New"));
 
 
 ImportSystemFontDialog::ImportSystemFontDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, title)
@@ -89,7 +81,7 @@ void ImportSystemFontDialog::OnChoiceFont(wxCommandEvent &)
     
     if (dlg.ShowModal() == wxID_OK)
     {
-        font = dlg.GetFontData().GetChosenFont();
+        settings.font = dlg.GetFontData().GetChosenFont();
 
         TuneTextFont();
     }
@@ -98,10 +90,10 @@ void ImportSystemFontDialog::OnChoiceFont(wxCommandEvent &)
 
 void ImportSystemFontDialog::OnButtonApply(wxCommandEvent &)
 {
-    tcWidthCell->ToLong(widthCell);
-    tcHeightCell->ToLong(heightCell);
-    tcOffsetX->ToLong(offsetSymbolX);
-    tcOffsetY->ToLong(offsetSymbolY);
+    tcWidthCell->ToInt(&settings.width);
+    tcHeightCell->ToInt(&settings.height);
+    tcOffsetX->ToInt(&settings.offsetX);
+    tcOffsetY->ToInt(&settings.offsetY);
 
     TheCanvas->Rebuild();
 }
@@ -113,13 +105,9 @@ void ImportSystemFontDialog::OnButtonClose(wxCommandEvent &)
 }
 
 
-void ImportSystemFontDialog::GetDataImport(SettingsFont *settings)
+void ImportSystemFontDialog::GetDataImport(SettingsFont *set)
 {
-    settings->width = widthCell;
-    settings->height = heightCell;
-    settings->offsetX = offsetSymbolX;
-    settings->offsetY = offsetSymbolY;
-    settings->font = font;
+    *set = settings;
 }
 
 
@@ -127,22 +115,22 @@ void ImportSystemFontDialog::TuneTexts()
 {
     TuneTextFont();
 
-    tcWidthCell->FromLong(widthCell);
-    tcHeightCell->FromLong(heightCell);
-    tcOffsetX->FromLong(offsetSymbolX);
-    tcOffsetY->FromLong(offsetSymbolY);
+    tcWidthCell->WriteInt(settings.width);
+    tcHeightCell->WriteInt(settings.height);
+    tcOffsetX->WriteInt(settings.offsetX);
+    tcOffsetY->WriteInt(settings.offsetY);
 }
 
 
 void ImportSystemFontDialog::TuneTextFont()
 {
-    int size = font.GetPointSize();
+    int size = settings.font.GetPointSize();
 
-    font.SetPointSize(10);
+    settings.font.SetPointSize(10);
 
-    textFont->SetFont(font);
+    textFont->SetFont(settings.font);
 
-    font.SetPointSize(size);
+    settings.font.SetPointSize(size);
 
-    textFont->SetLabel(wxString::Format("%s %d %s", font.GetFaceName(), font.GetPointSize(), wxT("Пример")));
+    textFont->SetLabel(wxString::Format("%s %d %s", settings.font.GetFaceName(), settings.font.GetPointSize(), wxT("Пример")));
 }

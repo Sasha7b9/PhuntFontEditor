@@ -15,16 +15,28 @@ TextControl::TextControl(wxWindow *parent, const wxString &value, const wxString
 }
 
 
-bool TextControl::ToLong(long &value)
+//bool TextControl::ToLong(long &value)
+//{
+//    return tc->GetLineText(0).ToLong(&value);
+//}
+
+
+bool TextControl::ToInt(int *value)
 {
-    return tc->GetLineText(0).ToLong(&value);
+    long l = 0;
+
+    bool result = tc->GetLineText(0).ToLong(&l);
+
+    *value = static_cast<int>(l);
+
+    return result;
 }
 
 
-void TextControl::FromLong(long value)
+void TextControl::WriteInt(int value)
 {
     tc->Clear();
-    tc->WriteText(wxString::Format("%d", value));
+    tc->WriteText(wxString::Format("%i", value));
 }
 
 

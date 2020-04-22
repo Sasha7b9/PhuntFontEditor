@@ -6,11 +6,11 @@
 
 struct SettingsFont
 {
-    int width;
-    int height;
-    int offsetX;
-    int offsetY;
-    wxFont font;
+    int width;      // Ширина знкоместа
+    int height;     // Высота знакоместа
+    int offsetX;    // Смещение шрифта по горизонтали
+    int offsetY;    // Смещение шрифта по вертикали
+    wxFont font;    // Импортируемый шрифт  
 };
 
 
@@ -37,9 +37,5 @@ private:
     // Установить все полагающиеся надписи в соотвествии с текущими настройками
     static void TuneTexts();
 
-    static wxFont font;         // Импортируемый шрифт  
-    static long offsetSymbolX;  // Смещение шрифта по горизонтали
-    static long offsetSymbolY;  // Смещение шрифта по вертикали
-    static long widthCell;      // Ширина символа
-    static long heightCell;     // Высота символа
+    static SettingsFont settings;       // Настройки шрифта
 };
