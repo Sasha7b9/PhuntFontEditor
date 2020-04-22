@@ -10,5 +10,5 @@ class XML
 public:
 
     // Возвращает потомка node с именем name, если таковой существует
-    static wxXmlNode *FindChildren(wxXmlNode *node, const wxString &name);
+    static wxXmlNode *FindChildren(const wxXmlNode *node, const wxString &name);
 };

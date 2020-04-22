@@ -4,7 +4,7 @@
 #pragma warning(pop)
 
 
-wxXmlNode *XML::FindChildren(wxXmlNode *node, const wxString &name)
+wxXmlNode *XML::FindChildren(const wxXmlNode *node, const wxString &name)
 {
     wxXmlNode *child = node->GetChildren();
 

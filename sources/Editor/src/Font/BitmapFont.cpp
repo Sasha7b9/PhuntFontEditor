@@ -162,7 +162,7 @@ void BitmapFont::GetSymbolXY(const BitmapSymbol *symbol, int *x, int *y)
 }
 
 
-void BitmapFont::CreateNew(const SettingsFont set)
+void BitmapFont::CreateNew(const SettingsFont set) //-V801
 {
     size.x = set.width;
     size.y = set.height;
