@@ -12,7 +12,7 @@
 
 #include "defines.h"
 #include "Canvas.h"
-#include "Dialogs/ExportDialogC.h"
+#include "Dialogs/ExportFontToCFileDialog.h"
 #include "Dialogs/ImportSystemFontDialog.h"
 
 extern void init();
@@ -276,7 +276,7 @@ void Frame::OnImportDescriptionFromXML(wxCommandEvent &)
 
 void Frame::OnExportFontToC(wxCommandEvent &)
 {
-    ExportDialogC dlg(wxT("Экспорт шрифта в Си-файл"));
+    ExportFontToCFileDialog dlg(wxT("Экспорт шрифта в Си-файл"));
     dlg.ShowModal();
 }
 

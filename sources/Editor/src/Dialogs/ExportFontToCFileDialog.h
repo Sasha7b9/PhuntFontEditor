@@ -8,10 +8,10 @@ struct Symbol;
 class wxXmlNode;
 
 
-class ExportDialogC : public wxDialog
+class ExportFontToCFileDialog : public wxDialog
 {
 public:
-    ExportDialogC(const wxString &title);
+    ExportFontToCFileDialog(const wxString &title);
 
 private:
     void OnButtonExport(wxCommandEvent &);

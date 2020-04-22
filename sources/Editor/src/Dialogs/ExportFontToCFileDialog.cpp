@@ -1,6 +1,6 @@
 #include "defines.h"
 #include "Canvas.h"
-#include "Dialogs/ExportDialogC.h"
+#include "Dialogs/ExportFontToCFileDialog.h"
 #include "Dialogs/ImportSystemFontDialog.h"
 #include "Dialogs/Controls/TextControl.h"
 //#include "Font/Font.h"
@@ -22,16 +22,16 @@ static TextControl *tcNameFont = nullptr;
 static wxString nameFont(wxT("font"));
 
 
-ExportDialogC::ExportDialogC(const wxString &title) : wxDialog(nullptr, wxID_ANY, title)
+ExportFontToCFileDialog::ExportFontToCFileDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, title)
 {
 #define BORDER 5
 #define SPACER 10
 #define _ALIGN wxALIGN_CENTER | wxALL
 
     wxButton *btnExport = new wxButton(this, ID_BUTTON_EXPORT, wxT("Экспорт"), wxDefaultPosition, BUTTON_SIZE);
-    Connect(ID_BUTTON_EXPORT, wxEVT_BUTTON, wxCommandEventHandler(ExportDialogC::OnButtonExport));
+    Connect(ID_BUTTON_EXPORT, wxEVT_BUTTON, wxCommandEventHandler(ExportFontToCFileDialog::OnButtonExport));
     wxButton *btnCancel = new wxButton(this, ID_BUTTON_CANCEL, wxT("Отмена"), wxDefaultPosition, BUTTON_SIZE);
-    Connect(ID_BUTTON_CANCEL, wxEVT_BUTTON, wxCommandEventHandler(ExportDialogC::OnButtonCancel));
+    Connect(ID_BUTTON_CANCEL, wxEVT_BUTTON, wxCommandEventHandler(ExportFontToCFileDialog::OnButtonCancel));
     wxBoxSizer *boxButtons = new wxBoxSizer(wxHORIZONTAL);
     boxButtons->Add(btnExport, 1, wxALIGN_CENTER);
     boxButtons->AddSpacer(20);
@@ -48,7 +48,7 @@ ExportDialogC::ExportDialogC(const wxString &title) : wxDialog(nullptr, wxID_ANY
 }
 
 
-void ExportDialogC::OnButtonExport(wxCommandEvent &)
+void ExportFontToCFileDialog::OnButtonExport(wxCommandEvent &)
 {
     nameFont = tcNameFont->GetLineText();
 
@@ -86,7 +86,7 @@ void ExportDialogC::OnButtonExport(wxCommandEvent &)
 }
 
 
-void ExportDialogC::WriteFileXML(const wxString &nameFileFont)
+void ExportFontToCFileDialog::WriteFileXML(const wxString &nameFileFont)
 {
     DataImport data;
     ImportSystemFontDialog::GetDataImport(&data);
@@ -129,7 +129,7 @@ void ExportDialogC::WriteFileXML(const wxString &nameFileFont)
 }
 
 
-void ExportDialogC::WriteInfoSymbolXML(uint8 code, wxXmlNode *node)
+void ExportFontToCFileDialog::WriteInfoSymbolXML(uint8 code, wxXmlNode *node)
 {
     BitmapSymbol *symbol = TheCanvas->GetFont()->GetSymbol(code);
 
@@ -140,7 +140,7 @@ void ExportDialogC::WriteInfoSymbolXML(uint8 code, wxXmlNode *node)
 }
 
 
-void ExportDialogC::OnButtonCancel(wxCommandEvent &)
+void ExportFontToCFileDialog::OnButtonCancel(wxCommandEvent &)
 {
     Destroy();
 }
