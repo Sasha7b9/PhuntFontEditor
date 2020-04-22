@@ -1,4 +1,3 @@
-#include "defines.h"
 #include "Dialogs/Controls/TextControl.h"
 
 
