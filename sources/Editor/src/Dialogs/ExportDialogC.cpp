@@ -106,9 +106,12 @@ void ExportDialogC::WriteFileXML(const wxString &nameFileFont)
     cell->AddAttribute(_T("OffsetX"), wxString::Format(wxT("%i"), data.offsetX));
     cell->AddAttribute(_T("OffsetY"), wxString::Format(wxT("%i"), data.offsetY));
 
+    wxXmlNode *symbols = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, _T("Symbols"));
+    common->AddChild(symbols);
+
     for (int i = 0; i < 256; i++)
     {
-        WriteInfoSymbolXML(static_cast<uint8>(i), common);
+        WriteInfoSymbolXML(static_cast<uint8>(i), symbols);
     }
 
     xml.SetRoot(root);
@@ -117,9 +120,14 @@ void ExportDialogC::WriteFileXML(const wxString &nameFileFont)
 }
 
 
-void ExportDialogC::WriteInfoSymbolXML(uint8 /*code*/, wxXmlNode * /*node*/)
+void ExportDialogC::WriteInfoSymbolXML(uint8 code, wxXmlNode *node)
 {
-    //Symbol *symbol = Font::GetSymbol(code);
+    BitmapSymbol *symbol = TheCanvas->GetFont()->GetSymbol(code);
+
+    wxXmlNode *nodeSymbol = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, wxString::Format(wxT("Symbol%d"), code));
+    node->AddChild(nodeSymbol);
+
+    nodeSymbol->AddAttribute(_T("Enabled"), symbol->IsEnabled() ? "1" : "0");
 }
 
 

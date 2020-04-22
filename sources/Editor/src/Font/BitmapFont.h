@@ -30,6 +30,8 @@ public:
 
     void ToggleState();
 
+    bool IsEnabled() { return enabled; }
+
     static BitmapSymbol *Null();
 
 private:
@@ -47,9 +49,8 @@ private:
 };
 
 
-class BitmapFont
+struct BitmapFont
 {
-public:
     ~BitmapFont();
     
     // Размер символа в точках

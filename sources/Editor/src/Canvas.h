@@ -5,7 +5,7 @@
 #pragma warning(pop)
 
 
-class BitmapSymbol;
+struct BitmapFont;
 
 
 class Canvas : public wxPanel
@@ -31,6 +31,8 @@ public:
     
     // ¬ключить/выключить режим выбора символов
     void EnableModeSelectSymbols(bool enable);
+
+    BitmapFont *GetFont();
 
 private:
 
@@ -58,8 +60,6 @@ private:
     
     // ƒействующий размер холста
     wxSize CurrentSize();
-
-    BitmapSymbol *GetSymbolUnderMouse(int mouseX, int mouseY);
 
     wxScrolledWindow *sw = nullptr;
 

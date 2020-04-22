@@ -239,4 +239,7 @@ void Canvas::EnableModeSelectSymbols(bool enable)
 }
 
 
-
+BitmapFont *Canvas::GetFont()
+{
+    return &font;
+}
