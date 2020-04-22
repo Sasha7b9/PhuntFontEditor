@@ -113,13 +113,13 @@ void ImportSystemFontDialog::OnButtonClose(wxCommandEvent &)
 }
 
 
-void ImportSystemFontDialog::GetDataImport(DataImportFont *data)
+void ImportSystemFontDialog::GetDataImport(SettingsFont *settings)
 {
-    data->width = widthCell;
-    data->height = heightCell;
-    data->offsetX = offsetSymbolX;
-    data->offsetY = offsetSymbolY;
-    data->font = font;
+    settings->width = widthCell;
+    settings->height = heightCell;
+    settings->offsetX = offsetSymbolX;
+    settings->offsetY = offsetSymbolY;
+    settings->font = font;
 }
 
 

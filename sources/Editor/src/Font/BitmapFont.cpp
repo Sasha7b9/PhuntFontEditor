@@ -162,10 +162,10 @@ void BitmapFont::GetSymbolXY(const BitmapSymbol *symbol, int *x, int *y)
 }
 
 
-void BitmapFont::CreateNew(const DataImportFont data)
+void BitmapFont::CreateNew(const SettingsFont set)
 {
-    size.x = data.width;
-    size.y = data.height;
+    size.x = set.width;
+    size.y = set.height;
 
     int i = 0;
 
@@ -173,7 +173,7 @@ void BitmapFont::CreateNew(const DataImportFont data)
     {
         for (int col = 0; col < 16; col++)
         {
-            symbols[row][col].Build(data.font, static_cast<uint8>(i++), size.x, size.y, data.offsetX, data.offsetY);
+            symbols[row][col].Build(set.font, static_cast<uint8>(i++), size.x, size.y, set.offsetX, set.offsetY);
         }
     }
 

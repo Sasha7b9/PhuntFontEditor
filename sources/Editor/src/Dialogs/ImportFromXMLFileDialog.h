@@ -4,5 +4,5 @@
 class ImportFromXMLFileDialog
 {
 public:
-    static void Execute();
+    static bool Execute();
 };

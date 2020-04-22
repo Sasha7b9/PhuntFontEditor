@@ -4,7 +4,7 @@
 #pragma warning(pop)
 
 
-struct DataImportFont
+struct SettingsFont
 {
     int width;
     int height;
@@ -19,7 +19,7 @@ class ImportSystemFontDialog : public wxDialog
 public:
     ImportSystemFontDialog(const wxString &title);
 
-    static void GetDataImport(DataImportFont *data);
+    static void GetDataImport(SettingsFont *settings);
    
 protected:
 

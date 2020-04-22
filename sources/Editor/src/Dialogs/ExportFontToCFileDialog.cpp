@@ -87,8 +87,8 @@ void ExportFontToCFileDialog::OnButtonExport(wxCommandEvent &)
 
 void ExportFontToCFileDialog::WriteFileXML(const wxString &nameFileFont)
 {
-    DataImportFont data;
-    ImportSystemFontDialog::GetDataImport(&data);
+    SettingsFont set;
+    ImportSystemFontDialog::GetDataImport(&set);
 
     wxString nameFile = nameFileFont;
     nameFile[nameFile.size() - 1] = 'l';
@@ -101,18 +101,18 @@ void ExportFontToCFileDialog::WriteFileXML(const wxString &nameFileFont)
     wxXmlNode *common = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, _T("Common"));
     root->AddChild(common);
 
-    common->AddAttribute(_T("Name"), data.font.GetFaceName());
-    common->AddAttribute(_T("Size"), wxString::Format(wxT("%i"), data.font.GetPointSize()));
-    common->AddAttribute(_T("FontWidth"), FontImporter::NameWidth(data.font.GetWeight()));
-    common->AddAttribute(_T("FontStyle"), FontImporter::NameStyle(data.font.GetStyle()));
+    common->AddAttribute(_T("Name"), set.font.GetFaceName());
+    common->AddAttribute(_T("Size"), wxString::Format(wxT("%i"), set.font.GetPointSize()));
+    common->AddAttribute(_T("FontWidth"), FontImporter::NameWidth(set.font.GetWeight()));
+    common->AddAttribute(_T("FontStyle"), FontImporter::NameStyle(set.font.GetStyle()));
 
     wxXmlNode *cell = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, _T("Cell"));
     common->AddChild(cell);
 
-    cell->AddAttribute(_T("Width"), wxString::Format(wxT("%i"), data.width));
-    cell->AddAttribute(_T("Height"), wxString::Format(wxT("%i"), data.height));
-    cell->AddAttribute(_T("OffsetX"), wxString::Format(wxT("%i"), data.offsetX));
-    cell->AddAttribute(_T("OffsetY"), wxString::Format(wxT("%i"), data.offsetY));
+    cell->AddAttribute(_T("Width"), wxString::Format(wxT("%i"), set.width));
+    cell->AddAttribute(_T("Height"), wxString::Format(wxT("%i"), set.height));
+    cell->AddAttribute(_T("OffsetX"), wxString::Format(wxT("%i"), set.offsetX));
+    cell->AddAttribute(_T("OffsetY"), wxString::Format(wxT("%i"), set.offsetY));
 
     wxXmlNode *symbols = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, _T("Symbols"));
     common->AddChild(symbols);

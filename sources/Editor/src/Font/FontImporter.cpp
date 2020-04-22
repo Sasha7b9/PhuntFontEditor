@@ -162,18 +162,18 @@ void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const u
 
 void FontImporter::WriteParametersFont(wxTextFile &file)
 {
-    DataImportFont data;
-    ImportSystemFontDialog::GetDataImport(&data);
+    SettingsFont set;
+    ImportSystemFontDialog::GetDataImport(&set);
 
     ADD_LINE("/*");
-    ADD_FLINE_1("    Name - %s", data.font.GetFaceName());
-    ADD_FLINE_1("    Size - %d", data.font.GetPointSize());
-    ADD_FLINE_1("    Width - %s", NameWidth(data.font.GetWeight()));
-    ADD_FLINE_1("    Style - %s", NameStyle(data.font.GetStyle()));
-    ADD_FLINE_1("    Cell width - %d", data.width);
-    ADD_FLINE_1("    Cell height - %d", data.height);
-    ADD_FLINE_1("    Offset x - %d", data.offsetX);
-    ADD_FLINE_1("    Offset y - %d", data.offsetY);
+    ADD_FLINE_1("    Name - %s", set.font.GetFaceName());
+    ADD_FLINE_1("    Size - %d", set.font.GetPointSize());
+    ADD_FLINE_1("    Width - %s", NameWidth(set.font.GetWeight()));
+    ADD_FLINE_1("    Style - %s", NameStyle(set.font.GetStyle()));
+    ADD_FLINE_1("    Cell width - %d", set.width);
+    ADD_FLINE_1("    Cell height - %d", set.height);
+    ADD_FLINE_1("    Offset x - %d", set.offsetX);
+    ADD_FLINE_1("    Offset y - %d", set.offsetY);
     ADD_LINE("*/");
 }
 

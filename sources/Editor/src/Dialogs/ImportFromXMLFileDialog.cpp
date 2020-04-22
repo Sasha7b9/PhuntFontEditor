@@ -7,7 +7,7 @@
 #pragma warning(pop)
 
 
-void ImportFromXMLFileDialog::Execute()
+bool ImportFromXMLFileDialog::Execute()
 {
     wxFileDialog openDialog(nullptr, wxEmptyString, wxEmptyString, wxEmptyString, wxT("*.xml"), wxFD_OPEN);
 
@@ -24,12 +24,10 @@ void ImportFromXMLFileDialog::Execute()
 
             if(common)
             {
-                common = common;
-            }
-            else
-            {
-                common = common;
+                wxString name = common->GetAttribute("Name");
             }
         }
     }
+
+    return true;
 }

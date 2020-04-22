@@ -62,7 +62,7 @@ struct BitmapFont
     BitmapSymbol symbols[16][16];
     
     // Ñמחהא¸ע םמגûי רנטפע
-    void CreateNew(const DataImportFont data);
+    void CreateNew(const SettingsFont settings);
 
     void Resize();
 
