@@ -42,7 +42,7 @@ private:
     void OnImportSystemFont(wxCommandEvent &);
 
     // Ёкспортировать шрифт в си-файл
-    void OnExportFontC(wxCommandEvent &);
+    void OnExportFontToC(wxCommandEvent &);
 
 	void OnUndo(wxCommandEvent &);
 

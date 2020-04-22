@@ -94,7 +94,7 @@ Frame::Frame(const wxString &title)
     Bind(wxEVT_MENU,     &Frame::OnImportDescriptionFromXML, this, FILE_IMPORT_DESCRIPTION_FROM_XML);
     Bind(wxEVT_MENU,     &Frame::OnImportSystemFont,         this, FILE_IMPORT_SYSTEM_FONT);
     Bind(wxEVT_MENU,     &Frame::OnImportSystemFont,         this, TOOL_IMPORT_FONT);
-    Bind(wxEVT_MENU,     &Frame::OnExportFontC,              this, FILE_EXPORT_TO_C);
+    Bind(wxEVT_MENU,     &Frame::OnExportFontToC,            this, FILE_EXPORT_TO_C);
     Bind(wxEVT_MENU,     &Frame::OnUndo,                     this, UNDO);
     Bind(wxEVT_MENU,     &Frame::OnRedo,                     this, REDO);
     Bind(wxEVT_TIMER,    &Frame::OnTimer,                    this, TIMER_ID);
@@ -195,11 +195,11 @@ wxRect Frame::GetMaxDisplay()
 void Frame::CreateMenu()
 {
     wxMenu *fileMenu = new wxMenu;
-    fileMenu->Append(FILE_IMPORT_DESCRIPTION_FROM_XML, wxT("Загрузить\tCtrl+O"), wxT("Загрузить данные из файла"));
-    fileMenu->AppendSeparator();
-    fileMenu->Append(FILE_IMPORT_SYSTEM_FONT, wxT("Импорт"), wxT("Импортировать системный шрифт"));
 
-
+    wxMenu *menuImport = new wxMenu;
+    menuImport->Append(FILE_IMPORT_DESCRIPTION_FROM_XML, wxT("Загрузить\tCtrl+O"), wxT("Загрузить данные из файла"));
+    menuImport->Append(FILE_IMPORT_SYSTEM_FONT, wxT("Импорт"), wxT("Импортировать системный шрифт"));
+    fileMenu->AppendSubMenu(menuImport, wxT("Импорт"));
 
     wxMenu *menuExport = new wxMenu;
     menuExport->Append(FILE_EXPORT_TO_C, wxT("Экспортировать в Си-файл"));
@@ -292,7 +292,7 @@ void Frame::OnImportDescriptionFromXML(wxCommandEvent &)
 }
 
 
-void Frame::OnExportFontC(wxCommandEvent &)
+void Frame::OnExportFontToC(wxCommandEvent &)
 {
     ExportDialogC dlg(wxT("Экспорт шрифта в Си-файл"));
     dlg.ShowModal();
