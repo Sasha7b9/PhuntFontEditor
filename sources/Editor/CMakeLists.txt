@@ -21,12 +21,18 @@ add_compile_options(/wd5027)    # move assignment operator was implicitly define
 add_compile_options(/wd5045)    # Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
 
 
+set_source_files_properties(src/_temp/Font.cpp
+    PROPERTIES HEADER_FILE_ONLY TRUE)
+
+
 source_group(src               REGULAR_EXPRESSION src/*)
+source_group(_temp             REGULAR_EXPRESSION src/_temp/*)
 source_group(Dialogs           REGULAR_EXPRESSION src/Dialogs/*)
 source_group(Dialogs\\Controls REGULAR_EXPRESSION src/Disalogs/Controls/*)
 source_group(Font              REGULAR_EXPRESSION src/Font/*)
 
 file(GLOB SOURCES src/*
+                  src/_temp/*
                   src/Dialogs/*
                   src/Dialogs/Controls/*
                   src/Font/*
