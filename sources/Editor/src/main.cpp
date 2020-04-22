@@ -5,7 +5,3 @@ void init()
 {
     new Frame("");
 }
-
-void update()
-{
-}

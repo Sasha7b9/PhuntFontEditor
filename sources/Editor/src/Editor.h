@@ -18,13 +18,10 @@ public:
     ~Frame();
 
     void OnQuit(wxCommandEvent &);
-    void OnTimer(wxTimerEvent &);
     void OnResize(wxSizeEvent &);
     void OnRepaint(wxPaintEvent &);
 
 private:
-    wxTimer timer;
-
     void SetSizeAndPosition();
 
     wxRect GetMaxDisplay();

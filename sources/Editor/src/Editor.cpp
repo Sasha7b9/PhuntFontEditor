@@ -15,7 +15,6 @@
 #include "Dialogs/ExportDialogC.h"
 #include "Dialogs/ImportDialog.h"
 
-extern void update();
 extern void init();
 
 
@@ -45,11 +44,6 @@ enum
     TOOL_SELECT_SYMBOLS                         // Выбрать символы, которые будут включены в шрифт
 };
 
-enum
-{
-    TIMER_ID = 1
-};
-
 
 wxIMPLEMENT_APP_NO_MAIN(Application);
 
@@ -76,8 +70,7 @@ bool Application::OnInit()
 
 
 Frame::Frame(const wxString &title)
-    : wxFrame(NULL, wxID_ANY, title),
-    timer(this, TIMER_ID)
+    : wxFrame(NULL, wxID_ANY, title)
 {
     SetIcon(wxICON(sample));
 
@@ -95,7 +88,6 @@ Frame::Frame(const wxString &title)
     Bind(wxEVT_MENU,     &Frame::OnExportFontToC,            this, FILE_EXPORT_TO_C);
     Bind(wxEVT_MENU,     &Frame::OnUndo,                     this, UNDO);
     Bind(wxEVT_MENU,     &Frame::OnRedo,                     this, REDO);
-    Bind(wxEVT_TIMER,    &Frame::OnTimer,                    this, TIMER_ID);
     Bind(wxEVT_SIZE,     &Frame::OnResize,                   this);
     Bind(wxEVT_PAINT,    &Frame::OnRepaint,                  this);
     Bind(wxEVT_KEY_DOWN, &Frame::OnKeyDown,                  this);
@@ -105,8 +97,6 @@ Frame::Frame(const wxString &title)
     Bind(wxEVT_MENU,     &Frame::OnSelectSymbols,            this, TOOL_SELECT_SYMBOLS);
 
     Show(true);
-
-    timer.Start(0);
 
     Maximize();
 }
@@ -123,12 +113,6 @@ void Frame::CreatePanels()
     TheCanvas = new Canvas(sw);
 
     Centre();
-}
-
-
-void Frame::OnTimer(wxTimerEvent &)
-{
-    update();
 }
 
 
