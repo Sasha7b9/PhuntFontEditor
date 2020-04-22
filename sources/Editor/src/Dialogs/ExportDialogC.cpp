@@ -2,7 +2,7 @@
 #include "Canvas.h"
 #include "Dialogs/ExportDialogC.h"
 #include "Dialogs/ImportSystemFontDialog.h"
-#include "Dialogs/TextControl.h"
+#include "Dialogs/Controls/TextControl.h"
 #include "Font/Font.h"
 #include "Font/FontImporter.h"
 #pragma warning(push, 0)

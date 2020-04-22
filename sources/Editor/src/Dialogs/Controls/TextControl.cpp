@@ -1,5 +1,5 @@
 #include "defines.h"
-#include "Dialogs/TextControl.h"
+#include "Dialogs/Controls/TextControl.h"
 
 
 TextControl::TextControl(wxWindow *parent, const wxString &value, const wxString &label) : wxPanel(parent)

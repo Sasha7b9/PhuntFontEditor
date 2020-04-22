@@ -1,7 +1,7 @@
 #include "defines.h"
 #include "Canvas.h"
 #include "Dialogs/ImportSystemFontDialog.h"
-#include "Dialogs/TextControl.h"
+#include "Dialogs/Controls/TextControl.h"
 #pragma warning(push, 0)
 #include <wx/fontdlg.h>
 #pragma warning(pop)
