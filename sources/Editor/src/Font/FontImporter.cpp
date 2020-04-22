@@ -162,7 +162,7 @@ void FontImporter::WriteFont(wxTextFile &file, const wxString &nameFont, const u
 
 void FontImporter::WriteParametersFont(wxTextFile &file)
 {
-    DataImport data;
+    DataImportFont data;
     ImportSystemFontDialog::GetDataImport(&data);
 
     ADD_LINE("/*");

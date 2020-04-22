@@ -87,7 +87,7 @@ void ExportFontToCFileDialog::OnButtonExport(wxCommandEvent &)
 
 void ExportFontToCFileDialog::WriteFileXML(const wxString &nameFileFont)
 {
-    DataImport data;
+    DataImportFont data;
     ImportSystemFontDialog::GetDataImport(&data);
 
     wxString nameFile = nameFileFont;

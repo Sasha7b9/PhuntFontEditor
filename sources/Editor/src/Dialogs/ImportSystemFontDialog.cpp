@@ -113,7 +113,7 @@ void ImportSystemFontDialog::OnButtonClose(wxCommandEvent &)
 }
 
 
-void ImportSystemFontDialog::GetDataImport(DataImport *data)
+void ImportSystemFontDialog::GetDataImport(DataImportFont *data)
 {
     data->width = widthCell;
     data->height = heightCell;
