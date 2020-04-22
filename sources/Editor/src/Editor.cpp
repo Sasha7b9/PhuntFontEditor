@@ -1,10 +1,12 @@
 #include "Editor.h"
+#include "XML.h"
 #pragma warning(push, 0)
 #include <wx/wx.h>
 #include <wx/display.h>
 #include <wx/fontdlg.h>
 #include <wx/mstream.h>
 #include <wx/textfile.h>
+#include <wx/xml/xml.h>
 #pragma warning(pop)
 
 #undef main
@@ -262,13 +264,21 @@ void Frame::OnImportDescriptionFromXML(wxCommandEvent &)
     {
         wxString fileName = openDialog.GetPath();
 
-        wxTextFile file(fileName);
-
-        if(file.Exists())
+        wxXmlDocument xml;
+        if(xml.Load(fileName))
         {
-            file.Open();
+            wxXmlNode *root = xml.GetRoot();
 
-            file.Close();
+            wxXmlNode *common = XML::FindChildren(root, "Commo");
+
+            if(common)
+            {
+                common = common;
+            }
+            else
+            {
+                common = common;
+            }
         }
     }
 }
