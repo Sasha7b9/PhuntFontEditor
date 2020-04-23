@@ -15,6 +15,7 @@ public:
     static const char *FontFamilyToChar(const wxFont &font);
 
     static wxFontFamily FontFamilyToENUM(const char *family);
+    static wxFontStyle FontStyleToENUM(const char *style);
 
 private:
 
