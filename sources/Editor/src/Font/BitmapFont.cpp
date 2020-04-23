@@ -32,7 +32,7 @@ wxString BitmapSymbol::UTFfrom1251(uint8 code)
 }
 
 
-void BitmapSymbol::Build(const wxFont &font, uint8 number, int w, int h, int offsetX, int offsetY)
+void BitmapSymbol::BuildFromFont(const wxFont &font, uint8 number, int w, int h, int offsetX, int offsetY)
 {
     width = w;
     height = h;
@@ -244,7 +244,7 @@ void BitmapFont::CreateNew(const SettingsFont set) //-V801
     {
         for (int col = 0; col < 16; col++)
         {
-            symbols[row][col].Build(set.font, static_cast<uint8>(i++), size.x, size.y, set.offsetX, set.offsetY);
+            symbols[row][col].BuildFromFont(set.font, static_cast<uint8>(i++), size.x, size.y, set.offsetX, set.offsetY);
         }
     }
 

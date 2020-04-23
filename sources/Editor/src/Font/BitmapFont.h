@@ -16,7 +16,7 @@ public:
     int width = 0;
     int height = 0;
 
-    void Build(const wxFont &font, uint8 number, int w, int h, int offsetX, int offsetY);
+    void BuildFromFont(const wxFont &font, uint8 number, int w, int h, int offsetX, int offsetY);
     
     void Clear();
 
