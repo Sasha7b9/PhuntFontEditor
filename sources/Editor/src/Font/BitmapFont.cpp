@@ -158,7 +158,8 @@ void BitmapFont::GetSymbolXY(const BitmapSymbol *symbol, int *x, int *y)
         }
     }
 
-    *x = *y = 0;
+    *x = 0;
+    *y = 0;
 }
 
 

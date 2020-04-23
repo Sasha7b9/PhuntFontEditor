@@ -20,11 +20,14 @@
 
 extern void init();
 
+enum
+{
+    MENU_FILE_QUIT = wxID_EXIT
+};
+
 
 enum
 {
-    MENU_FILE_QUIT = wxID_EXIT,
-
     CONTEXT_MENU_DELETE = wxID_HIGHEST + 1,     // Удалить точку
     CONTEXT_MENU_PARAMETERS,                    // Параметры точки
 

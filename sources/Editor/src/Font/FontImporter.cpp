@@ -246,14 +246,11 @@ char *FontImporter::NameStyle(wxFontStyle style)
 
 void FontImporter::CalculateSizes(int *sizes)
 {
-    int i = 0;
-
     for (int row = 0; row < 16; row++)
     {
         for (int col = 0; col < 16; col++)
         {
-            sizes[i] = symbols[i]->GetSize();
-            i++;
+            *sizes++ = symbols[row * 16 + col]->GetSize();
         }
     }
 }

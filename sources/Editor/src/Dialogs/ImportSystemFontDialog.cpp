@@ -30,7 +30,7 @@ ImportSystemFontDialog::ImportSystemFontDialog(const wxString &title) : wxDialog
 {
 #define BORDER 5
 #define SPACER 10
-#define _ALIGN wxALIGN_CENTER | wxALL
+#define FULL_ALIGN wxALIGN_CENTER | wxALL
 
 
     wxButton *btnApply = new wxButton(this, ID_BUTTON_APPLY, wxT("Применить"), wxDefaultPosition, BUTTON_SIZE);
@@ -61,13 +61,13 @@ ImportSystemFontDialog::ImportSystemFontDialog(const wxString &title) : wxDialog
     tcOffsetY = new TextControl(this, wxT("0"), wxT("смещение по y"));
 
     vBox->Add(boxFont, 0, wxALIGN_LEFT, BORDER);
-    vBox->Add(tcWidthCell, 0, _ALIGN, BORDER);
-    vBox->Add(tcHeightCell, 0, _ALIGN, BORDER);
-    vBox->Add(tcOffsetX, 0, _ALIGN, BORDER);
-    vBox->Add(tcOffsetY, 0, _ALIGN, BORDER);
+    vBox->Add(tcWidthCell, 0, FULL_ALIGN, BORDER);
+    vBox->Add(tcHeightCell, 0, FULL_ALIGN, BORDER);
+    vBox->Add(tcOffsetX, 0, FULL_ALIGN,  BORDER);
+    vBox->Add(tcOffsetY, 0, FULL_ALIGN, BORDER);
 
     vBox->AddSpacer(10);
-    vBox->Add(boxButtons, 0, _ALIGN, BORDER);
+    vBox->Add(boxButtons, 0, FULL_ALIGN, BORDER);
 
     SetSizer(vBox);
 

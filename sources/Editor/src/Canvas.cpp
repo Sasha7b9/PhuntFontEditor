@@ -160,7 +160,8 @@ void Canvas::Decrease()
 
 void Canvas::OnMouseLeave(wxMouseEvent &)
 {
-    mouseX = mouseY = -100;
+    mouseX = -100;
+    mouseY = mouseX;
     Refresh();
 }
 

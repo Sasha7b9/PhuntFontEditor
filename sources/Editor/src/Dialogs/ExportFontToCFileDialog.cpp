@@ -25,7 +25,7 @@ ExportFontToCFileDialog::ExportFontToCFileDialog(const wxString &title) : wxDial
 {
 #define BORDER 5
 #define SPACER 10
-#define _ALIGN wxALIGN_CENTER | wxALL
+#define FULL_ALIGN wxALIGN_CENTER | wxALL
 
     wxButton *btnExport = new wxButton(this, ID_BUTTON_EXPORT, wxT("Ёкспорт"), wxDefaultPosition, BUTTON_SIZE);
     Connect(ID_BUTTON_EXPORT, wxEVT_BUTTON, wxCommandEventHandler(ExportFontToCFileDialog::OnButtonExport));
@@ -41,7 +41,7 @@ ExportFontToCFileDialog::ExportFontToCFileDialog(const wxString &title) : wxDial
     wxBoxSizer *vBox = new wxBoxSizer(wxVERTICAL);
     
     vBox->Add(tcNameFont);
-    vBox->Add(boxButtons, 0, _ALIGN, BORDER);
+    vBox->Add(boxButtons, 0, FULL_ALIGN, BORDER);
 
     SetSizer(vBox);
 }
