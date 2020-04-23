@@ -36,6 +36,8 @@ public:
 
     static BitmapSymbol *Null();
 
+    void TogglePixel(int x, int y);
+
 private:
     
     // Здесь хранится исходное изображение в масштабе 1:1

@@ -89,6 +89,21 @@ void Canvas::DrawCursor(wxPaintDC &dc)
 }
 
 
+void Canvas::OnMouseLeftDown(wxMouseEvent &)
+{
+    if(mode == Mode::Edit)
+    {
+//        BitmapSymbol *symbol = font.GetSymbolUnderMouse(mouseX, mouseY);
+//        wxRect rect = font.GetRectForSymbol(symbol);
+    }
+    else
+    {
+        font.ToggleStateSymbol(mouseX, mouseY);
+        Refresh();
+    }
+}
+
+
 void Canvas::HighlightPixel(wxPaintDC &dc)
 {
     dc.SetPen(*wxBLACK_PEN);
@@ -177,16 +192,6 @@ void Canvas::TuneScrollBar()
     sw->SetScrollbars(1, 1, size.x, size.y);
 
     SetPosition({ 0, 0 });
-}
-
-
-void Canvas::OnMouseLeftDown(wxMouseEvent &)
-{
-    if (mode == Mode::SelectSymbols)
-    {
-        font.ToggleStateSymbol(mouseX, mouseY);
-        Refresh();
-    }
 }
 
 
