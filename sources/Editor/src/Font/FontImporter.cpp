@@ -167,9 +167,9 @@ void FontImporter::WriteParametersFont(wxTextFile &file)
     ADD_LINE("/*");
     ADD_FLINE_1("    FaceName - %s",    set.font.GetFaceName());
     ADD_FLINE_1("    PointSize - %d",   set.font.GetPointSize());
-    ADD_FLINE_1("    FontWeight - %s",  FontWeight(set.font));
-    ADD_FLINE_1("    Style - %s",       FontStyle(set.font));
-    ADD_FLINE_1("    Family - %s",      FontFamily(set.font));
+    ADD_FLINE_1("    FontWeight - %s",  FontWeightToChar(set.font));
+    ADD_FLINE_1("    Style - %s",       FontStyleToChar(set.font));
+    ADD_FLINE_1("    Family - %s",      FontFamilyToChar(set.font));
     ADD_FLINE_1("    Cell width - %d",  set.width);
     ADD_FLINE_1("    Cell height - %d", set.height);
     ADD_FLINE_1("    Offset x - %d",    set.offsetX);
@@ -178,7 +178,7 @@ void FontImporter::WriteParametersFont(wxTextFile &file)
 }
 
 
-char *FontImporter::FontWeight(const wxFont &font)
+char *FontImporter::FontWeightToChar(const wxFont &font)
 {
     char *result = "invalid";
 
@@ -201,7 +201,7 @@ char *FontImporter::FontWeight(const wxFont &font)
 }
 
 
-char *FontImporter::FontStyle(const wxFont &font)
+char *FontImporter::FontStyleToChar(const wxFont &font)
 {
     char *result = "invalid";
 
@@ -217,7 +217,7 @@ char *FontImporter::FontStyle(const wxFont &font)
 }
 
 
-char *FontImporter::FontFamily(const wxFont &font)
+char *FontImporter::FontFamilyToChar(const wxFont &font)
 {
     char *result = "invalid";
 

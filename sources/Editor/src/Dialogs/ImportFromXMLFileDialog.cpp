@@ -24,7 +24,10 @@ bool ImportFromXMLFileDialog::Execute()
 
             if(common)
             {
-                wxString faceName = common->GetAttribute("FaceName");
+                long pointSize = 0;
+                common->GetAttribute("PointSize").ToLong(&pointSize);
+
+                //wxFontFamily fontFamily = 
             }
         }
     }
