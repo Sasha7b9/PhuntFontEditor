@@ -1,6 +1,7 @@
 #include "defines.h"
 #include "Dialogs/ImportSystemFontDialog.h"
 #include "Font/BitmapFont.h"
+#include <thread>
 
 
 
@@ -114,15 +115,30 @@ void BitmapSymbol::Resize(int scale)
 }
 
 
-void BitmapFont::Resize()
+static void FuncThread(BitmapSymbol symbols[16][16], int rowStart, int rowEnd, int scale)
 {
-    for (int row = 0; row < 16; row++)
+    for(int row = rowStart; row < rowEnd; row++)
     {
-        for (int col = 0; col < 16; col++)
+        for(int col = 0; col < 16; col++)
         {
             symbols[row][col].Resize(scale);
         }
     }
+
+}
+
+
+void BitmapFont::Resize()
+{
+    std::thread thread0(FuncThread, symbols, 0, 4, scale);
+    std::thread thread1(FuncThread, symbols, 4, 8, scale);
+    std::thread thread2(FuncThread, symbols, 8, 12, scale);
+    std::thread thread3(FuncThread, symbols, 12, 16, scale);
+
+    thread0.join();
+    thread1.join();
+    thread2.join();
+    thread3.join();
 
     delete bitmap;
 

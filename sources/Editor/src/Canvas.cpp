@@ -132,8 +132,6 @@ void Canvas::ZoomUp()
 
         Resize();
 
-        font.Resize();
-
         TuneScrollBar();
 
         Refresh();
