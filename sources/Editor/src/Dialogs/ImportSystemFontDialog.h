@@ -20,6 +20,8 @@ public:
     ImportSystemFontDialog(const wxString &title);
 
     static SettingsFont GetSettingsFont();
+
+    static void SetSettingsFont(SettingsFont settings);
    
 protected:
 

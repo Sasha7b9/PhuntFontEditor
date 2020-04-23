@@ -21,7 +21,7 @@ static TextControl *tcNameFont = nullptr;
 static wxString nameFont(wxT("font"));
 
 
-ExportFontToCFileDialog::ExportFontToCFileDialog(const wxString &title) : wxDialog(nullptr, wxID_ANY, title)
+ExportFontToCFileDialog::ExportFontToCFileDialog() : wxDialog(nullptr, wxID_ANY, wxT("Экспорт шрифта в Си-файл"))
 {
 #define BORDER 5
 #define SPACER 10

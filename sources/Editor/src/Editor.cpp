@@ -268,8 +268,7 @@ void Frame::OnImportDescriptionFromXML(wxCommandEvent &)
 
 void Frame::OnExportFontToC(wxCommandEvent &)
 {
-    ExportFontToCFileDialog dlg(wxT("Экспорт шрифта в Си-файл"));
-    dlg.ShowModal();
+    ExportFontToCFileDialog().ShowModal();
 }
 
 

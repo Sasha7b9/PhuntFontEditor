@@ -63,7 +63,7 @@ ImportSystemFontDialog::ImportSystemFontDialog(const wxString &title) : wxDialog
     vBox->Add(boxFont, 0, wxALIGN_LEFT, BORDER);
     vBox->Add(tcWidthCell, 0, FULL_ALIGN, BORDER);
     vBox->Add(tcHeightCell, 0, FULL_ALIGN, BORDER);
-    vBox->Add(tcOffsetX, 0, FULL_ALIGN,  BORDER);
+    vBox->Add(tcOffsetX, 0, FULL_ALIGN, BORDER);
     vBox->Add(tcOffsetY, 0, FULL_ALIGN, BORDER);
 
     vBox->AddSpacer(10);
@@ -94,6 +94,16 @@ void ImportSystemFontDialog::OnButtonApply(wxCommandEvent &)
     settings.height = tcHeightCell->ToInt();
     settings.offsetX = tcOffsetX->ToInt();
     settings.offsetY = tcOffsetY->ToInt();
+
+    TheCanvas->Rebuild();
+}
+
+
+void ImportSystemFontDialog::SetSettingsFont(SettingsFont set)
+{
+    settings = set;
+
+    TuneTextFont();
 
     TheCanvas->Rebuild();
 }

@@ -11,7 +11,7 @@ class wxXmlNode;
 class ExportFontToCFileDialog : public wxDialog
 {
 public:
-    ExportFontToCFileDialog(const wxString &title);
+    ExportFontToCFileDialog();
 
 private:
     void OnButtonExport(wxCommandEvent &);
