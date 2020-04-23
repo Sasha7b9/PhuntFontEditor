@@ -47,6 +47,23 @@ bool ImportFromXMLFileDialog::Execute()
 
                 ImportSystemFontDialog::SetSettingsFont(settings);
 
+                wxXmlNode *symbols = XML::FindChildren(common, "Symbols");
+
+                for(int i = 0; i < 256; i++)
+                {
+                    char buffer[30];
+                    std::sprintf(buffer, "Symbol%d", i);
+
+                    wxXmlNode *symbol = XML::FindChildren(symbols, buffer);
+
+                    wxString enabled = symbol->GetAttribute("Enabled");
+
+                    if(std::strcmp(enabled.c_str(), "0") == 0)
+                    {
+                        TheCanvas->GetFont()->GetSymbol(static_cast<uint8>(i))->Disable();
+                    }
+                }
+
                 TheCanvas->Rebuild();
             }
         }
