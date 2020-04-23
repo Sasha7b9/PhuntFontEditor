@@ -12,11 +12,14 @@ public:
 
     static char *NameWidth(wxFontWeight width);
 
-    static char *NameStyle(wxFontStyle style);
+    static char *FontStyle(const wxFont &font);
+
+    static char *FontFamily(const wxFont &font);
 
 private:
 
     static void CreateSymbols(BitmapFont &font);
+    
     // Рассчитать размеры символов
     static void CalculateSizes(int *sizes);
 

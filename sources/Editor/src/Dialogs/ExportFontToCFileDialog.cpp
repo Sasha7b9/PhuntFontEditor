@@ -103,7 +103,8 @@ void ExportFontToCFileDialog::WriteFileXML(const wxString &nameFileFont)
     common->AddAttribute(_T("Name"), set.font.GetFaceName());
     common->AddAttribute(_T("Size"), wxString::Format(wxT("%i"), set.font.GetPointSize()));
     common->AddAttribute(_T("FontWidth"), FontImporter::NameWidth(set.font.GetWeight()));
-    common->AddAttribute(_T("FontStyle"), FontImporter::NameStyle(set.font.GetStyle()));
+    common->AddAttribute(_T("FontStyle"), FontImporter::FontStyle(set.font));
+    common->AddAttribute(_T("FontFamily"), FontImporter::FontFamily(set.font));
 
     wxXmlNode *cell = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, _T("Cell"));
     common->AddChild(cell);

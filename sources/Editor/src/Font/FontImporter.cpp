@@ -165,14 +165,15 @@ void FontImporter::WriteParametersFont(wxTextFile &file)
     SettingsFont set = ImportSystemFontDialog::GetSettingsFont();
 
     ADD_LINE("/*");
-    ADD_FLINE_1("    Name - %s", set.font.GetFaceName());
-    ADD_FLINE_1("    Size - %d", set.font.GetPointSize());
-    ADD_FLINE_1("    Width - %s", NameWidth(set.font.GetWeight()));
-    ADD_FLINE_1("    Style - %s", NameStyle(set.font.GetStyle()));
-    ADD_FLINE_1("    Cell width - %d", set.width);
+    ADD_FLINE_1("    Name - %s",        set.font.GetFaceName());
+    ADD_FLINE_1("    Size - %d",        set.font.GetPointSize());
+    ADD_FLINE_1("    Width - %s",       NameWidth(set.font.GetWeight()));
+    ADD_FLINE_1("    Style - %s",       FontStyle(set.font));
+    ADD_FLINE_1("    Family - %s",      FontFamily(set.font));
+    ADD_FLINE_1("    Cell width - %d",  set.width);
     ADD_FLINE_1("    Cell height - %d", set.height);
-    ADD_FLINE_1("    Offset x - %d", set.offsetX);
-    ADD_FLINE_1("    Offset y - %d", set.offsetY);
+    ADD_FLINE_1("    Offset x - %d",    set.offsetX);
+    ADD_FLINE_1("    Offset y - %d",    set.offsetY);
     ADD_LINE("*/");
 }
 
@@ -183,61 +184,53 @@ char *FontImporter::NameWidth(wxFontWeight width)
 
     switch(width)
     {
-    case wxFONTWEIGHT_THIN:
-        result = "thin";
-        break;
-    case wxFONTWEIGHT_EXTRALIGHT:
-        result = "extralight";
-        break;
-    case wxFONTWEIGHT_LIGHT:
-        result = "light";
-        break;
-    case wxFONTWEIGHT_MEDIUM:
-        result = "medium";
-        break;
-    case wxFONTWEIGHT_SEMIBOLD:
-        result = "semibold";
-        break;
-    case wxFONTWEIGHT_BOLD:
-        result = "bold";
-        break;
-    case wxFONTWEIGHT_EXTRABOLD:
-        result = "extrabold";
-        break;
-    case wxFONTWEIGHT_HEAVY:
-        result = "heavy";
-        break;
-    case wxFONTWEIGHT_EXTRAHEAVY:
-        result = "extraheavy";
-        break;
-    case wxFONTWEIGHT_NORMAL:
-        result = "normal";
-        break;
-    case wxFONTWEIGHT_INVALID:
-        break;
+    case wxFONTWEIGHT_THIN:         result = "thin";        break;
+    case wxFONTWEIGHT_EXTRALIGHT:   result = "extralight";  break;
+    case wxFONTWEIGHT_LIGHT:        result = "light";       break;
+    case wxFONTWEIGHT_MEDIUM:       result = "medium";      break;
+    case wxFONTWEIGHT_SEMIBOLD:     result = "semibold";    break;
+    case wxFONTWEIGHT_BOLD:         result = "bold";        break;
+    case wxFONTWEIGHT_EXTRABOLD:    result = "extrabold";   break;
+    case wxFONTWEIGHT_HEAVY:        result = "heavy";       break;
+    case wxFONTWEIGHT_EXTRAHEAVY:   result = "extraheavy";  break;
+    case wxFONTWEIGHT_NORMAL:       result = "normal";      break;
+    case wxFONTWEIGHT_INVALID:                              break;
     }
 
     return result;
 }
 
 
-char *FontImporter::NameStyle(wxFontStyle style)
+char *FontImporter::FontStyle(const wxFont &font)
 {
     char *result = "invalid";
 
-    switch(style)
+    switch(font.GetStyle())
     {
-    case wxFONTSTYLE_NORMAL:
-        result = "normal";
-        break;
-    case wxFONTSTYLE_ITALIC:
-        result = "italic";
-        break;
-    case wxFONTSTYLE_SLANT:
-        result = "slant";
-        break;
-    case wxFONTSTYLE_MAX:
-        break;
+    case wxFONTSTYLE_NORMAL:    result = "normal";  break;
+    case wxFONTSTYLE_ITALIC:    result = "italic";  break;
+    case wxFONTSTYLE_SLANT:     result = "slant";   break;
+    case wxFONTSTYLE_MAX:                           break;
+    }
+
+    return result;
+}
+
+
+char *FontImporter::FontFamily(const wxFont &font)
+{
+    char *result = "invalid";
+
+    switch(font.GetFamily())
+    {
+    case wxFONTFAMILY_DEFAULT:      result = "default";     break;
+    case wxFONTFAMILY_DECORATIVE:   result = "decorative";  break;
+    case wxFONTFAMILY_ROMAN:        result = "roman";       break;
+    case wxFONTFAMILY_SCRIPT:       result = "script";      break;
+    case wxFONTFAMILY_SWISS:        result = "swiss";       break;
+    case wxFONTFAMILY_MODERN:       result = "modern";      break;
+    case wxFONTFAMILY_TELETYPE:     result = "teletype";    break;
+    case wxFONTFAMILY_UNKNOWN:      result = "unknown";     break;
     }
 
     return result;
