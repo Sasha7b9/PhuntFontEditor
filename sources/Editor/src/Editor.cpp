@@ -97,8 +97,8 @@ Frame::Frame(const wxString &title)
     Bind(wxEVT_SIZE,     &Frame::OnResize,                   this);
     Bind(wxEVT_PAINT,    &Frame::OnRepaint,                  this);
     Bind(wxEVT_KEY_DOWN, &Frame::OnKeyDown,                  this);
-    Bind(wxEVT_MENU,     &Frame::OnScaleDown,                this, TOOL_SCALE_DOWN);
-    Bind(wxEVT_MENU,     &Frame::OnScaleUp,                  this, TOOL_SCALE_UP);
+    Bind(wxEVT_MENU,     &Frame::OnZoomDown,                 this, TOOL_SCALE_DOWN);
+    Bind(wxEVT_MENU,     &Frame::OnZoomUp,                   this, TOOL_SCALE_UP);
     Bind(wxEVT_MENU,     &Frame::OnClearBadSymbols,          this, TOOL_CLEAR_BAD_SYMBOLS);
     Bind(wxEVT_MENU,     &Frame::OnSelectSymbols,            this, TOOL_SELECT_SYMBOLS);
 
@@ -289,15 +289,15 @@ void Frame::OnRedo(wxCommandEvent &)
 }
 
 
-void Frame::OnScaleUp(wxCommandEvent &)
+void Frame::OnZoomUp(wxCommandEvent &)
 {
-    TheCanvas->Increase();
+    TheCanvas->ZoomUp();
 }
 
 
-void Frame::OnScaleDown(wxCommandEvent &)
+void Frame::OnZoomDown(wxCommandEvent &)
 {
-    TheCanvas->Decrease();
+    TheCanvas->ZoomDown();
 }
 
 

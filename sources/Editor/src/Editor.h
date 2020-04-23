@@ -47,9 +47,9 @@ private:
 
     void OnKeyDown(wxKeyEvent &);
 
-    void OnScaleUp(wxCommandEvent &);
+    void OnZoomUp(wxCommandEvent &);
 
-    void OnScaleDown(wxCommandEvent &);
+    void OnZoomDown(wxCommandEvent &);
 
     // Очистить символы, не входящие в основной набор
     void OnClearBadSymbols(wxCommandEvent &);

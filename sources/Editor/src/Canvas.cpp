@@ -124,7 +124,7 @@ void Canvas::OnMouseMove(wxMouseEvent &event) //-V2009
 }
 
 
-void Canvas::Increase()
+void Canvas::ZoomUp()
 {
     if (font.scale < 32)
     {
@@ -141,7 +141,7 @@ void Canvas::Increase()
 }
 
 
-void Canvas::Decrease()
+void Canvas::ZoomDown()
 {
     if (font.scale > 2)
     {

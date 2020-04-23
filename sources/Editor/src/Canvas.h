@@ -19,10 +19,10 @@ public:
     void Rebuild();
     
     // Увеличить масштаб
-    void Increase();
+    void ZoomUp();
     
     // Уменьшить масштаб
-    void Decrease();
+    void ZoomDown();
     
     // Очистить символы, не входящие в основной набор
     void ClearBadSymbols();
