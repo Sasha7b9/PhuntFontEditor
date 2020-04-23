@@ -12,7 +12,9 @@ public:
 
     static char *FontWeightToChar(const wxFont &font);
     static char *FontStyleToChar(const wxFont &font);
-    static char *FontFamilyToChar(const wxFont &font);
+    static const char *FontFamilyToChar(const wxFont &font);
+
+    static wxFontFamily FontFamilyToENUM(const char *family);
 
 private:
 

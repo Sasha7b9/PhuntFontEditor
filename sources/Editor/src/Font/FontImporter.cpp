@@ -9,6 +9,27 @@
 #define ADD_FLINE_3(s, x1, x2, x3) file.AddLine(wxString::Format(s, x1, x2, x3))
 
 
+struct StructFontFamily
+{
+    wxFontFamily ENUM;
+    const char  *text;
+};
+
+
+static const StructFontFamily families[] =
+{
+    {wxFONTFAMILY_DEFAULT,    "default"},
+    {wxFONTFAMILY_DECORATIVE, "decorative"},
+    {wxFONTFAMILY_ROMAN,      "roman"},
+    {wxFONTFAMILY_SCRIPT,     "script"},
+    {wxFONTFAMILY_SWISS,      "swiss"},
+    {wxFONTFAMILY_MODERN,     "modern"},
+    {wxFONTFAMILY_TELETYPE,   "teletype"},
+    {wxFONTFAMILY_UNKNOWN,    "unknown"},
+    {wxFONTFAMILY_MAX,        ""}
+};
+
+
 //#define TRACE(num)                                          \
 //if(gI == 0x21)                                              \
 //{                                                           \
@@ -217,23 +238,39 @@ char *FontImporter::FontStyleToChar(const wxFont &font)
 }
 
 
-char *FontImporter::FontFamilyToChar(const wxFont &font)
+const char *FontImporter::FontFamilyToChar(const wxFont &font)
 {
-    char *result = "invalid";
+    const StructFontFamily *str = &families[0];
 
-    switch(font.GetFamily())
+    while(str->text[0] != '\0')
     {
-    case wxFONTFAMILY_DEFAULT:      result = "default";     break;
-    case wxFONTFAMILY_DECORATIVE:   result = "decorative";  break;
-    case wxFONTFAMILY_ROMAN:        result = "roman";       break;
-    case wxFONTFAMILY_SCRIPT:       result = "script";      break;
-    case wxFONTFAMILY_SWISS:        result = "swiss";       break;
-    case wxFONTFAMILY_MODERN:       result = "modern";      break;
-    case wxFONTFAMILY_TELETYPE:     result = "teletype";    break;
-    case wxFONTFAMILY_UNKNOWN:      result = "unknown";     break;
+        if(font.GetFamily() == str->ENUM)
+        {
+            return str->text;
+        }
+
+        str++;
     }
 
-    return result;
+    return "invalid";
+}
+
+
+wxFontFamily FontImporter::FontFamilyToENUM(const char *family)
+{
+    const StructFontFamily *str = &families[0];
+
+    while(str->text[0] != '\0')
+    {
+        if(std::strcmp(str->text, family) == 0)
+        {
+            return str->ENUM;
+        }
+
+        str++;
+    }
+
+    return wxFONTFAMILY_UNKNOWN;
 }
 
 

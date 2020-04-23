@@ -1,5 +1,7 @@
+#include "defines.h"
 #include "XML.h"
 #include "Dialogs/ImportFromXMLFileDialog.h"
+#include "Font/FontImporter.h"
 
 #pragma warning(push, 0)
 #include <wx/wx.h>
@@ -27,7 +29,7 @@ bool ImportFromXMLFileDialog::Execute()
                 long pointSize = 0;
                 common->GetAttribute("PointSize").ToLong(&pointSize);
 
-                //wxFontFamily fontFamily = 
+                wxFontFamily fontFamily = FontImporter::FontFamilyToENUM(common->GetAttribute("FontFamily"));
             }
         }
     }
