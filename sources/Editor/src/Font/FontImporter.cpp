@@ -9,17 +9,17 @@
 #define ADD_FLINE_3(s, x1, x2, x3) file.AddLine(wxString::Format(s, x1, x2, x3))
 
 
-struct StructFontFamily
+struct StructConversionENUM
 {
     const int   ENUM;
     const char *text;
 
-    static const char *FindText(const StructFontFamily *str, int e);
-    static const int FindENUM(const StructFontFamily *str, const char *text);
+    static const char *FindText(const StructConversionENUM *first, int e);
+    static const int FindENUM(const StructConversionENUM *first, const char *text);
 };
 
 
-static const StructFontFamily families[] =
+static const StructConversionENUM families[] =
 {
     {wxFONTFAMILY_DEFAULT,    "default"},
     {wxFONTFAMILY_DECORATIVE, "decorative"},
@@ -243,19 +243,19 @@ char *FontImporter::FontStyleToChar(const wxFont &font)
 
 const char *FontImporter::FontFamilyToChar(const wxFont &font)
 {
-    return StructFontFamily::FindText(&families[0], font.GetFamily());
+    return StructConversionENUM::FindText(&families[0], font.GetFamily());
 }
 
 
 wxFontFamily FontImporter::FontFamilyToENUM(const char *family)
 {
-    return static_cast<wxFontFamily>(StructFontFamily::FindENUM(&families[0], family));
+    return static_cast<wxFontFamily>(StructConversionENUM::FindENUM(&families[0], family));
 }
 
 
-const char *StructFontFamily::FindText(const StructFontFamily *first, int e)
+const char *StructConversionENUM::FindText(const StructConversionENUM *first, int e)
 {
-    const StructFontFamily *str = first;
+    const StructConversionENUM *str = first;
 
     while(str->text[0] != '\0')
     {
@@ -270,9 +270,9 @@ const char *StructFontFamily::FindText(const StructFontFamily *first, int e)
     return "invalid";
 }
 
-const int StructFontFamily::FindENUM(const StructFontFamily *first, const char *text)
+const int StructConversionENUM::FindENUM(const StructConversionENUM *first, const char *text)
 {
-    const StructFontFamily *str = first;
+    const StructConversionENUM *str = first;
 
     while(str->text[0] != '\0')
     {
@@ -280,6 +280,8 @@ const int StructFontFamily::FindENUM(const StructFontFamily *first, const char *
         {
             return str->ENUM;
         }
+
+        str++;
     }
 
     return -1;
