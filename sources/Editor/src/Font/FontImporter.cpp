@@ -29,7 +29,32 @@ static const StructConversionENUM families[] =
     {wxFONTFAMILY_MODERN,     "modern"},
     {wxFONTFAMILY_TELETYPE,   "teletype"},
     {wxFONTFAMILY_UNKNOWN,    "unknown"},
-    {wxFONTFAMILY_MAX,        ""}
+    {-1,                      ""}
+};
+
+
+static const StructConversionENUM styles[] =
+{
+    {wxFONTSTYLE_NORMAL, "normal"},
+    {wxFONTSTYLE_ITALIC, "italic"},
+    {wxFONTSTYLE_SLANT,  "slant"},
+    {-1,                 ""}
+};
+
+
+static const StructConversionENUM weights[] =
+{
+    {wxFONTWEIGHT_THIN,       "thin"},
+    {wxFONTWEIGHT_EXTRALIGHT, "extralight"},
+    {wxFONTWEIGHT_LIGHT,      "light"},
+    {wxFONTWEIGHT_MEDIUM,     "medium"},
+    {wxFONTWEIGHT_SEMIBOLD,   "semibold"},
+    {wxFONTWEIGHT_BOLD,       "bold"},
+    {wxFONTWEIGHT_EXTRABOLD,  "extrabold"},
+    {wxFONTWEIGHT_HEAVY,      "heavy"},
+    {wxFONTWEIGHT_EXTRAHEAVY, "extraheavy"},
+    {wxFONTWEIGHT_NORMAL,     "normal"},
+    {-1,                      ""}
 };
 
 
@@ -202,42 +227,27 @@ void FontImporter::WriteParametersFont(wxTextFile &file)
 }
 
 
-char *FontImporter::FontWeightToChar(const wxFont &font)
+const char *FontImporter::FontWeightToChar(const wxFont &font)
 {
-    char *result = "invalid";
-
-    switch(font.GetWeight())
-    {
-    case wxFONTWEIGHT_THIN:         result = "thin";        break;
-    case wxFONTWEIGHT_EXTRALIGHT:   result = "extralight";  break;
-    case wxFONTWEIGHT_LIGHT:        result = "light";       break;
-    case wxFONTWEIGHT_MEDIUM:       result = "medium";      break;
-    case wxFONTWEIGHT_SEMIBOLD:     result = "semibold";    break;
-    case wxFONTWEIGHT_BOLD:         result = "bold";        break;
-    case wxFONTWEIGHT_EXTRABOLD:    result = "extrabold";   break;
-    case wxFONTWEIGHT_HEAVY:        result = "heavy";       break;
-    case wxFONTWEIGHT_EXTRAHEAVY:   result = "extraheavy";  break;
-    case wxFONTWEIGHT_NORMAL:       result = "normal";      break;
-    case wxFONTWEIGHT_INVALID:                              break;
-    }
-
-    return result;
+    return StructConversionENUM::FindText(&weights[0], font.GetWeight());
 }
 
 
-char *FontImporter::FontStyleToChar(const wxFont &font)
+wxFontWeight FontImporter::FontWeightToENUM(const char *weight)
 {
-    char *result = "invalid";
+    return static_cast<wxFontWeight>(StructConversionENUM::FindENUM(&weights[0], weight));
+}
 
-    switch(font.GetStyle())
-    {
-    case wxFONTSTYLE_NORMAL:    result = "normal";  break;
-    case wxFONTSTYLE_ITALIC:    result = "italic";  break;
-    case wxFONTSTYLE_SLANT:     result = "slant";   break;
-    case wxFONTSTYLE_MAX:                           break;
-    }
 
-    return result;
+const char *FontImporter::FontStyleToChar(const wxFont &font)
+{
+    return StructConversionENUM::FindText(&styles[0], font.GetStyle());
+}
+
+
+wxFontStyle FontImporter::FontStyleToENUM(const char *style)
+{
+    return static_cast<wxFontStyle>(StructConversionENUM::FindENUM(&styles[0], style));
 }
 
 

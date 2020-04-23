@@ -10,13 +10,14 @@ class FontImporter
 public:
     static void Import(BitmapFont &font, wxTextFile &file, const wxString &nameFont);
 
-    static char *FontWeightToChar(const wxFont &font);
-    static char *FontStyleToChar(const wxFont &font);
+    static const char *FontWeightToChar(const wxFont &font);
+    static const char *FontStyleToChar(const wxFont &font);
     static const char *FontFamilyToChar(const wxFont &font);
 
-    static wxFontFamily FontFamilyToENUM(const char *family);
+    static wxFontWeight FontWeightToENUM(const char *weight);
     static wxFontStyle FontStyleToENUM(const char *style);
-
+    static wxFontFamily FontFamilyToENUM(const char *family);
+    
 private:
 
     static void CreateSymbols(BitmapFont &font);

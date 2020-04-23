@@ -29,9 +29,9 @@ bool ImportFromXMLFileDialog::Execute()
                 long pointSize = 0;
                 common->GetAttribute("PointSize").ToLong(&pointSize);
 
-                //wxFontFamily fontFamily = FontImporter::FontFamilyToENUM(common->GetAttribute("FontFamily"));
+                wxFontFamily fontFamily = FontImporter::FontFamilyToENUM(common->GetAttribute("FontFamily"));
 
-                //wxFontStyle fontStyle = FontImporter::FontStyleToENUM(common->GetAttribute("FontStyle"));
+                wxFontStyle fontStyle = FontImporter::FontStyleToENUM(common->GetAttribute("FontStyle"));
             }
         }
     }
