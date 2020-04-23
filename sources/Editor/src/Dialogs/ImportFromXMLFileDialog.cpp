@@ -24,7 +24,7 @@ bool ImportFromXMLFileDialog::Execute()
 
             if(common)
             {
-                //wxString name = common->GetAttribute("Name");
+                wxString faceName = common->GetAttribute("FaceName");
             }
         }
     }

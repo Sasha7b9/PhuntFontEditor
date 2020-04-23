@@ -10,7 +10,7 @@ class FontImporter
 public:
     static void Import(BitmapFont &font, wxTextFile &file, const wxString &nameFont);
 
-    static char *NameWidth(wxFontWeight width);
+    static char *FontWeight(const wxFont &font);
 
     static char *FontStyle(const wxFont &font);
 

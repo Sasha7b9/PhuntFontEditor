@@ -165,9 +165,9 @@ void FontImporter::WriteParametersFont(wxTextFile &file)
     SettingsFont set = ImportSystemFontDialog::GetSettingsFont();
 
     ADD_LINE("/*");
-    ADD_FLINE_1("    Name - %s",        set.font.GetFaceName());
-    ADD_FLINE_1("    Size - %d",        set.font.GetPointSize());
-    ADD_FLINE_1("    Width - %s",       NameWidth(set.font.GetWeight()));
+    ADD_FLINE_1("    FaceName - %s",    set.font.GetFaceName());
+    ADD_FLINE_1("    PointSize - %d",   set.font.GetPointSize());
+    ADD_FLINE_1("    FontWeight - %s",  FontWeight(set.font));
     ADD_FLINE_1("    Style - %s",       FontStyle(set.font));
     ADD_FLINE_1("    Family - %s",      FontFamily(set.font));
     ADD_FLINE_1("    Cell width - %d",  set.width);
@@ -178,11 +178,11 @@ void FontImporter::WriteParametersFont(wxTextFile &file)
 }
 
 
-char *FontImporter::NameWidth(wxFontWeight width)
+char *FontImporter::FontWeight(const wxFont &font)
 {
     char *result = "invalid";
 
-    switch(width)
+    switch(font.GetWeight())
     {
     case wxFONTWEIGHT_THIN:         result = "thin";        break;
     case wxFONTWEIGHT_EXTRALIGHT:   result = "extralight";  break;
