@@ -58,16 +58,6 @@ static const StructConversionENUM weights[] =
 };
 
 
-//#define TRACE(num)                                          \
-//if(gI == 0x21)                                              \
-//{                                                           \
-//    std::cout << "Point " <<  num <<  std::endl;            \
-//    std::cout << "width = " << GetWidth() << std::endl;     \
-//    std::cout << "height = " << GetHeight() << std::endl;   \
-//    Log();                                                  \
-//}
-
-
 // Структура символа для импортёра
 class SymbolImp
 {
@@ -76,51 +66,66 @@ public:
     SymbolImp(BitmapSymbol *s) : symbol(s)
     {
         CreateBits();
-//        TRACE(1);
         DeleteFirstEmptyBits();
-//        TRACE(2);
         DeleteLastEmptyBits();
-//        TRACE(3);
         DeleteBottomEmptyBits();
-//        TRACE(4);
     };
+
     // Возвращает размер соответствующего символа BitmapSymbol
     int GetSize() const;
+
     // Возвращает в vec последовательность байт, соответсвующую символу
     void PrepareBytes(std::vector<uint8> &vec);
+
 private:
+
     // Обрабатывемый символ
     BitmapSymbol *symbol;
+
     // Функция заполняем массив bits. При этом удаляются пустые начальные биты строк и пустые конечные биты строк
     void CreateBits();
+
     // Здесь хранятся биты символа
     std::vector<std::vector<uint8>> bits;
+
     // Удалить первые "пустые" биты
     void DeleteFirstEmptyBits();
+
     // Удалить последние "пустые" биты
     void DeleteLastEmptyBits();
+
     // Удалить нижние "пустые" биты
     void DeleteBottomEmptyBits();
+
     // Найти позицию первого ненулевого бита в символе
     int FindPositionFirstBit() const;
+
     // Найти позицию последнего ненулевого бита в символе
     int FindPositionLastBit() const;
+
     // Возвращает высоту символа
     int GetHeight() const;
+
     // Возвращает номер первой непустой строки
     int GetFirstRow() const;
+
     // Возвращает ширину символа
     int GetWidth() const;
+
     // Возвращает число бит в строке
     int BitsInRow() const;
+
     // Возвращает число байт на строку
     int BytesInRow() const;
     
     void Log() const;
+
     // Возвращает true, если все биты раны 0
     bool Empty() const;
+
     // Возвращает сумму элементов вектора
     int SumRow(const std::vector<uint8> &vec) const;
+
     // Добавить в vec байты очередной строки
     void PrepareRow(const std::vector<uint8> &row, std::vector<uint8> &vec);
 };

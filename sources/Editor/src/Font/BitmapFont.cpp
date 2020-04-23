@@ -60,6 +60,31 @@ void BitmapSymbol::Build(const wxFont &font, uint8 number, int w, int h, int off
 }
 
 
+void BitmapSymbol::TogglePixel(int row, int col)
+{
+    wxMemoryDC dc;
+    dc.SelectObject(*bmpSymbol);
+
+    wxColour color;
+    dc.GetPixel(col, row, &color);
+
+    if(color.Red())
+    {
+        dc.SetPen(wxPen(*wxWHITE_PEN));
+        dc.SetBrush(wxBrush(*wxWHITE_BRUSH));
+    }
+    else
+    {
+        dc.SetPen(wxPen(*wxBLACK_PEN));
+        dc.SetBrush(wxBrush(*wxBLACK_BRUSH));
+    }
+
+    dc.DrawPoint(row, col);
+
+    dc.SelectObject(wxNullBitmap);
+}
+
+
 void BitmapSymbol::Clear()
 {
     delete bmpSymbol;
@@ -156,6 +181,35 @@ void BitmapFont::Resize()
             symbols[row][col].Draw(dc, x0, y0);
         }
     }
+}
+
+
+void BitmapFont::DrawSymbol(BitmapSymbol *symbol)
+{
+    symbol->Resize(scale);
+    
+    wxMemoryDC dc;
+    dc.SelectObject(*bitmap);
+
+    wxPoint coord = GetCoordSymbol(symbol);
+    symbol->Draw(dc, coord.x * size.x * scale, coord.y * size.y * scale);
+}
+
+
+wxPoint BitmapFont::GetCoordSymbol(BitmapSymbol *symbol)
+{
+    for(int row = 0; row < 16; row++)
+    {
+        for(int col = 0; col < 16; col++)
+        {
+            if(&symbols[row][col] == symbol)
+            {
+                return { col, row };
+            }
+        }
+    }
+
+    return { 0, 0 };
 }
 
 

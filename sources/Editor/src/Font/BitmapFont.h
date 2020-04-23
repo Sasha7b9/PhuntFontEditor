@@ -36,7 +36,7 @@ public:
 
     static BitmapSymbol *Null();
 
-    void TogglePixel(int x, int y);
+    void TogglePixel(int row, int col);
 
 private:
     
@@ -71,6 +71,8 @@ struct BitmapFont
     void Resize();
 
     void Draw(wxPaintDC &dc);
+
+    void DrawSymbol(BitmapSymbol *symbol);
     
     // Очистить символы, не входящие в основной набор
     void ClearBadSymbols();
@@ -88,6 +90,8 @@ struct BitmapFont
     BitmapSymbol *GetSymbolUnderMouse(int x, int y);
 
     void GetSymbolXY(const BitmapSymbol *symbol, int *x, int *y);
+
+    wxPoint GetCoordSymbol(BitmapSymbol *symbol);
 
 private:
 

@@ -93,14 +93,21 @@ void Canvas::OnMouseLeftDown(wxMouseEvent &)
 {
     if(mode == Mode::Edit)
     {
-//        BitmapSymbol *symbol = font.GetSymbolUnderMouse(mouseX, mouseY);
-//        wxRect rect = font.GetRectForSymbol(symbol);
+        BitmapSymbol *symbol = font.GetSymbolUnderMouse(mouseX, mouseY);
+        wxRect rect = font.GetRectForSymbol(symbol);
+        int dx = mouseX - rect.x;
+        int dy = mouseY - rect.y;
+        int row = dy / font.scale;
+        int col = dx / font.scale;
+        symbol->TogglePixel(row, col);
+        font.DrawSymbol(symbol);
     }
     else
     {
         font.ToggleStateSymbol(mouseX, mouseY);
-        Refresh();
     }
+
+    Refresh();
 }
 
 
