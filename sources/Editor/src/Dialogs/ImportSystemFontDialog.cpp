@@ -99,16 +99,6 @@ void ImportSystemFontDialog::OnButtonApply(wxCommandEvent &)
 }
 
 
-void ImportSystemFontDialog::SetSettingsFont(SettingsFont set)
-{
-    settings = set;
-
-    TuneTextFont();
-
-    TheCanvas->Rebuild();
-}
-
-
 void ImportSystemFontDialog::OnButtonClose(wxCommandEvent &)
 {
     Destroy();
@@ -118,6 +108,11 @@ void ImportSystemFontDialog::OnButtonClose(wxCommandEvent &)
 SettingsFont ImportSystemFontDialog::GetSettingsFont()
 {
     return settings;
+}
+
+void ImportSystemFontDialog::SetSettingsFont(SettingsFont set)
+{
+    settings = set;
 }
 
 

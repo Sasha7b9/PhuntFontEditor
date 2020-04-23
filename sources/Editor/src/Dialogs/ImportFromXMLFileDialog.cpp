@@ -1,4 +1,5 @@
 #include "defines.h"
+#include "Canvas.h"
 #include "XML.h"
 #include "Dialogs/ImportFromXMLFileDialog.h"
 #include "Font/FontImporter.h"
@@ -45,6 +46,8 @@ bool ImportFromXMLFileDialog::Execute()
                 cell->GetAttribute("OffsetY").ToLong(reinterpret_cast<long *>(&settings.offsetY));
 
                 ImportSystemFontDialog::SetSettingsFont(settings);
+
+                TheCanvas->Rebuild();
             }
         }
     }
