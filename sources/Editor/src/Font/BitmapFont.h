@@ -36,7 +36,7 @@ public:
 
     static BitmapSymbol *Null();
 
-    void TogglePixel(int row, int col);
+    void TogglePixel(int col, int row);
 
 private:
     

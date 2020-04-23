@@ -60,7 +60,7 @@ void BitmapSymbol::Build(const wxFont &font, uint8 number, int w, int h, int off
 }
 
 
-void BitmapSymbol::TogglePixel(int row, int col)
+void BitmapSymbol::TogglePixel(int col, int row)
 {
     wxMemoryDC dc;
     dc.SelectObject(*bmpSymbol);
@@ -70,16 +70,16 @@ void BitmapSymbol::TogglePixel(int row, int col)
 
     if(color.Red())
     {
-        dc.SetPen(wxPen(*wxWHITE_PEN));
-        dc.SetBrush(wxBrush(*wxWHITE_BRUSH));
-    }
-    else
-    {
         dc.SetPen(wxPen(*wxBLACK_PEN));
         dc.SetBrush(wxBrush(*wxBLACK_BRUSH));
     }
+    else
+    {
+        dc.SetPen(wxPen(*wxWHITE_PEN));
+        dc.SetBrush(wxBrush(*wxWHITE_BRUSH));
+    }
 
-    dc.DrawPoint(row, col);
+    dc.DrawPoint(col, row);
 
     dc.SelectObject(wxNullBitmap);
 }

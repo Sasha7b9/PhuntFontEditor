@@ -99,7 +99,7 @@ void Canvas::OnMouseLeftDown(wxMouseEvent &)
         int dy = mouseY - rect.y;
         int row = dy / font.scale;
         int col = dx / font.scale;
-        symbol->TogglePixel(row, col);
+        symbol->TogglePixel(col, row);
         font.DrawSymbol(symbol);
     }
     else
