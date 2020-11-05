@@ -21,7 +21,7 @@ public:
 
     static SettingsFont GetSettingsFont();
 
-    static void SetSettingsFont(SettingsFont settings);
+    static void SetSettingsFont(const SettingsFont &settings);
    
 protected:
 

@@ -91,7 +91,7 @@ struct BitmapFont
 
     void GetSymbolXY(const BitmapSymbol *symbol, int *x, int *y);
 
-    wxPoint GetCoordSymbol(BitmapSymbol *symbol);
+    wxPoint GetCoordSymbol(const BitmapSymbol *symbol);
 
 private:
 

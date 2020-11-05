@@ -110,7 +110,7 @@ SettingsFont ImportSystemFontDialog::GetSettingsFont()
     return settings;
 }
 
-void ImportSystemFontDialog::SetSettingsFont(SettingsFont set)
+void ImportSystemFontDialog::SetSettingsFont(const SettingsFont &set)
 {
     settings = set;
 }

@@ -196,7 +196,7 @@ void BitmapFont::DrawSymbol(BitmapSymbol *symbol)
 }
 
 
-wxPoint BitmapFont::GetCoordSymbol(BitmapSymbol *symbol)
+wxPoint BitmapFont::GetCoordSymbol(const BitmapSymbol *symbol)
 {
     for(int row = 0; row < 16; row++)
     {
