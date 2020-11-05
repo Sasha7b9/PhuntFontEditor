@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.15)
 project (Editor)
 
 include_directories(src
-                    ../../../ThirdParty/wxWidgets/include
-                    ../../../ThirdParty/wxWidgets/generated/lib/vc_dll/mswud)
+                    ../ThirdParty/wxWidgets/include
+                    ../ThirdParty/wxWidgets/generated/lib/vc_dll/mswud)
                     
 add_definitions(-DWXUSINGDLL)
 
@@ -41,9 +41,9 @@ file(GLOB SOURCES src/*
 
 add_executable(Editor ${SOURCES})
 
-target_link_libraries(Editor ../../../../../ThirdParty/wxWidgets/generated/lib/vc_dll/wxbase31ud)
-target_link_libraries(Editor ../../../../../ThirdParty/wxWidgets/generated/lib/vc_dll/wxmsw31ud_core)
-target_link_libraries(Editor ../../../../../ThirdParty/wxWidgets/generated/lib/vc_dll/wxbase31ud_xml)
+target_link_libraries(Editor ../../../ThirdParty/wxWidgets/generated/lib/vc_dll/wxbase31ud)
+target_link_libraries(Editor ../../../ThirdParty/wxWidgets/generated/lib/vc_dll/wxmsw31ud_core)
+target_link_libraries(Editor ../../../ThirdParty/wxWidgets/generated/lib/vc_dll/wxbase31ud_xml)
 
 target_link_libraries(Editor WinMM.lib)
 target_link_libraries(Editor version.lib)
