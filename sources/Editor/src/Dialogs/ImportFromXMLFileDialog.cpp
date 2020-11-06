@@ -99,11 +99,11 @@ bool ImportFromXMLFileDialog::Execute()
 
                                         if (std::strcmp(pixel, "0") == 0)
                                         {
-                                            bmpSymbol->ClearPixel(r, c);
+                                            bmpSymbol->ClearPixel(c, r);
                                         }
                                         else
                                         {
-                                            bmpSymbol->SetPixel(r, c);
+                                            bmpSymbol->SetPixel(c, r);
                                         }
                                     }
                                 }
@@ -112,7 +112,8 @@ bool ImportFromXMLFileDialog::Execute()
                     }
                 }
 
-                //TheCanvas->Rebuild();
+                TheCanvas->ZoomUp();
+                TheCanvas->ZoomDown();
             }
         }
     }

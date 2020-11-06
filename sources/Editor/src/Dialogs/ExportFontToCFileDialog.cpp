@@ -154,7 +154,7 @@ void ExportFontToCFileDialog::WriteInfoSymbolXML(uint8 code, wxXmlNode *node)
 
             for (int c = 0; c < set.width; c++)
             {
-                row->AddAttribute(wxString::Format(wxT("_%02d"), c), symbol->GetPixel(r, c) ? "0" : "1");
+                row->AddAttribute(wxString::Format(wxT("_%02d"), c), symbol->GetPixel(c, r) ? "0" : "1");
             }
         }
     }
