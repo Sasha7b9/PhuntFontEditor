@@ -43,6 +43,8 @@ private:
 
     void OnMouseLeftDown(wxMouseEvent &);
 
+    void OnMouseLeftUp(wxMouseEvent &);
+
     void OnMouseRightDown(wxMouseEvent &);
 
     void OnMouseRightUp(wxMouseEvent &);

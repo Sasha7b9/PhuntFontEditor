@@ -20,11 +20,14 @@ Canvas::Canvas(wxWindow *parent) : wxPanel(parent, wxID_ANY)
 
     SetDoubleBuffered(true);
 
-    Bind(wxEVT_PAINT,        &Canvas::OnPaint,         this);
-    Bind(wxEVT_MOTION,       &Canvas::OnMouseMove,     this);
-    Bind(wxEVT_LEFT_DOWN,    &Canvas::OnMouseLeftDown, this);
-    Bind(wxEVT_LEFT_DCLICK,  &Canvas::OnMouseLeftDown, this);
-    Bind(wxEVT_LEAVE_WINDOW, &Canvas::OnMouseLeave,    this);
+    Bind(wxEVT_PAINT,        &Canvas::OnPaint,          this);
+    Bind(wxEVT_MOTION,       &Canvas::OnMouseMove,      this);
+    Bind(wxEVT_LEFT_DOWN,    &Canvas::OnMouseLeftDown,  this);
+    Bind(wxEVT_LEFT_DCLICK,  &Canvas::OnMouseLeftDown,  this);
+    Bind(wxEVT_LEFT_UP,      &Canvas::OnMouseLeftUp,    this);
+    Bind(wxEVT_RIGHT_DOWN,   &Canvas::OnMouseRightDown, this);
+    Bind(wxEVT_RIGHT_UP,     &Canvas::OnMouseRightUp,   this);
+    Bind(wxEVT_LEAVE_WINDOW, &Canvas::OnMouseLeave,     this);
 
     TuneScrollBar();
 
@@ -87,15 +90,38 @@ void Canvas::DrawCursor(wxPaintDC &dc)
     }
 }
 
+static bool leftIsDown = false;
+static bool rightIsDown = false;
+
 
 void Canvas::OnMouseRightDown(wxMouseEvent &)
 {
+    rightIsDown = true;
 
+    if (mode == Mode::Edit)
+    {
+        BitmapSymbol *symbol = font.GetSymbolUnderMouse(mouseX, mouseY);
+        wxRect rect = font.GetRectForSymbol(symbol);
+        int dx = mouseX - rect.x;
+        int dy = mouseY - rect.y;
+        int row = dy / font.scale;
+        int col = dx / font.scale;
+        symbol->ClearPixel(col, row);
+        font.DrawSymbol(symbol);
+    }
+}
+
+
+void Canvas::OnMouseRightUp(wxMouseEvent &)
+{
+    rightIsDown = false;
 }
 
 
 void Canvas::OnMouseLeftDown(wxMouseEvent &)
 {
+    leftIsDown = true;
+
     if(mode == Mode::Edit)
     {
         BitmapSymbol *symbol = font.GetSymbolUnderMouse(mouseX, mouseY);
@@ -104,7 +130,7 @@ void Canvas::OnMouseLeftDown(wxMouseEvent &)
         int dy = mouseY - rect.y;
         int row = dy / font.scale;
         int col = dx / font.scale;
-        symbol->TogglePixel(col, row);
+        symbol->SetPixel(col, row);
         font.DrawSymbol(symbol);
     }
     else
@@ -116,9 +142,41 @@ void Canvas::OnMouseLeftDown(wxMouseEvent &)
 }
 
 
+void Canvas::OnMouseLeftUp(wxMouseEvent &)
+{
+    leftIsDown = false;
+}
+
+
 void Canvas::OnMouseMove(wxMouseEvent &event) //-V2009
 {
     event.GetPosition(&mouseX, &mouseY);
+
+    if (mode == Mode::Edit)
+    {
+        if (leftIsDown)
+        {
+            BitmapSymbol *symbol = font.GetSymbolUnderMouse(mouseX, mouseY);
+            wxRect rect = font.GetRectForSymbol(symbol);
+            int dx = mouseX - rect.x;
+            int dy = mouseY - rect.y;
+            int row = dy / font.scale;
+            int col = dx / font.scale;
+            symbol->SetPixel(col, row);
+            font.DrawSymbol(symbol);
+        }
+        else if (rightIsDown)
+        {
+            BitmapSymbol *symbol = font.GetSymbolUnderMouse(mouseX, mouseY);
+            wxRect rect = font.GetRectForSymbol(symbol);
+            int dx = mouseX - rect.x;
+            int dy = mouseY - rect.y;
+            int row = dy / font.scale;
+            int col = dx / font.scale;
+            symbol->ClearPixel(col, row);
+            font.DrawSymbol(symbol);
+        }
+    }
 
     Refresh();
 }
@@ -204,12 +262,6 @@ void Canvas::TuneScrollBar()
     sw->SetScrollbars(1, 1, size.x, size.y);
 
     SetPosition({ 0, 0 });
-}
-
-
-void Canvas::OnMouseRightUp(wxMouseEvent &)
-{
-
 }
 
 
