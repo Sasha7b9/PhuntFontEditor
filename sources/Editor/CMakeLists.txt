@@ -27,20 +27,19 @@ set_source_files_properties(src/_files/Font.cpp
     PROPERTIES HEADER_FILE_ONLY TRUE)
 
 
-source_group(src               REGULAR_EXPRESSION src/*)
-source_group(_files            REGULAR_EXPRESSION src/_files/*)
-source_group(Dialogs           REGULAR_EXPRESSION src/Dialogs/*)
-source_group(Dialogs\\Controls REGULAR_EXPRESSION src/Dialogs/Controls/*)
-source_group(Font              REGULAR_EXPRESSION src/Font/*)
+file(GLOB SRC              src/*.h src/*.cpp)
+file(GLOB _FILES           src/_files/*)
+file(GLOB DIALOGS          src/Dialogs/*.h src/Dialogs/*.cpp)
+file(GLOB DIALOGS_CONTROLS src/Dialogs/Controls/*)
+file(GLOB FONT             src/Font/*)
 
-file(GLOB SOURCES src/*
-                  src/_files/*
-                  src/Dialogs/*
-                  src/Dialogs/Controls/*
-                  src/Font/*
-                  )
+source_group(src               FILES ${SRC})
+source_group(_files            FILES ${_FILES})
+source_group(Dialogs           FILES ${DIALOGS})
+source_group(Dialogs\\Controls FILES ${DIALOGS_CONTROLS})
+source_group(Font              FILES ${FONT})
 
-add_executable(Editor ${SOURCES})
+add_executable(Editor ${SRC} ${_FILES} ${DIALOGS} ${DIALOGS_CONTROLS} ${FONT})
 
 target_link_libraries(Editor ../../../ThirdParty/wxWidgets/generated/lib/vc_dll/wxbase31ud)
 target_link_libraries(Editor ../../../ThirdParty/wxWidgets/generated/lib/vc_dll/wxmsw31ud_core)

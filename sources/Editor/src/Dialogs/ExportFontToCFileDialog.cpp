@@ -142,7 +142,8 @@ void ExportFontToCFileDialog::WriteInfoSymbolXML(uint8 code, wxXmlNode *node)
 
     if (symbol->IsEdited())
     {
-
+        wxXmlNode *rows = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, _T("Rows"));
+        nodeSymbol->AddChild(rows);
     }
 }
 
