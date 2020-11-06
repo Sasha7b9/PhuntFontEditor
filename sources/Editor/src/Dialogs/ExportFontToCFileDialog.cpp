@@ -137,6 +137,13 @@ void ExportFontToCFileDialog::WriteInfoSymbolXML(uint8 code, wxXmlNode *node)
     node->AddChild(nodeSymbol);
 
     nodeSymbol->AddAttribute(_T("Enabled"), symbol->IsEnabled() ? "1" : "0");
+
+    nodeSymbol->AddAttribute(_T("Edited"), symbol->IsEdited() ? "1" : "0");
+
+    if (symbol->IsEdited())
+    {
+
+    }
 }
 
 

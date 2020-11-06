@@ -34,6 +34,8 @@ public:
 
     bool IsEnabled() { return enabled; }
 
+    bool IsEdited() { return edited; }
+
     static BitmapSymbol *Null();
 
     void TogglePixel(int col, int row);
@@ -51,6 +53,9 @@ private:
     
     // Если true, символ будет включён в итоговый шрифт
     bool enabled = true;
+
+    // Если true, то символ отредактировал - в XML-файл нужно сохранять все пиксели символа - символ отредактирован и не соотвествует системному
+    bool edited = false;
 
     static wxString UTFfrom1251(uint8 code);
 };

@@ -79,6 +79,8 @@ void BitmapSymbol::TogglePixel(int col, int row)
 
     dc.DrawPoint(col, row);
     dc.SelectObject(wxNullBitmap);
+
+    edited = true;
 }
 
 
