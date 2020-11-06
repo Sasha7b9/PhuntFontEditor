@@ -62,25 +62,14 @@ void BitmapSymbol::BuildFromFont(const wxFont &font, uint8 number, int w, int h,
 
 void BitmapSymbol::TogglePixel(int col, int row)
 {
-    wxMemoryDC dc;
-
     if (GetPixel(col, row))
     {
-        dc.SelectObject(*bmpSymbol);
-        dc.SetPen(wxPen(*wxBLACK_PEN));
-        dc.SetBrush(wxBrush(*wxBLACK_BRUSH));
+        SetPixel(col, row);
     }
     else
     {
-        dc.SelectObject(*bmpSymbol);
-        dc.SetPen(wxPen(*wxWHITE_PEN));
-        dc.SetBrush(wxBrush(*wxWHITE_BRUSH));
+        ClearPixel(col, row);
     }
-
-    dc.DrawPoint(col, row);
-    dc.SelectObject(wxNullBitmap);
-
-    edited = true;
 }
 
 

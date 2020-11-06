@@ -88,6 +88,12 @@ void Canvas::DrawCursor(wxPaintDC &dc)
 }
 
 
+void Canvas::OnMouseRightDown(wxMouseEvent &)
+{
+
+}
+
+
 void Canvas::OnMouseLeftDown(wxMouseEvent &)
 {
     if(mode == Mode::Edit)
@@ -198,12 +204,6 @@ void Canvas::TuneScrollBar()
     sw->SetScrollbars(1, 1, size.x, size.y);
 
     SetPosition({ 0, 0 });
-}
-
-
-void Canvas::OnMouseRightDown(wxMouseEvent &)
-{
-
 }
 
 
