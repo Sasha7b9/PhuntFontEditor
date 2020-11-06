@@ -27,9 +27,11 @@ set_source_files_properties(src/_files/Font.cpp
     PROPERTIES HEADER_FILE_ONLY TRUE)
 
 
-file(GLOB SRC              src/*.h src/*.cpp)
+file(GLOB SRC              src/*.h
+                           src/*.cpp)
 file(GLOB _FILES           src/_files/*)
-file(GLOB DIALOGS          src/Dialogs/*.h src/Dialogs/*.cpp)
+file(GLOB DIALOGS          src/Dialogs/*.h
+                           src/Dialogs/*.cpp)
 file(GLOB DIALOGS_CONTROLS src/Dialogs/Controls/*)
 file(GLOB FONT             src/Font/*)
 

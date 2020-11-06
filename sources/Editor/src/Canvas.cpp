@@ -7,9 +7,8 @@
 
 
 Canvas *TheCanvas = nullptr;
-
-
 static BitmapFont font;
+
 
 static wxCoord mouseX;
 static wxCoord mouseY;

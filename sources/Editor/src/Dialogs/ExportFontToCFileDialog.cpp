@@ -144,6 +144,19 @@ void ExportFontToCFileDialog::WriteInfoSymbolXML(uint8 code, wxXmlNode *node)
     {
         wxXmlNode *rows = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, _T("Rows"));
         nodeSymbol->AddChild(rows);
+
+        SettingsFont set = ImportSystemFontDialog::GetSettingsFont();
+
+        for (int r = 0; r < set.height; r++)
+        {
+            wxXmlNode *row = new wxXmlNode(nullptr, wxXML_ELEMENT_NODE, wxString::Format(wxT("row%02d"), r));
+            rows->AddChild(row);
+
+            for (int c = 0; c < set.width; c++)
+            {
+                row->AddAttribute(wxString::Format(wxT("_%02d"), c), symbol->GetPixel(r, c) ? "0" : "1");
+            }
+        }
     }
 }
 
