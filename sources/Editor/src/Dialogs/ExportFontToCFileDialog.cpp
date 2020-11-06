@@ -37,6 +37,7 @@ ExportFontToCFileDialog::ExportFontToCFileDialog() : wxDialog(nullptr, wxID_ANY,
     boxButtons->Add(btnCancel, 1, wxALIGN_CENTER);
 
     tcNameFont = new TextControl(this, nameFont, wxT("ָלÿ רנטפעא"));
+    tcNameFont->SetMinSize({ 200, 20 });
 
     wxBoxSizer *vBox = new wxBoxSizer(wxVERTICAL);
     

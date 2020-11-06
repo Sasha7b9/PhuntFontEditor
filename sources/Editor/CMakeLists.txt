@@ -20,6 +20,7 @@ add_compile_options(/wd4820) # 'bytes' bytes padding added after construct 'memb
 add_compile_options(/wd5026) # move constructor was implicitly defined as deleted
 add_compile_options(/wd5027) # move assignment operator was implicitly defined as deleted
 add_compile_options(/wd5045) # Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
+add_compile_options(/wd26812)
 
 
 set_source_files_properties(src/_files/Font.cpp

@@ -38,6 +38,9 @@ public:
 
     void TogglePixel(int col, int row);
 
+    // Возвращает true, если даный пиксель закрашен
+    bool GetPixel(int col, int row);
+
 private:
     
     // Здесь хранится исходное изображение в масштабе 1:1

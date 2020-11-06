@@ -111,6 +111,14 @@ void Canvas::OnMouseLeftDown(wxMouseEvent &)
 }
 
 
+void Canvas::OnMouseMove(wxMouseEvent &event) //-V2009
+{
+    event.GetPosition(&mouseX, &mouseY);
+
+    Refresh();
+}
+
+
 void Canvas::HighlightPixel(wxPaintDC &dc)
 {
     dc.SetPen(*wxBLACK_PEN);
@@ -135,14 +143,6 @@ void Canvas::HighlightSymbol(wxPaintDC &dc)
     dc.DrawLine(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
     dc.DrawLine(rect.x, rect.y + rect.height, rect.x + rect.width, rect.y);
     dc.DrawRectangle(rect);
-}
-
-
-void Canvas::OnMouseMove(wxMouseEvent &event) //-V2009
-{
-    event.GetPosition(&mouseX, &mouseY);
-
-    Refresh();
 }
 
 
