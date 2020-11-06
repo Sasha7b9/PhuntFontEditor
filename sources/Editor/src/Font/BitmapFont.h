@@ -43,6 +43,10 @@ public:
     // Возвращает true, если даный пиксель закрашен
     bool GetPixel(int col, int row);
 
+    void SetPixel(int col, int row);
+
+    void ClearPixel(int col, int row);
+
 private:
     
     // Здесь хранится исходное изображение в масштабе 1:1

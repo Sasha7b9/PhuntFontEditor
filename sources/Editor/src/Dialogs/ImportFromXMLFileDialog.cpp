@@ -65,6 +65,54 @@ bool ImportFromXMLFileDialog::Execute()
                 }
 
                 TheCanvas->Rebuild();
+
+                for (int i = 0; i < 256; i++)
+                {
+                    char buffer[30];
+                    std::sprintf(buffer, "Symbol%d", i);
+
+                    wxXmlNode *symbol = XML::FindChildren(symbols, buffer);
+
+                    wxString edited = symbol->GetAttribute("Edited");
+
+                    if (std::strcmp(edited.c_str(), "1") == 0)
+                    {
+                        wxXmlNode *rows = XML::FindChildren(symbol, "Rows");
+
+                        BitmapSymbol *bmpSymbol = TheCanvas->GetFont()->GetSymbol((uint8)i);
+
+                        if (rows)
+                        {
+                            for (int r = 0; r < settings.height; r++)
+                            {
+                                std::sprintf(buffer, "row%02d", r);
+
+                                wxXmlNode *row = XML::FindChildren(rows, buffer);
+
+                                if (row)
+                                {
+                                    for (int c = 0; c < settings.width; c++)
+                                    {
+                                        std::sprintf(buffer, "_%02d", c);
+
+                                        wxString pixel = row->GetAttribute(buffer);
+
+                                        if (std::strcmp(pixel, "0") == 0)
+                                        {
+                                            bmpSymbol->ClearPixel(r, c);
+                                        }
+                                        else
+                                        {
+                                            bmpSymbol->SetPixel(r, c);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                //TheCanvas->Rebuild();
             }
         }
     }

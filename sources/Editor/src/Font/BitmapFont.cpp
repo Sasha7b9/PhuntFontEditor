@@ -84,6 +84,35 @@ void BitmapSymbol::TogglePixel(int col, int row)
 }
 
 
+void BitmapSymbol::SetPixel(int col, int row)
+{
+    wxMemoryDC dc;
+
+    dc.SelectObject(*bmpSymbol);
+    dc.SetPen(wxPen(*wxBLACK_PEN));
+    dc.SetBrush(wxBrush(*wxBLACK_BRUSH));
+    dc.DrawPoint(col, row);
+    dc.SelectObject(wxNullBitmap);
+
+    edited = true;
+}
+
+
+void BitmapSymbol::ClearPixel(int col, int row)
+{
+    wxMemoryDC dc;
+
+    dc.SelectObject(*bmpSymbol);
+    dc.SetPen(wxPen(*wxWHITE_PEN));
+    dc.SetBrush(wxBrush(*wxWHITE_BRUSH));
+    dc.DrawPoint(col, row);
+    dc.SelectObject(wxNullBitmap);
+
+    edited = true;
+
+}
+
+
 bool BitmapSymbol::GetPixel(int col, int row)
 {
     wxMemoryDC dc;
