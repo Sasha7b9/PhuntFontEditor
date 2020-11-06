@@ -94,20 +94,29 @@ static bool leftIsDown = false;
 static bool rightIsDown = false;
 
 
+static void DrawPixel(bool fill)
+{
+    BitmapSymbol *symbol = font.GetSymbolUnderMouse(mouseX, mouseY);
+    wxRect rect = font.GetRectForSymbol(symbol);
+    int dx = mouseX - rect.x;
+    int dy = mouseY - rect.y;
+    int row = dy / font.scale;
+    int col = dx / font.scale;
+
+    if (fill)   { symbol->SetPixel(col, row);   }
+    else        { symbol->ClearPixel(col, row); }
+
+    font.DrawSymbol(symbol);
+}
+
+
 void Canvas::OnMouseRightDown(wxMouseEvent &)
 {
     rightIsDown = true;
 
     if (mode == Mode::Edit)
     {
-        BitmapSymbol *symbol = font.GetSymbolUnderMouse(mouseX, mouseY);
-        wxRect rect = font.GetRectForSymbol(symbol);
-        int dx = mouseX - rect.x;
-        int dy = mouseY - rect.y;
-        int row = dy / font.scale;
-        int col = dx / font.scale;
-        symbol->ClearPixel(col, row);
-        font.DrawSymbol(symbol);
+        DrawPixel(false);
     }
 }
 
@@ -124,14 +133,7 @@ void Canvas::OnMouseLeftDown(wxMouseEvent &)
 
     if(mode == Mode::Edit)
     {
-        BitmapSymbol *symbol = font.GetSymbolUnderMouse(mouseX, mouseY);
-        wxRect rect = font.GetRectForSymbol(symbol);
-        int dx = mouseX - rect.x;
-        int dy = mouseY - rect.y;
-        int row = dy / font.scale;
-        int col = dx / font.scale;
-        symbol->SetPixel(col, row);
-        font.DrawSymbol(symbol);
+        DrawPixel(true);
     }
     else
     {
@@ -156,25 +158,11 @@ void Canvas::OnMouseMove(wxMouseEvent &event) //-V2009
     {
         if (leftIsDown)
         {
-            BitmapSymbol *symbol = font.GetSymbolUnderMouse(mouseX, mouseY);
-            wxRect rect = font.GetRectForSymbol(symbol);
-            int dx = mouseX - rect.x;
-            int dy = mouseY - rect.y;
-            int row = dy / font.scale;
-            int col = dx / font.scale;
-            symbol->SetPixel(col, row);
-            font.DrawSymbol(symbol);
+            DrawPixel(true);
         }
         else if (rightIsDown)
         {
-            BitmapSymbol *symbol = font.GetSymbolUnderMouse(mouseX, mouseY);
-            wxRect rect = font.GetRectForSymbol(symbol);
-            int dx = mouseX - rect.x;
-            int dy = mouseY - rect.y;
-            int row = dy / font.scale;
-            int col = dx / font.scale;
-            symbol->ClearPixel(col, row);
-            font.DrawSymbol(symbol);
+            DrawPixel(false);
         }
     }
 
