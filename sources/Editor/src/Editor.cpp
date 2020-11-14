@@ -58,6 +58,15 @@ int main(int argc, char **argv)
 {
     setlocale(LC_ALL, "Russian");
 
+    wxFont::AddPrivateFont(wxT("GOST.ttf"));
+    wxFont::AddPrivateFont(wxT("GOST_0.ttf"));
+    wxFont::AddPrivateFont(wxT("GOST_AU.ttf"));
+    wxFont::AddPrivateFont(wxT("GOST_BU.ttf"));
+    wxFont::AddPrivateFont(wxT("GOST_type_A.ttf"));
+    wxFont::AddPrivateFont(wxT("GOST_type_A_tilt.ttf"));
+    wxFont::AddPrivateFont(wxT("GOST_type_B.ttf"));
+    wxFont::AddPrivateFont(wxT("GOST_typeB_tilt.ttf"));
+
     return wxEntry(argc, argv);
 }
 
