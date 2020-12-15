@@ -33,32 +33,32 @@ ImportSystemFontDialog::ImportSystemFontDialog(const wxString &title) : wxDialog
 #define FULL_ALIGN wxALIGN_CENTER | wxALL
 
 
-    wxButton *btnApply = new wxButton(this, ID_BUTTON_APPLY, wxT("Применить"), wxDefaultPosition, BUTTON_SIZE);
+    wxButton *btnApply = new wxButton(this, ID_BUTTON_APPLY, wxT("Применить"), wxDefaultPosition, BUTTON_SIZE); //-V2511
     Connect(ID_BUTTON_APPLY, wxEVT_BUTTON, wxCommandEventHandler(ImportSystemFontDialog::OnButtonApply));
-    wxButton *btnClose = new wxButton(this, ID_BUTTON_CLOSE, wxT("Закрыть"), wxDefaultPosition, BUTTON_SIZE);
+    wxButton *btnClose = new wxButton(this, ID_BUTTON_CLOSE, wxT("Закрыть"), wxDefaultPosition, BUTTON_SIZE); //-V2511
     Connect(ID_BUTTON_CLOSE, wxEVT_BUTTON, wxCommandEventHandler(ImportSystemFontDialog::OnButtonClose));
-    wxBoxSizer *boxButtons = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer *boxButtons = new wxBoxSizer(wxHORIZONTAL); //-V2511
     boxButtons->Add(btnApply, 1, wxALIGN_CENTER);
     boxButtons->AddSpacer(20);
     boxButtons->Add(btnClose, 1, wxALIGN_CENTER);
 
-    wxBoxSizer *vBox = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer *vBox = new wxBoxSizer(wxVERTICAL); //-V2511
 
-    wxBoxSizer *boxFont = new wxBoxSizer(wxHORIZONTAL);
-    wxButton *btnFont = new wxButton(this, ID_BUTTON_FONT, wxT("Шрифт"), wxDefaultPosition, BUTTON_SIZE);
+    wxBoxSizer *boxFont = new wxBoxSizer(wxHORIZONTAL); //-V2511
+    wxButton *btnFont = new wxButton(this, ID_BUTTON_FONT, wxT("Шрифт"), wxDefaultPosition, BUTTON_SIZE); //-V2511
     Connect(ID_BUTTON_FONT, wxEVT_BUTTON, wxCommandEventHandler(ImportSystemFontDialog::OnChoiceFont));
-    textFont = new wxStaticText(this, wxID_ANY, "");
+    textFont = new wxStaticText(this, wxID_ANY, ""); //-V2511
     boxFont->Add(btnFont, wxALIGN_LEFT, BORDER);
     boxFont->AddSpacer(SPACER);
     boxFont->Add(textFont, 0, wxALIGN_CENTER_VERTICAL, BORDER);
 
-    tcWidthCell = new TextControl(this, wxT("8"), wxT("ширина символа"));
+    tcWidthCell = new TextControl(this, wxT("8"), wxT("ширина символа")); //-V2511
 
-    tcHeightCell = new TextControl(this, wxT("8"), wxT("высота символа"));
+    tcHeightCell = new TextControl(this, wxT("8"), wxT("высота символа")); //-V2511
 
-    tcOffsetX = new TextControl(this, wxT("0"), wxT("смещение по x"));
+    tcOffsetX = new TextControl(this, wxT("0"), wxT("смещение по x")); //-V2511
 
-    tcOffsetY = new TextControl(this, wxT("0"), wxT("смещение по y"));
+    tcOffsetY = new TextControl(this, wxT("0"), wxT("смещение по y")); //-V2511
 
     vBox->Add(boxFont, 0, wxALIGN_LEFT, BORDER);
     vBox->Add(tcWidthCell, 0, FULL_ALIGN, BORDER);

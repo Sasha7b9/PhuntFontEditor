@@ -160,7 +160,7 @@ void FontImporter::CreateSymbols(BitmapFont &font)
     {
         for (int col = 0; col < 16; col++)
         {
-            symbols[i++] = new SymbolImp(&font.symbols[row][col]);
+            symbols[i++] = new SymbolImp(&font.symbols[row][col]); //-V2511
         }
     }
 }
@@ -268,11 +268,11 @@ wxFontFamily FontImporter::FontFamilyToENUM(const char *family)
 }
 
 
-const char *StructConversionENUM::FindText(const StructConversionENUM *first, int e)
+const char *StructConversionENUM::FindText(const StructConversionENUM *first, int e) //-V2506
 {
     const StructConversionENUM *str = first;
 
-    while(str->text[0] != '\0')
+    while(str->text[0] != '\0') //-V2563
     {
         if(str->ENUM == e)
         {
@@ -285,13 +285,13 @@ const char *StructConversionENUM::FindText(const StructConversionENUM *first, in
     return "invalid";
 }
 
-const int StructConversionENUM::FindENUM(const StructConversionENUM *first, const char *text)
+const int StructConversionENUM::FindENUM(const StructConversionENUM *first, const char *text) //-V2506
 {
     const StructConversionENUM *str = first;
 
-    while(str->text[0] != '\0')
+    while(str->text[0] != '\0') //-V2563
     {
-        if(std::strcmp(str->text, text) == 0)
+        if(std::strcmp(str->text, text) == 0) //-V2513
         {
             return str->ENUM;
         }
@@ -339,7 +339,7 @@ void FontImporter::CalculateOffsets(const int sizes[256], uint16 offsets[256])
 }
 
 
-int SymbolImp::GetSize() const
+int SymbolImp::GetSize() const //-V2506
 {
     if (!symbol->enabled)
     {
@@ -390,7 +390,7 @@ void SymbolImp::CreateBits()
 }
 
 
-int SymbolImp::FindPositionFirstBit() const
+int SymbolImp::FindPositionFirstBit() const //-V2506
 {
     int result = INT_MAX;
 
@@ -417,7 +417,7 @@ int SymbolImp::FindPositionFirstBit() const
 }
 
 
-int SymbolImp::FindPositionLastBit() const
+int SymbolImp::FindPositionLastBit() const //-V2506
 {
     if (Empty())
     {
@@ -457,7 +457,7 @@ int SymbolImp::GetHeight() const
 }
 
 
-int SymbolImp::GetFirstRow() const
+int SymbolImp::GetFirstRow() const //-V2506
 {
     if (Empty())
     {
@@ -486,7 +486,7 @@ void FontImporter::DeleteSymbols()
 {
     for (int i = 0; i < 256; i++)
     {
-        delete symbols[i];
+        delete symbols[i]; //-V2511
     }
 }
 
@@ -560,7 +560,7 @@ void SymbolImp::Log() const
 }
 
 
-bool SymbolImp::Empty() const
+bool SymbolImp::Empty() const //-V2506
 {
     for (uint row = 0; row < bits.size(); row++)
     {

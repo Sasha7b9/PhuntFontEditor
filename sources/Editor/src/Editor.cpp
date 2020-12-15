@@ -51,7 +51,7 @@ enum
 };
 
 
-wxIMPLEMENT_APP_NO_MAIN(Application);
+wxIMPLEMENT_APP_NO_MAIN(Application); //-V2511
 
 
 int main(int argc, char **argv)
@@ -71,7 +71,7 @@ int main(int argc, char **argv)
 }
 
 
-bool Application::OnInit()
+bool Application::OnInit() //-V2506
 {
     if (!wxApp::OnInit())
     {
@@ -123,9 +123,9 @@ Frame::~Frame()
 
 void Frame::CreatePanels()
 {
-    wxScrolledWindow *sw = new wxScrolledWindow(this);
+    wxScrolledWindow *sw = new wxScrolledWindow(this); //-V2511
 
-    TheCanvas = new Canvas(sw);
+    TheCanvas = new Canvas(sw); //-V2511
 
     Centre();
 }
@@ -191,21 +191,21 @@ wxRect Frame::GetMaxDisplay()
 
 void Frame::CreateMenu()
 {
-    wxMenu *fileMenu = new wxMenu;
+    wxMenu *fileMenu = new wxMenu; //-V2511
 
-    wxMenu *menuImport = new wxMenu;
+    wxMenu *menuImport = new wxMenu; //-V2511
     menuImport->Append(FILE_IMPORT_DESCRIPTION_FROM_XML, wxT("Загрузить шрифт из xml-файла описания \tCtrl+O"));
     menuImport->Append(FILE_IMPORT_SYSTEM_FONT, wxT("Загрузить системный шрифт"));
     fileMenu->AppendSubMenu(menuImport, wxT("Импорт"));
 
-    wxMenu *menuExport = new wxMenu;
+    wxMenu *menuExport = new wxMenu; //-V2511
     menuExport->Append(FILE_EXPORT_TO_C, wxT("Экспортировать в си-файл"));
     fileMenu->AppendSubMenu(menuExport, wxT("Экспорт"));
 
     fileMenu->AppendSeparator();
     fileMenu->Append(MENU_FILE_QUIT, wxT("Выход\tAlt+X"), wxT("Закрыть редактор"));
 
-    wxMenuBar *menuBar = new wxMenuBar();
+    wxMenuBar *menuBar = new wxMenuBar(); //-V2511
     menuBar->Append(fileMenu, wxT("Файл"));
 
     SetMenuBar(menuBar);
@@ -251,7 +251,7 @@ void Frame::ShowContextMenu(const wxPoint &pos, bool underPoint)
 
     if (menuAlign == nullptr)
     {
-        menuAlign = new wxMenu();
+        menuAlign = new wxMenu(); //-V2511
 
         menuAlign->Append(ALIGN_LEFT, "Слева");
         menuAlign->Append(ALIGN_RIGHT, "Справа");

@@ -3,13 +3,13 @@
 
 TextControl::TextControl(wxWindow *parent, const wxString &value, const wxString &label) : wxPanel(parent)
 {
-    wxBoxSizer *box = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer *box = new wxBoxSizer(wxHORIZONTAL); //-V2511
 
-    tc = new wxTextCtrl(this, wxID_ANY, value, wxDefaultPosition, { 50, 20 });
+    tc = new wxTextCtrl(this, wxID_ANY, value, wxDefaultPosition, { 50, 20 }); //-V2511
     tc->SetMinSize({ 100, 20 });
     box->Add(tc, wxALIGN_CENTER | wxALL);
     box->AddSpacer(10);
-    box->Add(new wxStaticText(this, wxID_ANY, label), wxALIGN_CENTER | wxALL, 5);
+    box->Add(new wxStaticText(this, wxID_ANY, label), wxALIGN_CENTER | wxALL, 5); //-V2511
 
     SetSizer(box);
 }

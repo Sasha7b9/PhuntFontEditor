@@ -160,7 +160,7 @@ void Canvas::OnMouseMove(wxMouseEvent &event) //-V2009
         {
             DrawPixel(true);
         }
-        else if (rightIsDown)
+        else if (rightIsDown) //-V2516
         {
             DrawPixel(false);
         }

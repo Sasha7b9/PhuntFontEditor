@@ -7,11 +7,11 @@
 
 BitmapSymbol::~BitmapSymbol()
 {
-    delete bmpSymbol;
+    delete bmpSymbol; //-V2511
 }
 
 
-wxString BitmapSymbol::UTFfrom1251(uint8 code)
+wxString BitmapSymbol::UTFfrom1251(uint8 code) //-V2506
 {
     if (code >= 192)
     {
@@ -37,9 +37,9 @@ void BitmapSymbol::BuildFromFont(const wxFont &font, uint8 number, int w, int h,
     width = w;
     height = h;
 
-    delete bmpSymbol;
+    delete bmpSymbol; //-V2511
 
-    bmpSymbol = new wxBitmap(width, height);
+    bmpSymbol = new wxBitmap(width, height); //-V2511
 
     wxMemoryDC memDC;
 
@@ -118,8 +118,8 @@ bool BitmapSymbol::GetPixel(int col, int row)
 
 void BitmapSymbol::Clear()
 {
-    delete bmpSymbol;
-    bmpSymbol = new wxBitmap(width, height);
+    delete bmpSymbol; //-V2511
+    bmpSymbol = new wxBitmap(width, height); //-V2511
 
     wxMemoryDC memDC;
     memDC.SelectObject(*bmpSymbol);
@@ -196,9 +196,9 @@ void BitmapFont::Resize()
     thread2.join();
     thread3.join();
 
-    delete bitmap;
+    delete bitmap; //-V2511
 
-    bitmap = new wxBitmap(16 * size.x * scale, 16 * size.y * scale);
+    bitmap = new wxBitmap(16 * size.x * scale, 16 * size.y * scale); //-V2511
 
     wxMemoryDC dc;
     dc.SelectObject(*bitmap);
@@ -227,7 +227,7 @@ void BitmapFont::DrawSymbol(BitmapSymbol *symbol)
 }
 
 
-wxPoint BitmapFont::GetCoordSymbol(const BitmapSymbol *symbol)
+wxPoint BitmapFont::GetCoordSymbol(const BitmapSymbol *symbol) //-V2506
 {
     for(int row = 0; row < 16; row++)
     {
@@ -244,7 +244,7 @@ wxPoint BitmapFont::GetCoordSymbol(const BitmapSymbol *symbol)
 }
 
 
-void BitmapFont::GetSymbolXY(const BitmapSymbol *symbol, int *x, int *y)
+void BitmapFont::GetSymbolXY(const BitmapSymbol *symbol, int *x, int *y) //-V2506
 {
     for (int row = 0; row < 16; row++)
     {
@@ -291,7 +291,7 @@ void BitmapFont::Draw(wxPaintDC &dc)
 
 BitmapFont::~BitmapFont()
 {
-    delete bitmap;
+    delete bitmap; //-V2511
 }
 
 
@@ -345,7 +345,7 @@ BitmapSymbol *BitmapFont::GetSymbol(uint8 num)
 }
 
 
-wxRect BitmapFont::GetRectForSymbol(const BitmapSymbol *symbol) const
+wxRect BitmapFont::GetRectForSymbol(const BitmapSymbol *symbol) const //-V2506
 {
     for (int row = 0; row < 16; row++)
     {
@@ -395,7 +395,7 @@ void BitmapFont::ToggleStateSymbol(int mouseX, int mouseY)
 }
 
 
-BitmapSymbol *BitmapFont::GetSymbolUnderMouse(int x, int y)
+BitmapSymbol *BitmapFont::GetSymbolUnderMouse(int x, int y) //-V2506
 {
     if (x < 0 || y < 0)
     {

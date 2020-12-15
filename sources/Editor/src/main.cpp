@@ -3,5 +3,5 @@
 
 void init()
 {
-    new Frame("");
+    new Frame(""); //-V2511
 }

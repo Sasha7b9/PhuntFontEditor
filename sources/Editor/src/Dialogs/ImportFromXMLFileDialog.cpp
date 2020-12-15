@@ -58,7 +58,7 @@ bool ImportFromXMLFileDialog::Execute()
 
                     wxString enabled = symbol->GetAttribute("Enabled");
 
-                    if(std::strcmp(enabled.c_str(), "0") == 0)
+                    if(std::strcmp(enabled.c_str(), "0") == 0) //-V2513
                     {
                         TheCanvas->GetFont()->GetSymbol(static_cast<uint8>(i))->Disable();
                     }
@@ -75,11 +75,11 @@ bool ImportFromXMLFileDialog::Execute()
 
                     wxString edited = symbol->GetAttribute("Edited");
 
-                    if (std::strcmp(edited.c_str(), "1") == 0)
+                    if (std::strcmp(edited.c_str(), "1") == 0) //-V2513
                     {
                         wxXmlNode *rows = XML::FindChildren(symbol, "Rows");
 
-                        BitmapSymbol *bmpSymbol = TheCanvas->GetFont()->GetSymbol((uint8)i);
+                        BitmapSymbol *bmpSymbol = TheCanvas->GetFont()->GetSymbol((uint8)i); //-V2533
 
                         if (rows)
                         {
@@ -97,7 +97,7 @@ bool ImportFromXMLFileDialog::Execute()
 
                                         wxString pixel = row->GetAttribute(buffer);
 
-                                        if (std::strcmp(pixel, "0") == 0)
+                                        if (std::strcmp(pixel, "0") == 0) //-V2513
                                         {
                                             bmpSymbol->ClearPixel(c, r);
                                         }
